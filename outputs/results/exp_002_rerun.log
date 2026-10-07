@@ -1,0 +1,7 @@
+seed 42 OK, skipping
+>>> rerunning seed 123
+ep 00 loss   3.128 val PR-AUC 0.7932 ROC 0.9722
+ep 01 loss   2.275 val PR-AUC 0.5273 ROC 0.9422
+ep 02 loss   1.971 val PR-AUC 0.2815 ROC 0.7925
+ep 03 loss   1.764 val PR-AUC 0.3679 ROC 0.9121
+ep 04 loss   1.587 val PR-AUC 0.2824 ROC 0.7760

@@ -1,0 +1,44 @@
+# Model configuration.
+common:
+  input_dim: 18             # 16 numeric + 2 protocol-encoded
+  n_kpis: 16                # graph nodes = numeric KPIs
+  window_size: 128
+  dropout: 0.2
+  device: auto              # auto | cpu | cuda
+
+temporal_encoder:
+  hidden_dim: 64
+  n_layers: 2
+  n_heads: 4
+
+graph:
+  builder: lagged_correlation   # pearson | spearman | lagged_correlation | granger
+  top_k_edges_per_node: 4
+  threshold: 0.15
+  dynamic: true
+  dynamic_subwindow: 32         # steps per sub-window for G(t)
+  edge_features: [strength, lag, direction]
+
+gat:
+  hidden_dim: 64
+  n_layers: 2
+  n_heads: 4
+
+heads:
+  anomaly: binary          # BCE
+  root_cause: multilabel_ranking   # 16-dim scores vs affected_kpi template
+  early_warning: binary_hazard     # predict anomaly onset within horizon
+
+training:
+  batch_size: 64
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  epochs: 30
+  early_stopping_patience: 6
+  mixed_precision: false   # CPU-safe default; enable on CUDA
+  grad_clip: 1.0
+  loss_weights:
+    anomaly: 1.0
+    type: 1.0
+    root_cause: 1.0
+    early_warning: 0.5

@@ -1,0 +1,38 @@
+{
+  "early_warning_test": {
+    "n_chunks": 60,
+    "warning_before_onset_frac": 0.5666666666666667,
+    "median_lead_steps": -13.0,
+    "mean_abs_lead_err_steps": 41.21666666666667,
+    "p10_lead_steps": -97.5,
+    "p90_lead_steps": 45.90000000000001,
+    "per_step_auc_mean": 0.45292513301070725,
+    "per_step_ap_mean": 0.6266054311971867
+  },
+  "alarm_sweep": [
+    {
+      "threshold": 0.3,
+      "fp_per_window": 0.00022002200220022002,
+      "median_ttd_steps": -64.0,
+      "frac_any_preonset_alarm": 0.05
+    },
+    {
+      "threshold": 0.5,
+      "fp_per_window": 0.0,
+      "median_ttd_steps": null,
+      "frac_any_preonset_alarm": 0.0
+    },
+    {
+      "threshold": 0.7,
+      "fp_per_window": 0.0,
+      "median_ttd_steps": null,
+      "frac_any_preonset_alarm": 0.0
+    },
+    {
+      "threshold": 0.9,
+      "fp_per_window": 0.0,
+      "median_ttd_steps": null,
+      "frac_any_preonset_alarm": 0.0
+    }
+  ]
+}

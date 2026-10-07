@@ -1,0 +1,12 @@
+anomaly_type,train,val,test
+Co-Channel Interference (Mild),131,0,15
+Jamming,93,94,92
+Buffer Overflow (Gradual Buildup),86,5,41
+High Network Congestion (Gradual Buildup),81,0,12
+Antenna Failure,73,15,19
+Co-Channel Interference (Severe),70,0,12
+Doppler Shift (Severe),58,0,10
+Faulty RF Filters (Temporal),57,10,10
+Resource Allocation Bugs,50,0,0
+High Network Congestion (Sudden Spike),40,0,8
+Faulty Handover Algorithm (Too Frequent),39,5,4

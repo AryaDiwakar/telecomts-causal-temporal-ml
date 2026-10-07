@@ -1,0 +1,224 @@
+true,pred
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Jamming
+Jamming,Jamming
+Jamming,Faulty RF Filters (Temporal)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Faulty RF Filters (Temporal)
+Jamming,Antenna Failure
+Jamming,Faulty RF Filters (Temporal)
+Jamming,Jamming
+Jamming,Jamming
+Jamming,High Network Congestion (Sudden Spike)
+Jamming,Buffer Overflow (Gradual Buildup)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Jamming
+Jamming,Jamming
+Jamming,Co-Channel Interference (Mild)
+Jamming,Jamming
+Jamming,Co-Channel Interference (Mild)
+Jamming,Faulty RF Filters (Temporal)
+Jamming,Jamming
+Jamming,Jamming
+Jamming,Faulty RF Filters (Temporal)
+Jamming,Jamming
+Jamming,Jamming
+Jamming,Jamming
+Jamming,Jamming
+Jamming,High Network Congestion (Sudden Spike)
+Jamming,Co-Channel Interference (Mild)
+Jamming,High Network Congestion (Sudden Spike)
+Jamming,Jamming
+Jamming,High Network Congestion (Sudden Spike)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Jamming
+Jamming,Faulty RF Filters (Temporal)
+Jamming,Antenna Failure
+Jamming,Faulty RF Filters (Temporal)
+Jamming,High Network Congestion (Sudden Spike)
+Jamming,Faulty RF Filters (Temporal)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Jamming
+Jamming,Jamming
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Faulty RF Filters (Temporal)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Jamming
+Jamming,High Network Congestion (Sudden Spike)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Jamming
+Jamming,Jamming
+Jamming,High Network Congestion (Sudden Spike)
+Jamming,Jamming
+Jamming,Faulty RF Filters (Temporal)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Jamming
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Jamming
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,High Network Congestion (Sudden Spike)
+Jamming,Faulty RF Filters (Temporal)
+Jamming,Antenna Failure
+Jamming,Co-Channel Interference (Mild)
+Jamming,Jamming
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Jamming
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Jamming
+Jamming,Jamming
+Jamming,Co-Channel Interference (Mild)
+Jamming,Jamming
+Jamming,Jamming
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Co-Channel Interference (Mild)
+Jamming,Jamming
+Jamming,Faulty RF Filters (Temporal)
+Jamming,High Network Congestion (Sudden Spike)
+Jamming,Buffer Overflow (Gradual Buildup)
+Jamming,High Network Congestion (Sudden Spike)
+Co-Channel Interference (Severe),Co-Channel Interference (Severe)
+Co-Channel Interference (Severe),Co-Channel Interference (Severe)
+Co-Channel Interference (Severe),Co-Channel Interference (Severe)
+Co-Channel Interference (Severe),Co-Channel Interference (Severe)
+Co-Channel Interference (Severe),Co-Channel Interference (Severe)
+Co-Channel Interference (Severe),Co-Channel Interference (Severe)
+Co-Channel Interference (Severe),Co-Channel Interference (Severe)
+Faulty RF Filters (Temporal),Co-Channel Interference (Mild)
+Faulty RF Filters (Temporal),Co-Channel Interference (Mild)
+Faulty RF Filters (Temporal),Co-Channel Interference (Mild)
+Antenna Failure,Antenna Failure
+Antenna Failure,Antenna Failure
+Antenna Failure,Antenna Failure
+Antenna Failure,Antenna Failure
+Faulty RF Filters (Temporal),High Network Congestion (Sudden Spike)
+Antenna Failure,Antenna Failure
+Faulty RF Filters (Temporal),Co-Channel Interference (Mild)
+Faulty RF Filters (Temporal),Co-Channel Interference (Mild)
+Antenna Failure,Antenna Failure
+Faulty RF Filters (Temporal),High Network Congestion (Gradual Buildup)
+Antenna Failure,Antenna Failure
+Antenna Failure,Antenna Failure
+Faulty RF Filters (Temporal),Co-Channel Interference (Mild)
+Antenna Failure,Antenna Failure
+Antenna Failure,Antenna Failure
+Antenna Failure,Antenna Failure
+Faulty RF Filters (Temporal),High Network Congestion (Gradual Buildup)
+High Network Congestion (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Co-Channel Interference (Mild),Faulty Handover Algorithm (Too Frequent)
+Co-Channel Interference (Mild),Faulty Handover Algorithm (Too Frequent)
+Buffer Overflow (Gradual Buildup),Antenna Failure
+Buffer Overflow (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+High Network Congestion (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+High Network Congestion (Gradual Buildup),Faulty Handover Algorithm (Too Frequent)
+Faulty RF Filters (Temporal),Faulty Handover Algorithm (Too Frequent)
+Co-Channel Interference (Mild),Faulty Handover Algorithm (Too Frequent)
+Co-Channel Interference (Mild),Faulty Handover Algorithm (Too Frequent)
+Buffer Overflow (Gradual Buildup),Antenna Failure
+Buffer Overflow (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+High Network Congestion (Gradual Buildup),Faulty Handover Algorithm (Too Frequent)
+High Network Congestion (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+High Network Congestion (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),Faulty Handover Algorithm (Too Frequent)
+High Network Congestion (Sudden Spike),Buffer Overflow (Gradual Buildup)
+Co-Channel Interference (Severe),Co-Channel Interference (Severe)
+High Network Congestion (Sudden Spike),Faulty Handover Algorithm (Too Frequent)
+Co-Channel Interference (Severe),Co-Channel Interference (Severe)
+High Network Congestion (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+High Network Congestion (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Co-Channel Interference (Severe),Co-Channel Interference (Severe)
+High Network Congestion (Sudden Spike),High Network Congestion (Sudden Spike)
+High Network Congestion (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+High Network Congestion (Sudden Spike),Resource Allocation Bugs
+High Network Congestion (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+High Network Congestion (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Co-Channel Interference (Severe),Co-Channel Interference (Severe)
+Co-Channel Interference (Severe),Co-Channel Interference (Severe)
+High Network Congestion (Sudden Spike),High Network Congestion (Sudden Spike)
+High Network Congestion (Sudden Spike),High Network Congestion (Sudden Spike)
+High Network Congestion (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+High Network Congestion (Sudden Spike),Buffer Overflow (Gradual Buildup)
+High Network Congestion (Sudden Spike),Buffer Overflow (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),Co-Channel Interference (Mild)
+Buffer Overflow (Gradual Buildup),High Network Congestion (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),High Network Congestion (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),High Network Congestion (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),High Network Congestion (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),High Network Congestion (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),High Network Congestion (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),High Network Congestion (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Doppler Shift (Severe),Co-Channel Interference (Mild)
+Doppler Shift (Severe),Doppler Shift (Severe)
+Faulty Handover Algorithm (Too Frequent),Co-Channel Interference (Severe)
+Doppler Shift (Severe),Doppler Shift (Severe)
+Doppler Shift (Severe),Doppler Shift (Severe)
+Co-Channel Interference (Mild),Faulty RF Filters (Temporal)
+Faulty Handover Algorithm (Too Frequent),Buffer Overflow (Gradual Buildup)
+Co-Channel Interference (Mild),Doppler Shift (Severe)
+Co-Channel Interference (Mild),Doppler Shift (Severe)
+Co-Channel Interference (Mild),Co-Channel Interference (Mild)
+Co-Channel Interference (Mild),Co-Channel Interference (Mild)
+Doppler Shift (Severe),Doppler Shift (Severe)
+Co-Channel Interference (Mild),Co-Channel Interference (Mild)
+Faulty Handover Algorithm (Too Frequent),Co-Channel Interference (Severe)
+Doppler Shift (Severe),Co-Channel Interference (Mild)
+Doppler Shift (Severe),Doppler Shift (Severe)
+Co-Channel Interference (Mild),Co-Channel Interference (Mild)
+Doppler Shift (Severe),Doppler Shift (Severe)
+Faulty Handover Algorithm (Too Frequent),Co-Channel Interference (Severe)
+Co-Channel Interference (Mild),Co-Channel Interference (Mild)
+Doppler Shift (Severe),Doppler Shift (Severe)
+Doppler Shift (Severe),Doppler Shift (Severe)
+Co-Channel Interference (Mild),Faulty RF Filters (Temporal)
+Co-Channel Interference (Mild),Faulty RF Filters (Temporal)
+Co-Channel Interference (Mild),Co-Channel Interference (Mild)
+Buffer Overflow (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),Antenna Failure
+Buffer Overflow (Gradual Buildup),Antenna Failure
+Buffer Overflow (Gradual Buildup),Antenna Failure
+Buffer Overflow (Gradual Buildup),Antenna Failure
+Buffer Overflow (Gradual Buildup),Antenna Failure
+Buffer Overflow (Gradual Buildup),Antenna Failure
+Buffer Overflow (Gradual Buildup),Antenna Failure
+Buffer Overflow (Gradual Buildup),Antenna Failure
+Buffer Overflow (Gradual Buildup),Antenna Failure
+Buffer Overflow (Gradual Buildup),High Network Congestion (Gradual Buildup)
+Antenna Failure,Antenna Failure
+Buffer Overflow (Gradual Buildup),High Network Congestion (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Antenna Failure,Antenna Failure
+Buffer Overflow (Gradual Buildup),High Network Congestion (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),High Network Congestion (Gradual Buildup)
+Buffer Overflow (Gradual Buildup),High Network Congestion (Gradual Buildup)
+Antenna Failure,Antenna Failure
+Antenna Failure,Antenna Failure
+Buffer Overflow (Gradual Buildup),Buffer Overflow (Gradual Buildup)
+Antenna Failure,Antenna Failure
+Antenna Failure,Antenna Failure
+Antenna Failure,Antenna Failure
+Buffer Overflow (Gradual Buildup),High Network Congestion (Gradual Buildup)
+Antenna Failure,Antenna Failure
+Buffer Overflow (Gradual Buildup),High Network Congestion (Gradual Buildup)

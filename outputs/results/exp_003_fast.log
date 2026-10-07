@@ -1,0 +1,44 @@
+[ablation] full
+  ep 00 loss   3.221 val PR 0.8452
+registry: appended exp_003 -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+[ablation] no_graph
+  ep 00 loss   3.242 val PR 0.4131
+registry: appended exp_003 -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+[ablation] static_graph
+  ep 00 loss   3.142 val PR 0.7943
+registry: appended exp_003 -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+[ablation] undirected
+  ep 00 loss   3.225 val PR 0.3035
+registry: appended exp_003 -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+[ablation] no_nodeconv
+  ep 00 loss   3.482 val PR 0.2496
+registry: appended exp_003 -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+[ablation] hazard_only
+  ep 00 loss   0.084 val PR 0.0928
+registry: appended exp_003 -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+{
+  "full": {
+    "pr_auc": 0.6729883933673603,
+    "acc": 0.2645739910313901
+  },
+  "no_graph": {
+    "pr_auc": 0.7492476505257543,
+    "acc": 0.27802690582959644
+  },
+  "static_graph": {
+    "pr_auc": 0.7161175850227212,
+    "acc": 0.15246636771300448
+  },
+  "undirected": {
+    "pr_auc": 0.48059121291548246,
+    "acc": 0.15246636771300448
+  },
+  "no_nodeconv": {
+    "pr_auc": 0.598290573108538,
+    "acc": 0.11210762331838565
+  },
+  "hazard_only": {
+    "pr_auc": 0.09432695327579163,
+    "acc": 0.18385650224215247
+  }
+}

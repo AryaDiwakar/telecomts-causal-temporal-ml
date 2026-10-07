@@ -1,0 +1,37 @@
+# Experiment matrix (source of truth for the script IDs in src/experiments/).
+# Each experiment writes results to outputs/results/ and appends to outputs/results_registry.json.
+experiments:
+  - id: exp_001_classical_baselines
+    module: src.experiments.exp_001_classical_baselines
+    track: baselines
+    tasks: [anomaly_detection, type_classification, root_cause]
+  - id: exp_002_tagn
+    module: src.experiments.exp_002_tagn
+    track: proposed
+    model: tagn
+    seeds: [42, 123, 2024, 2026, 3407]
+    tasks: [anomaly_detection, type_classification, root_cause, early_warning]
+  - id: exp_003_ablations
+    module: src.experiments.exp_003_ablations
+    track: ablations
+    variants: [full, no_graph, static_graph, undirected, no_nodeconv, hazard_only]
+  - id: exp_004_robustness
+    module: src.experiments.exp_004_robustness
+    track: robustness
+    perturbations: [noise_0.05, noise_0.10, noise_0.20, channel_drop_0.20, time_shift_0.10, scale_0.20]
+  - id: exp_005_loro
+    module: src.experiments.exp_005_loro
+    track: generalization
+    setting: leave-recordings-out GroupKFold(5)
+  - id: exp_006_explainability
+    module: src.experiments.exp_006_explainability
+    track: explainability
+  - id: exp_007_early_warning
+    module: src.experiments.exp_007_early_warning
+    track: early_warning
+
+robustness:
+  noise_sigmas: [0.05, 0.10, 0.20]
+  channel_drop_frac: 0.20
+  time_shift_frac: 0.10
+  scale_frac: 0.20

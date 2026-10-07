@@ -1,0 +1,41 @@
+{
+  "numeric_kpis": [
+    "RSRP",
+    "DL_BLER",
+    "DL_MCS",
+    "UL_BLER",
+    "UL_MCS",
+    "UL_NPRB",
+    "UL_SNR",
+    "TX_Bytes",
+    "RX_Bytes",
+    "Estimated_UL_Buffer",
+    "PRBs_DL_Current",
+    "PRBs_UL_Current",
+    "PRB_Utilization_DL",
+    "PRB_Utilization_UL",
+    "UL_NumberOfPackets",
+    "DL_NumberOfPackets"
+  ],
+  "categorical_kpis": [
+    "UL_Protocol",
+    "DL_Protocol"
+  ],
+  "categorical_maps": {
+    "UL_Protocol": {
+      "": 0,
+      "None": 1,
+      "TCP": 2,
+      "UDP": 3
+    },
+    "DL_Protocol": {
+      "": 0,
+      "None": 1,
+      "TCP": 2,
+      "UDP": 3
+    }
+  },
+  "n_chunks": 32000,
+  "chunk_length": 128,
+  "n_channels": 18
+}

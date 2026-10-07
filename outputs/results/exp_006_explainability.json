@@ -1,0 +1,211 @@
+{
+  "agreement_with_template": {
+    "attn_template_vs_non_auc": 0.8518696838388702,
+    "n_template_kpis_total": 93,
+    "n_non_template_kpis_total": 67,
+    "jaccard_topk_vs_template_mean_chunklevel": 0.644867427042315,
+    "mean_attn_in_template": 0.796183370688571
+  },
+  "top_grad_kpis": [
+    "DL_BLER",
+    "UL_SNR",
+    "PRB_Utilization_UL",
+    "RSRP",
+    "UL_NumberOfPackets"
+  ],
+  "per_type": {
+    "Jamming": {
+      "n": 92,
+      "top3_attn_kpis": [
+        "UL_BLER",
+        "RX_Bytes",
+        "TX_Bytes"
+      ],
+      "template_kpis": [
+        "DL_BLER",
+        "RX_Bytes",
+        "TX_Bytes",
+        "UL_BLER",
+        "UL_MCS"
+      ]
+    },
+    "Co-Channel Interference (Severe)": {
+      "n": 12,
+      "top3_attn_kpis": [
+        "UL_NPRB",
+        "PRB_Utilization_DL",
+        "PRB_Utilization_UL"
+      ],
+      "template_kpis": [
+        "DL_BLER",
+        "DL_NumberOfPackets",
+        "PRB_Utilization_DL",
+        "PRB_Utilization_UL",
+        "RSRP",
+        "RX_Bytes",
+        "TX_Bytes",
+        "UL_BLER",
+        "UL_NPRB",
+        "UL_NumberOfPackets",
+        "UL_SNR"
+      ]
+    },
+    "Faulty RF Filters (Temporal)": {
+      "n": 10,
+      "top3_attn_kpis": [
+        "RX_Bytes",
+        "TX_Bytes",
+        "UL_BLER"
+      ],
+      "template_kpis": [
+        "DL_BLER",
+        "PRB_Utilization_DL",
+        "PRB_Utilization_UL",
+        "RSRP",
+        "RX_Bytes",
+        "TX_Bytes",
+        "UL_BLER",
+        "UL_NPRB",
+        "UL_SNR"
+      ]
+    },
+    "Antenna Failure": {
+      "n": 19,
+      "top3_attn_kpis": [
+        "RX_Bytes",
+        "TX_Bytes",
+        "DL_BLER"
+      ],
+      "template_kpis": [
+        "DL_BLER",
+        "DL_MCS",
+        "DL_NumberOfPackets",
+        "Estimated_UL_Buffer",
+        "PRBs_DL_Current",
+        "PRBs_UL_Current",
+        "RSRP",
+        "RX_Bytes",
+        "TX_Bytes",
+        "UL_BLER",
+        "UL_MCS",
+        "UL_NumberOfPackets",
+        "UL_SNR"
+      ]
+    },
+    "High Network Congestion (Gradual Buildup)": {
+      "n": 12,
+      "top3_attn_kpis": [
+        "TX_Bytes",
+        "RX_Bytes",
+        "DL_BLER"
+      ],
+      "template_kpis": [
+        "DL_BLER",
+        "DL_NumberOfPackets",
+        "Estimated_UL_Buffer",
+        "PRB_Utilization_DL",
+        "PRB_Utilization_UL",
+        "RX_Bytes",
+        "TX_Bytes",
+        "UL_BLER",
+        "UL_NPRB",
+        "UL_NumberOfPackets"
+      ]
+    },
+    "Co-Channel Interference (Mild)": {
+      "n": 15,
+      "top3_attn_kpis": [
+        "RX_Bytes",
+        "UL_BLER",
+        "TX_Bytes"
+      ],
+      "template_kpis": [
+        "DL_BLER",
+        "PRB_Utilization_DL",
+        "PRB_Utilization_UL",
+        "RSRP",
+        "RX_Bytes",
+        "TX_Bytes",
+        "UL_BLER",
+        "UL_NPRB",
+        "UL_SNR"
+      ]
+    },
+    "Buffer Overflow (Gradual Buildup)": {
+      "n": 41,
+      "top3_attn_kpis": [
+        "TX_Bytes",
+        "RX_Bytes",
+        "DL_BLER"
+      ],
+      "template_kpis": [
+        "DL_BLER",
+        "DL_NumberOfPackets",
+        "Estimated_UL_Buffer",
+        "PRB_Utilization_DL",
+        "PRB_Utilization_UL",
+        "RX_Bytes",
+        "TX_Bytes",
+        "UL_BLER",
+        "UL_NPRB",
+        "UL_NumberOfPackets"
+      ]
+    },
+    "High Network Congestion (Sudden Spike)": {
+      "n": 8,
+      "top3_attn_kpis": [
+        "PRB_Utilization_DL",
+        "TX_Bytes",
+        "PRB_Utilization_UL"
+      ],
+      "template_kpis": [
+        "DL_BLER",
+        "DL_NumberOfPackets",
+        "Estimated_UL_Buffer",
+        "PRB_Utilization_DL",
+        "PRB_Utilization_UL",
+        "RX_Bytes",
+        "TX_Bytes",
+        "UL_BLER",
+        "UL_NPRB",
+        "UL_NumberOfPackets"
+      ]
+    },
+    "Doppler Shift (Severe)": {
+      "n": 10,
+      "top3_attn_kpis": [
+        "TX_Bytes",
+        "RX_Bytes",
+        "DL_BLER"
+      ],
+      "template_kpis": [
+        "DL_MCS",
+        "RSRP",
+        "RX_Bytes",
+        "TX_Bytes",
+        "UL_MCS",
+        "UL_NPRB",
+        "UL_SNR"
+      ]
+    },
+    "Faulty Handover Algorithm (Too Frequent)": {
+      "n": 4,
+      "top3_attn_kpis": [
+        "RX_Bytes",
+        "TX_Bytes",
+        "DL_BLER"
+      ],
+      "template_kpis": [
+        "DL_BLER",
+        "DL_NumberOfPackets",
+        "Estimated_UL_Buffer",
+        "RSRP",
+        "RX_Bytes",
+        "TX_Bytes",
+        "UL_BLER",
+        "UL_NumberOfPackets",
+        "UL_SNR"
+      ]
+    }
+  }
+}

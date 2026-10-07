@@ -1,0 +1,2 @@
+seed,roc_auc,pr_auc,f1_max,precision,recall,tpr_at_fpr_0.01,tpr_at_fpr_0.05,accuracy,macro_f1_seen,micro_f1,type_template_jaccard,topk_shift_jaccard,n_chunks,median_lag_steps,warning_before_onset_frac,best_val_pr_auc
+42,0.9112383884128323,0.6514005578001381,0.631578947368421,0.7159090909090909,0.5650224215246636,0.547085201793722,0.6681614349775785,0.4574,0.30863752763427493,0.45739910313901344,0.7791,0.3754,60,5.5,0.4,0.7551571828273025

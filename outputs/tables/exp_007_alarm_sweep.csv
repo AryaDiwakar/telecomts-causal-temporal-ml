@@ -1,0 +1,5 @@
+threshold,fp_per_window,median_ttd_steps,frac_any_preonset_alarm
+0.3,0.00022002200220022002,-64.0,0.05
+0.5,0.0,,0.0
+0.7,0.0,,0.0
+0.9,0.0,,0.0

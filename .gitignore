@@ -1,0 +1,21 @@
+# Python and local tooling
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+.env
+.env.*
+
+# Dataset bulk and generated local caches
+data/raw/**
+data/interim/chunks_X.npy
+data/raw/download.log
+
+# Interrupted/resumable local training state
+checkpoints/**/*.progress.pt
+
+# Local experiment scratch files
+*.tmp
+*.swp

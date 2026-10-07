@@ -1,0 +1,502 @@
+{
+  "n_files": 33,
+  "n_condition_groups": 33,
+  "total_chunks": 32000,
+  "n_anomalous_chunks": 1235,
+  "n_normal_chunks": 30765,
+  "top_level_keys": {
+    "start_time": 32000,
+    "end_time": 32000,
+    "sampling_rate": 32000,
+    "KPIs": 32000,
+    "description": 32000,
+    "anomalies": 32000,
+    "statistics": 32000,
+    "labels": 32000,
+    "QnA": 32000
+  },
+  "sampling_rates_hz": {
+    "10": 32000
+  },
+  "kpi_names": [
+    "RSRP",
+    "DL_BLER",
+    "DL_MCS",
+    "UL_BLER",
+    "UL_MCS",
+    "UL_NPRB",
+    "UL_SNR",
+    "TX_Bytes",
+    "RX_Bytes",
+    "Estimated_UL_Buffer",
+    "PRBs_DL_Current",
+    "PRBs_UL_Current",
+    "PRB_Utilization_DL",
+    "PRB_Utilization_UL",
+    "UL_Protocol",
+    "UL_NumberOfPackets",
+    "DL_Protocol",
+    "DL_NumberOfPackets"
+  ],
+  "kpi_value_types": {
+    "RSRP": {
+      "float": 32000
+    },
+    "DL_BLER": {
+      "float": 32000
+    },
+    "DL_MCS": {
+      "float": 32000
+    },
+    "UL_BLER": {
+      "float": 32000
+    },
+    "UL_MCS": {
+      "float": 32000
+    },
+    "UL_NPRB": {
+      "float": 32000
+    },
+    "UL_SNR": {
+      "float": 32000
+    },
+    "TX_Bytes": {
+      "float": 32000
+    },
+    "RX_Bytes": {
+      "float": 32000
+    },
+    "Estimated_UL_Buffer": {
+      "float": 32000
+    },
+    "PRBs_DL_Current": {
+      "float": 32000
+    },
+    "PRBs_UL_Current": {
+      "float": 32000
+    },
+    "PRB_Utilization_DL": {
+      "float": 32000
+    },
+    "PRB_Utilization_UL": {
+      "float": 32000
+    },
+    "UL_Protocol": {
+      "str": 32000
+    },
+    "UL_NumberOfPackets": {
+      "float": 1235,
+      "int": 30765
+    },
+    "DL_Protocol": {
+      "str": 32000
+    },
+    "DL_NumberOfPackets": {
+      "float": 32000
+    }
+  },
+  "anomaly_type_counts": {
+    "Jamming": 279,
+    "Co-Channel Interference (Mild)": 146,
+    "Buffer Overflow (Gradual Buildup)": 138,
+    "Co-Channel Interference (Severe)": 114,
+    "Antenna Failure": 107,
+    "Faulty RF Filters (Temporal)": 100,
+    "High Network Congestion (Gradual Buildup)": 93,
+    "Doppler Shift (Severe)": 86,
+    "Faulty Handover Algorithm (Too Frequent)": 64,
+    "Resource Allocation Bugs": 60,
+    "High Network Congestion (Sudden Spike)": 48
+  },
+  "affected_kpi_counts": {
+    "TX_Bytes": 1235,
+    "RX_Bytes": 1235,
+    "DL_BLER": 1149,
+    "UL_BLER": 1149,
+    "UL_NPRB": 785,
+    "PRB_Utilization_UL": 699,
+    "PRB_Utilization_DL": 699,
+    "UL_SNR": 617,
+    "RSRP": 617,
+    "DL_NumberOfPackets": 564,
+    "UL_NumberOfPackets": 564,
+    "UL_MCS": 472,
+    "Estimated_UL_Buffer": 450,
+    "DL_MCS": 193,
+    "PRBs_UL_Current": 167,
+    "PRBs_DL_Current": 167
+  },
+  "n_affected_kpis_hist": {
+    "5": 279,
+    "7": 86,
+    "9": 370,
+    "10": 279,
+    "11": 114,
+    "13": 107
+  },
+  "anomaly_duration": {
+    "n_with_duration": 1235,
+    "onset_gt0": 362,
+    "start_mean": 18.102024291497976,
+    "len_mean": 91.80647773279352,
+    "len_min": 1,
+    "len_max": 128,
+    "len_median": 121.0
+  },
+  "label_values": {
+    "zone": {
+      "A": 10538,
+      "B": 10250,
+      "C": 10285,
+      "In motion": 927
+    },
+    "application": {
+      "File": 10687,
+      "Twitch": 10625,
+      "Youtube": 10688
+    },
+    "mobility": {
+      "No": 31073,
+      "Yes": 927
+    },
+    "congestion": {
+      "No": 29219,
+      "Yes": 2781
+    },
+    "anomaly_present": {
+      "Yes": 1235,
+      "No": 30765
+    }
+  },
+  "statistics_keys": {
+    "RSRP": 32000,
+    "DL_BLER": 32000,
+    "DL_MCS": 32000,
+    "UL_BLER": 32000,
+    "UL_MCS": 32000,
+    "UL_NPRB": 32000,
+    "UL_SNR": 32000,
+    "TX_Bytes": 32000,
+    "RX_Bytes": 32000,
+    "Estimated_UL_Buffer": 32000,
+    "PRBs_DL_Current": 32000,
+    "PRBs_UL_Current": 32000,
+    "PRB_Utilization_DL": 32000,
+    "PRB_Utilization_UL": 32000,
+    "UL_NumberOfPackets": 32000,
+    "DL_NumberOfPackets": 32000
+  },
+  "qna_counts": {
+    "network": 128000,
+    "timeseries": 2048000,
+    "anomalies": 34185
+  },
+  "qna_total": 2210185,
+  "missing_kpi_values": 0,
+  "kpi_entries_total": 73728000,
+  "duplicate_chunks": 0,
+  "timestamp_range": [
+    "2025-01-01 00:00:00",
+    "2037-04-08 00:11:40.800000"
+  ],
+  "per_file": [
+    {
+      "group": "anomalous/jammer/File",
+      "n_chunks": 93,
+      "n_anomalous": 93,
+      "first_start": "2025-01-01 00:05:33",
+      "last_end": "2025-01-01 00:08:25.700000",
+      "internal_gaps": 47,
+      "internal_overlaps": 45
+    },
+    {
+      "group": "anomalous/jammer/Twitch",
+      "n_chunks": 94,
+      "n_anomalous": 94,
+      "first_start": "2025-01-02 00:06:26",
+      "last_end": "2025-01-02 00:07:08.700000",
+      "internal_gaps": 44,
+      "internal_overlaps": 49
+    },
+    {
+      "group": "anomalous/jammer/YouTube",
+      "n_chunks": 92,
+      "n_anomalous": 92,
+      "first_start": "2025-01-03 00:16:18.800000",
+      "last_end": "2025-01-03 00:05:02.900000",
+      "internal_gaps": 41,
+      "internal_overlaps": 50
+    },
+    {
+      "group": "anomalous/synthetic/Zone_A/File",
+      "n_chunks": 66,
+      "n_anomalous": 66,
+      "first_start": "2036-02-06 00:03:47.200000",
+      "last_end": "2036-02-06 00:05:29.500000",
+      "internal_gaps": 32,
+      "internal_overlaps": 33
+    },
+    {
+      "group": "anomalous/synthetic/Zone_A/Twitch",
+      "n_chunks": 98,
+      "n_anomalous": 98,
+      "first_start": "2026-09-02 00:09:04",
+      "last_end": "2026-09-02 00:04:47.900000",
+      "internal_gaps": 38,
+      "internal_overlaps": 59
+    },
+    {
+      "group": "anomalous/synthetic/Zone_A/YouTube",
+      "n_chunks": 147,
+      "n_anomalous": 147,
+      "first_start": "2026-01-28 00:00:03.200000",
+      "last_end": "2026-01-28 00:11:43.900000",
+      "internal_gaps": 66,
+      "internal_overlaps": 80
+    },
+    {
+      "group": "anomalous/synthetic/Zone_B/File",
+      "n_chunks": 137,
+      "n_anomalous": 137,
+      "first_start": "2035-11-28 00:11:47.200000",
+      "last_end": "2035-11-28 00:11:56.700000",
+      "internal_gaps": 64,
+      "internal_overlaps": 72
+    },
+    {
+      "group": "anomalous/synthetic/Zone_B/Twitch",
+      "n_chunks": 99,
+      "n_anomalous": 99,
+      "first_start": "2032-02-18 00:11:18.400000",
+      "last_end": "2032-02-18 00:14:39.900000",
+      "internal_gaps": 47,
+      "internal_overlaps": 51
+    },
+    {
+      "group": "anomalous/synthetic/Zone_B/YouTube",
+      "n_chunks": 69,
+      "n_anomalous": 69,
+      "first_start": "2027-07-07 00:06:24",
+      "last_end": "2027-07-07 00:02:04.700000",
+      "internal_gaps": 30,
+      "internal_overlaps": 38
+    },
+    {
+      "group": "anomalous/synthetic/Zone_C/File",
+      "n_chunks": 136,
+      "n_anomalous": 136,
+      "first_start": "2034-12-20 00:07:18.400000",
+      "last_end": "2034-12-20 00:06:52.700000",
+      "internal_gaps": 68,
+      "internal_overlaps": 67
+    },
+    {
+      "group": "anomalous/synthetic/Zone_C/Twitch",
+      "n_chunks": 79,
+      "n_anomalous": 79,
+      "first_start": "2037-04-08 00:06:36.800000",
+      "last_end": "2037-04-08 00:02:59.100000",
+      "internal_gaps": 39,
+      "internal_overlaps": 39
+    },
+    {
+      "group": "anomalous/synthetic/Zone_C/YouTube",
+      "n_chunks": 125,
+      "n_anomalous": 125,
+      "first_start": "2030-06-05 00:06:17.600000",
+      "last_end": "2030-06-05 00:06:55.900000",
+      "internal_gaps": 58,
+      "internal_overlaps": 66
+    },
+    {
+      "group": "normal/mobile/File",
+      "n_chunks": 309,
+      "n_anomalous": 0,
+      "first_start": "2037-03-11 00:12:25.600000",
+      "last_end": "2037-03-11 00:00:12.700000",
+      "internal_gaps": 144,
+      "internal_overlaps": 164
+    },
+    {
+      "group": "normal/mobile/Twitch",
+      "n_chunks": 309,
+      "n_anomalous": 0,
+      "first_start": "2037-02-25 00:09:48.800000",
+      "last_end": "2037-02-25 00:12:22.300000",
+      "internal_gaps": 149,
+      "internal_overlaps": 159
+    },
+    {
+      "group": "normal/mobile/YouTube",
+      "n_chunks": 309,
+      "n_anomalous": 0,
+      "first_start": "2037-02-11 00:02:33.600000",
+      "last_end": "2037-02-11 00:09:07.100000",
+      "internal_gaps": 153,
+      "internal_overlaps": 155
+    },
+    {
+      "group": "normal/stationary/Zone_A/congestion/File",
+      "n_chunks": 309,
+      "n_anomalous": 0,
+      "first_start": "2036-12-10 00:06:24",
+      "last_end": "2036-12-10 00:00:25.500000",
+      "internal_gaps": 152,
+      "internal_overlaps": 156
+    },
+    {
+      "group": "normal/stationary/Zone_A/congestion/Twitch",
+      "n_chunks": 309,
+      "n_anomalous": 0,
+      "first_start": "2036-10-08 00:15:21.600000",
+      "last_end": "2036-10-08 00:02:07.900000",
+      "internal_gaps": 146,
+      "internal_overlaps": 162
+    },
+    {
+      "group": "normal/stationary/Zone_A/congestion/YouTube",
+      "n_chunks": 309,
+      "n_anomalous": 0,
+      "first_start": "2036-08-06 00:00:00",
+      "last_end": "2036-08-06 00:03:08.700000",
+      "internal_gaps": 157,
+      "internal_overlaps": 151
+    },
+    {
+      "group": "normal/stationary/Zone_A/no_congestion/File",
+      "n_chunks": 3007,
+      "n_anomalous": 0,
+      "first_start": "2025-06-18 00:40:09.600000",
+      "last_end": "2025-06-18 00:41:16.700000",
+      "internal_gaps": 1486,
+      "internal_overlaps": 1520
+    },
+    {
+      "group": "normal/stationary/Zone_A/no_congestion/Twitch",
+      "n_chunks": 3007,
+      "n_anomalous": 0,
+      "first_start": "2025-03-26 01:53:13.600000",
+      "last_end": "2025-03-26 01:54:52.700000",
+      "internal_gaps": 1499,
+      "internal_overlaps": 1507
+    },
+    {
+      "group": "normal/stationary/Zone_A/no_congestion/YouTube",
+      "n_chunks": 3007,
+      "n_anomalous": 0,
+      "first_start": "2025-01-01 01:40:03.200000",
+      "last_end": "2025-01-01 00:23:08.700000",
+      "internal_gaps": 1516,
+      "internal_overlaps": 1490
+    },
+    {
+      "group": "normal/stationary/Zone_B/congestion/File",
+      "n_chunks": 309,
+      "n_anomalous": 0,
+      "first_start": "2036-12-31 00:01:29.600000",
+      "last_end": "2036-12-31 00:12:25.500000",
+      "internal_gaps": 147,
+      "internal_overlaps": 161
+    },
+    {
+      "group": "normal/stationary/Zone_B/congestion/Twitch",
+      "n_chunks": 309,
+      "n_anomalous": 0,
+      "first_start": "2036-10-29 00:07:18.400000",
+      "last_end": "2036-10-29 00:11:21.500000",
+      "internal_gaps": 157,
+      "internal_overlaps": 151
+    },
+    {
+      "group": "normal/stationary/Zone_B/congestion/YouTube",
+      "n_chunks": 309,
+      "n_anomalous": 0,
+      "first_start": "2036-08-27 00:03:34.400000",
+      "last_end": "2036-08-27 00:07:08.700000",
+      "internal_gaps": 153,
+      "internal_overlaps": 155
+    },
+    {
+      "group": "normal/stationary/Zone_B/no_congestion/File",
+      "n_chunks": 3006,
+      "n_anomalous": 0,
+      "first_start": "2025-07-30 01:36:12.800000",
+      "last_end": "2025-07-30 02:43:47.100000",
+      "internal_gaps": 1486,
+      "internal_overlaps": 1519
+    },
+    {
+      "group": "normal/stationary/Zone_B/no_congestion/Twitch",
+      "n_chunks": 3006,
+      "n_anomalous": 0,
+      "first_start": "2025-04-23 01:48:41.600000",
+      "last_end": "2025-04-23 02:29:16.700000",
+      "internal_gaps": 1482,
+      "internal_overlaps": 1523
+    },
+    {
+      "group": "normal/stationary/Zone_B/no_congestion/YouTube",
+      "n_chunks": 3006,
+      "n_anomalous": 0,
+      "first_start": "2025-01-29 00:39:34.400000",
+      "last_end": "2025-01-29 01:23:21.500000",
+      "internal_gaps": 1500,
+      "internal_overlaps": 1505
+    },
+    {
+      "group": "normal/stationary/Zone_C/congestion/File",
+      "n_chunks": 309,
+      "n_anomalous": 0,
+      "first_start": "2037-01-21 00:13:45.600000",
+      "last_end": "2037-01-21 00:14:39.900000",
+      "internal_gaps": 149,
+      "internal_overlaps": 159
+    },
+    {
+      "group": "normal/stationary/Zone_C/congestion/Twitch",
+      "n_chunks": 309,
+      "n_anomalous": 0,
+      "first_start": "2036-11-19 00:01:52",
+      "last_end": "2036-11-19 00:09:16.700000",
+      "internal_gaps": 148,
+      "internal_overlaps": 160
+    },
+    {
+      "group": "normal/stationary/Zone_C/congestion/YouTube",
+      "n_chunks": 309,
+      "n_anomalous": 0,
+      "first_start": "2036-09-17 00:06:01.600000",
+      "last_end": "2036-09-17 00:04:06.300000",
+      "internal_gaps": 156,
+      "internal_overlaps": 152
+    },
+    {
+      "group": "normal/stationary/Zone_C/no_congestion/File",
+      "n_chunks": 3006,
+      "n_anomalous": 0,
+      "first_start": "2025-09-10 01:24:54.400000",
+      "last_end": "2025-09-10 01:33:26.300000",
+      "internal_gaps": 1504,
+      "internal_overlaps": 1501
+    },
+    {
+      "group": "normal/stationary/Zone_C/no_congestion/Twitch",
+      "n_chunks": 3006,
+      "n_anomalous": 0,
+      "first_start": "2025-05-21 00:42:01.600000",
+      "last_end": "2025-05-21 00:29:03.900000",
+      "internal_gaps": 1535,
+      "internal_overlaps": 1470
+    },
+    {
+      "group": "normal/stationary/Zone_C/no_congestion/YouTube",
+      "n_chunks": 3006,
+      "n_anomalous": 0,
+      "first_start": "2025-02-26 00:36:28.800000",
+      "last_end": "2025-02-26 01:59:11.900000",
+      "internal_gaps": 1485,
+      "internal_overlaps": 1520
+    }
+  ],
+  "cross_file_timestamp_overlap_pairs": 0
+}

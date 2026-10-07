@@ -1,0 +1,59 @@
+# Data configuration for TelecomTS causal-temporal RCA project.
+dataset:
+  name: TelecomTS
+  source: huggingface
+  repo_id: AliMaatouk/TelecomTS
+  raw_dir: data/raw/TelecomTS
+  interim_dir: data/interim
+  processed_dir: data/processed
+
+sampling:
+  rate_hz: 10
+  chunk_length: 128          # steps per chunk (12.8 s)
+
+features:
+  numeric_kpis:
+    - RSRP
+    - DL_BLER
+    - DL_MCS
+    - UL_BLER
+    - UL_MCS
+    - UL_NPRB
+    - UL_SNR
+    - TX_Bytes
+    - RX_Bytes
+    - Estimated_UL_Buffer
+    - PRBs_DL_Current
+    - PRBs_UL_Current
+    - PRB_Utilization_DL
+    - PRB_Utilization_UL
+    - UL_NumberOfPackets
+    - DL_NumberOfPackets
+  categorical_kpis:
+    - UL_Protocol
+    - DL_Protocol
+  exclude_from_input:
+    - description          # free text, not model input
+    - statistics           # derived from full chunk; only used as baseline features
+    - QnA                  # benchmark artifacts, never input
+    - troubleshooting_tickets  # root-cause metadata, never input (leakage)
+
+windowing:
+  window_size: 128          # model input length (steps)
+  stride: 1                 # per-step targets inside a chunk
+  forecast_horizon: 50      # early-warning horizon in steps (5 s)
+  normalization_method: robust_zscore   # zscore | robust_zscore | minmax
+  missing_value_strategy: error         # dataset has 0 missing values; fail loudly if that changes
+
+split:
+  protocol: temporal_within_recording   # see docs/data_leakage.md
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+  embargo_s: 12.8           # 1 chunk length on each side of every boundary
+  group_bursts: true        # keep overlapping burst-clusters intact
+  seed: 42
+
+anomaly_subsample:
+  # training-only undersampling of normal chunks to balance batches
+  normal_to_anomalous_ratio: 4.0

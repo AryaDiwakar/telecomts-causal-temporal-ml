@@ -1,0 +1,224 @@
+type,recording,jaccard_topk_vs_template,mean_attn_in_template
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7860339879989624
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7850247621536255
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7781329154968262
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7659908533096313
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7878930568695068
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7968104481697083
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7852591276168823
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.8576644062995911
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7921661138534546
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.8407784700393677
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7919376492500305
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7930180430412292
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7928575873374939
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.799818217754364
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.8006256818771362
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7875493764877319
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7915538549423218
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.773025393486023
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7725491523742676
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7906336188316345
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7743667960166931
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7749711275100708
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.680941641330719
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7748546600341797
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7816638350486755
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7775623798370361
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7772324085235596
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7852777242660522
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.8010581135749817
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7868779897689819
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.8008020520210266
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7908830046653748
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7713106870651245
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.8024420738220215
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7816552519798279
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.8737183809280396
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7886404395103455
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7712486386299133
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7861246466636658
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7941370606422424
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.781180739402771
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7818915843963623
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7815318703651428
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.8011218309402466
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.784339427947998
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7706723213195801
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7984477281570435
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7846229672431946
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7959262132644653
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7997488975524902
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7820680737495422
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.785571277141571
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7980831265449524
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7731386423110962
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7999001741409302
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7765353918075562
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7879946827888489
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7600222826004028
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7851442098617554
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7929213643074036
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.8509753942489624
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7933567762374878
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7800031900405884
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.8226850628852844
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7870615720748901
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7852734327316284
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.8554102182388306
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7707265615463257
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7038460969924927
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7892675399780273
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.8905717134475708
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7852553129196167
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7827516794204712
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7728865146636963
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7759658694267273
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.776452362537384
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7949105501174927
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.787179172039032
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7788143754005432
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.796637237071991
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7921304702758789
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.795682966709137
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7874898910522461
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7873017191886902
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7834423780441284
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.7777732014656067
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7953757047653198
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.781353235244751
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.701594889163971
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.785028338432312
+Jamming,anomalous/jammer/YouTube,0.42857142857142855,0.8649835586547852
+Jamming,anomalous/jammer/YouTube,0.6666666666666666,0.7850290536880493
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_A/File,0.6923076923076923,0.8669882416725159
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_A/File,0.8333333333333334,0.9401903748512268
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_A/File,0.8333333333333334,0.9448302984237671
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_A/File,0.8333333333333334,0.9415157437324524
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_A/File,0.8333333333333334,0.9382749795913696
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_A/File,0.6923076923076923,0.8154439926147461
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_A/File,0.8333333333333334,0.9471789002418518
+Faulty RF Filters (Temporal),anomalous/synthetic/Zone_A/Twitch,0.8,0.8243062496185303
+Faulty RF Filters (Temporal),anomalous/synthetic/Zone_A/Twitch,0.8,0.8736889362335205
+Faulty RF Filters (Temporal),anomalous/synthetic/Zone_A/Twitch,0.8,0.8666560053825378
+Antenna Failure,anomalous/synthetic/Zone_A/Twitch,0.625,0.47524726390838623
+Antenna Failure,anomalous/synthetic/Zone_A/Twitch,0.7333333333333333,0.6685611009597778
+Antenna Failure,anomalous/synthetic/Zone_A/Twitch,0.7333333333333333,0.679742157459259
+Antenna Failure,anomalous/synthetic/Zone_A/Twitch,0.7333333333333333,0.6471832990646362
+Faulty RF Filters (Temporal),anomalous/synthetic/Zone_A/Twitch,0.8,0.7945091128349304
+Antenna Failure,anomalous/synthetic/Zone_A/Twitch,0.625,0.5512499213218689
+Faulty RF Filters (Temporal),anomalous/synthetic/Zone_A/Twitch,0.8,0.8061845898628235
+Faulty RF Filters (Temporal),anomalous/synthetic/Zone_A/Twitch,0.8,0.8472919464111328
+Antenna Failure,anomalous/synthetic/Zone_A/Twitch,0.7333333333333333,0.6798720955848694
+Faulty RF Filters (Temporal),anomalous/synthetic/Zone_A/Twitch,0.8,0.7531542181968689
+Antenna Failure,anomalous/synthetic/Zone_A/Twitch,0.7333333333333333,0.634577751159668
+Antenna Failure,anomalous/synthetic/Zone_A/Twitch,0.7333333333333333,0.6816872358322144
+Faulty RF Filters (Temporal),anomalous/synthetic/Zone_A/Twitch,0.8,0.8813737034797668
+Antenna Failure,anomalous/synthetic/Zone_A/Twitch,0.7333333333333333,0.6709506511688232
+Antenna Failure,anomalous/synthetic/Zone_A/Twitch,0.7333333333333333,0.6768448948860168
+Antenna Failure,anomalous/synthetic/Zone_A/Twitch,0.625,0.5658285021781921
+Faulty RF Filters (Temporal),anomalous/synthetic/Zone_A/Twitch,0.6363636363636364,0.7588114738464355
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5384615384615384,0.6855663061141968
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_B/File,0.6363636363636364,0.7733867168426514
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_B/File,0.6363636363636364,0.7777745723724365
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5384615384615384,0.6691024899482727
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5384615384615384,0.6832941770553589
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5384615384615384,0.6986440420150757
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5384615384615384,0.6915335059165955
+Faulty RF Filters (Temporal),anomalous/synthetic/Zone_B/File,0.5,0.7092881798744202
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_B/File,0.5,0.7396101951599121
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_B/File,0.6363636363636364,0.787889838218689
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5384615384615384,0.6798254251480103
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5384615384615384,0.6783679723739624
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5384615384615384,0.6924811601638794
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5384615384615384,0.6882381439208984
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5384615384615384,0.6950287222862244
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5384615384615384,0.6756688356399536
+High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,0.8181818181818182,0.9278274774551392
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_B/Twitch,0.8333333333333334,0.9285756945610046
+High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,0.8181818181818182,0.9112676382064819
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_B/Twitch,0.8333333333333334,0.8510041832923889
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,0.8181818181818182,0.942727267742157
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,0.8181818181818182,0.9489075541496277
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_B/Twitch,0.8333333333333334,0.8746715188026428
+High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,0.8181818181818182,0.8436275720596313
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,0.8181818181818182,0.9654396176338196
+High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,0.8181818181818182,0.8466723561286926
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,0.8181818181818182,0.9438272714614868
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,0.8181818181818182,0.9591686129570007
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_B/Twitch,0.8333333333333334,0.8485061526298523
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_B/Twitch,0.8333333333333334,0.8823257684707642
+High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,0.8181818181818182,0.8736330270767212
+High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,0.8181818181818182,0.878320038318634
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,0.8181818181818182,0.9522067308425903
+High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,0.8181818181818182,0.9413871765136719
+High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,0.8181818181818182,0.9138593673706055
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.42857142857142855,0.6913599371910095
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.8181818181818182,0.9372525215148926
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.6666666666666666,0.85383141040802
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.8181818181818182,0.9451230764389038
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,0.897055447101593
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.6666666666666666,0.8913658857345581
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.6666666666666666,0.87974613904953
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.8181818181818182,0.8717886209487915
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,0.9058789014816284
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.8181818181818182,0.8553975820541382
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.8181818181818182,0.9010680317878723
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.6666666666666666,0.8600093722343445
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.6666666666666666,0.798589289188385
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.6666666666666666,0.9121974110603333
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.6666666666666666,0.9230979681015015
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.6666666666666666,0.8425203561782837
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,0.16666666666666666,0.45600178837776184
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,0.4,0.6646692156791687
+Faulty Handover Algorithm (Too Frequent),anomalous/synthetic/Zone_C/File,0.5,0.6883814334869385
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,0.5555555555555556,0.9556432366371155
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,0.5555555555555556,0.9315119981765747
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,0.8,0.6957224607467651
+Faulty Handover Algorithm (Too Frequent),anomalous/synthetic/Zone_C/File,0.5,0.5617421865463257
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,0.6363636363636364,0.7052860260009766
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,0.8,0.807512104511261
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,0.8,0.8666995167732239
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,0.8,0.8532037734985352
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,0.5555555555555556,0.9493427276611328
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,0.8,0.843007504940033
+Faulty Handover Algorithm (Too Frequent),anomalous/synthetic/Zone_C/File,0.5,0.6915518045425415
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,0.2727272727272727,0.45777347683906555
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,0.5555555555555556,0.9227004051208496
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,0.8,0.840008020401001
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,0.4,0.7379298806190491
+Faulty Handover Algorithm (Too Frequent),anomalous/synthetic/Zone_C/File,0.5,0.6328412294387817
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.8525866270065308
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,0.5555555555555556,0.8536115884780884
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,0.5555555555555556,0.8717669248580933
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.7698222994804382
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.8145062923431396
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,0.8,0.8488011360168457
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.8181818181818182,0.9360346794128418
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.8181818181818182,0.8770889043807983
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.8181818181818182,0.8573635816574097
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.3333333333333333,0.5480645895004272
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.8181818181818182,0.9006342887878418
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.8181818181818182,0.9647102355957031
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.5384615384615384,0.8224951028823853
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.8181818181818182,0.9495295286178589
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.5384615384615384,0.6753175854682922
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.42857142857142855,0.708439290523529
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/YouTube,0.6666666666666666,0.8797440528869629
+Antenna Failure,anomalous/synthetic/Zone_C/YouTube,0.7333333333333333,0.6958742141723633
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/YouTube,0.8181818181818182,0.8636616468429565
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/YouTube,0.6666666666666666,0.8167240023612976
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/YouTube,0.5384615384615384,0.7873735427856445
+Antenna Failure,anomalous/synthetic/Zone_C/YouTube,0.7333333333333333,0.7258507013320923
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/YouTube,0.8181818181818182,0.8981269598007202
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/YouTube,0.6666666666666666,0.8079397082328796
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/YouTube,0.6666666666666666,0.8902400732040405
+Antenna Failure,anomalous/synthetic/Zone_C/YouTube,0.7333333333333333,0.7188510298728943
+Antenna Failure,anomalous/synthetic/Zone_C/YouTube,0.7333333333333333,0.728446364402771
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/YouTube,0.42857142857142855,0.7451469898223877
+Antenna Failure,anomalous/synthetic/Zone_C/YouTube,0.7333333333333333,0.7063575983047485
+Antenna Failure,anomalous/synthetic/Zone_C/YouTube,0.7333333333333333,0.7041962146759033
+Antenna Failure,anomalous/synthetic/Zone_C/YouTube,0.7333333333333333,0.7192741632461548
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/YouTube,1.0,0.920671820640564
+Antenna Failure,anomalous/synthetic/Zone_C/YouTube,0.7333333333333333,0.7294234037399292
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/YouTube,0.6666666666666666,0.8574363589286804

@@ -1,0 +1,35 @@
+isolation_forest {'n': 4768, 'n_positives': 223, 'roc_auc': 0.2468084476609096, 'pr_auc': 0.02841865344910926, 'f1_max': 0.08937875751503006, 'precision': 0.046779945458359555, 'recall': 1.0, 'threshold': -0.6362575272973363, 'tpr_at_fpr_0.01': 0.0, 'tpr_at_fpr_0.05': 0.0, 'threshold_val_tuned': -0.43799352420961685}
+one_class_svm {'n': 4768, 'n_positives': 223, 'roc_auc': 0.6910091906051593, 'pr_auc': 0.07609706302040359, 'f1_max': 0.16774837743384924, 'precision': 0.09438202247191012, 'recall': 0.7533632286995515, 'threshold': 110.13632772912226, 'tpr_at_fpr_0.01': 0.0, 'tpr_at_fpr_0.05': 0.06726457399103139, 'threshold_val_tuned': 110.14633246917148}
+lof {'n': 4768, 'n_positives': 223, 'roc_auc': 0.23874853853098316, 'pr_auc': 0.033038141241050326, 'f1_max': 0.08936084952915248, 'precision': 0.04677013422818792, 'recall': 1.0, 'threshold': -81.3094209762505, 'tpr_at_fpr_0.01': 0.013452914798206279, 'tpr_at_fpr_0.05': 0.017937219730941704, 'threshold_val_tuned': -1.0074275058372444}
+xgb {'n': 4768, 'n_positives': 223, 'roc_auc': 0.92053061808423, 'pr_auc': 0.6680928459679538, 'f1_max': 0.6685393258426966, 'precision': 0.8947368421052632, 'recall': 0.5336322869955157, 'threshold': 0.27774539589881897, 'tpr_at_fpr_0.01': 0.5515695067264574, 'tpr_at_fpr_0.05': 0.6681614349775785, 'threshold_val_tuned': 0.021008003503084183}
+/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:469: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+logreg {'n': 4768, 'n_positives': 223, 'roc_auc': 0.9650352479194109, 'pr_auc': 0.7617842693411438, 'f1_max': 0.6952054794520548, 'precision': 0.5623268698060941, 'recall': 0.9103139013452914, 'threshold': 0.6591942492679451, 'tpr_at_fpr_0.01': 0.5112107623318386, 'tpr_at_fpr_0.05': 0.9282511210762332, 'threshold_val_tuned': 0.8998229784213786}
+type xgb acc 0.4125560538116592 macro-f1-seen 0.3421063866247636 micro-f1 0.4125560538116592
+RCA: {
+  "type_prior_ml": {
+    "jaccard_mean": 0.7591098550179266,
+    "micro_f1": 0.8436288446627035
+  },
+  "recording_prior": {
+    "jaccard_mean": 0.817544936379017,
+    "micro_f1": 0.8399666017255775
+  },
+  "input_shift_topK": {
+    "jaccard_mean": 0.3670018944682622,
+    "micro_f1": 0.5623595505617978
+  }
+}
+registry: appended exp_001 -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+registry: appended exp_001 -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+registry: appended exp_001 -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+registry: appended exp_001 -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+registry: appended exp_001 -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+registry: appended exp_001 -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+registry: appended exp_001 -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
