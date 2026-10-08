@@ -248,8 +248,34 @@ class TagnModel(nn.Module):
             adj = 0.5 * (adj + adj.transpose(1, 2))
         return adj
 
-    def forward(self, x: torch.Tensor, chunk_proto: torch.Tensor) -> dict:
-        # x: [B, T, 18] (16 scaled numeric + 2 protocol codes)
+    ENCODER_MODULES = ("in_proj", "tconv", "node_enc", "gats", "fuse", "gru", "pool")
+
+    def encoder_state(self) -> dict:
+        """State dict of the shared trunk only (pretrained by exp_008)."""
+        out = {}
+        for name in self.ENCODER_MODULES:
+            mod = getattr(self, name, None)
+            if mod is None:
+                continue
+            for k, v in mod.state_dict().items():
+                out[f"{name}.{k}"] = v
+        return out
+
+    def load_encoder_state(self, state: dict) -> int:
+        """Load a trunk-only checkpoint; returns the number of tensors applied."""
+        own = self.state_dict()
+        n = 0
+        for k, v in state.items():
+            if k in own and own[k].shape == v.shape and own[k].dtype == v.dtype:
+                own[k].copy_(v)
+                n += 1
+        if n == 0:
+            raise ValueError("no encoder tensors matched the current model")
+        self.load_state_dict(own, strict=True)
+        return n
+
+    def encode(self, x: torch.Tensor, chunk_proto: torch.Tensor) -> dict:
+        """Shared trunk. Returns pooled/h/node_feats used by every head."""
         if x.ndim != 3 or x.shape[-1] != self.input_dim:
             raise ValueError(f"expected x with shape [B,T,{self.input_dim}], got {tuple(x.shape)}")
         if chunk_proto.ndim != 1 or chunk_proto.shape[0] != x.shape[0]:
@@ -278,6 +304,11 @@ class TagnModel(nn.Module):
         # chunk pooling (attention over time)
         attn = torch.softmax(self.pool(h), dim=1)        # [B, T, d]
         pooled = (attn * h).sum(dim=1)                   # [B, d]
+        return {"pooled": pooled, "h": h, "node_feats": node_feats, "fused": fused}
+
+    def forward(self, x: torch.Tensor, chunk_proto: torch.Tensor) -> dict:
+        enc = self.encode(x, chunk_proto)
+        pooled, h, node_feats = enc["pooled"], enc["h"], enc["node_feats"]
 
         logits = {
             "anomaly": self.anom_head(self.drop(pooled)).squeeze(-1),

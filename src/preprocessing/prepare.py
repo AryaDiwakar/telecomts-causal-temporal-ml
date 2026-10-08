@@ -172,7 +172,18 @@ def fit_scaler(X: np.ndarray, train_idx: np.ndarray, method: str) -> dict:
     elif method == "robust_zscore":
         loc = np.median(Xt, axis=(0, 1))
         q75, q25 = np.percentile(Xt, [75, 25], axis=(0, 1))
-        scale = (q75 - q25) / 1.349
+        iqr = (q75 - q25) / 1.349
+        mad = 1.4826 * np.median(np.abs(Xt - loc), axis=(0, 1))
+        std = Xt.std(axis=(0, 1))
+        # Zero-inflated channels (DL_BLER is 59.5% exact zeros, median 0) have a
+        # near-zero IQR. Dividing by it explodes the channel -- DL_BLER reached
+        # scaled std 472 / max 2040, letting one channel dominate every model.
+        # Escalate to the next estimator that reflects the real spread: IQR ->
+        # MAD -> standard deviation, accepting a candidate only when it is at
+        # least 10% of the channel's standard deviation.
+        scale = np.where(iqr >= 0.1 * std, iqr, mad)
+        scale = np.where(scale >= 0.1 * std, scale, std)
+        scale = np.where(scale < 1e-8, 1.0, scale)
     elif method == "minmax":
         loc = Xt.min(axis=(0, 1))
         scale = Xt.max(axis=(0, 1)) - loc

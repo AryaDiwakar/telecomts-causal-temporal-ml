@@ -120,90 +120,90 @@ Antenna Failure,anomalous/synthetic/Zone_A/Twitch,1.0,0.375,0.625
 Faulty RF Filters (Temporal),anomalous/synthetic/Zone_A/Twitch,0.5833333333333334,1.0,0.5
 High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,1.0,0.75,0.42857142857142855
 Co-Channel Interference (Mild),anomalous/synthetic/Zone_B/File,0.5,0.8181818181818182,0.38461538461538464
-Co-Channel Interference (Mild),anomalous/synthetic/Zone_B/File,0.5,0.8181818181818182,0.5
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.4375,0.75,0.42857142857142855
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,1.0,0.75,0.42857142857142855
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_B/File,0.5,0.8181818181818182,0.38461538461538464
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.4375,0.75,0.3333333333333333
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,1.0,0.75,0.3333333333333333
 High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,1.0,0.75,0.42857142857142855
-High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5833333333333334,0.75,0.42857142857142855
-Faulty RF Filters (Temporal),anomalous/synthetic/Zone_B/File,0.5,0.8181818181818182,0.5
-Co-Channel Interference (Mild),anomalous/synthetic/Zone_B/File,0.5,0.8181818181818182,0.5
-Co-Channel Interference (Mild),anomalous/synthetic/Zone_B/File,0.5,0.8181818181818182,0.5
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.4375,0.75,0.42857142857142855
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,1.0,0.75,0.42857142857142855
-High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5833333333333334,0.75,0.42857142857142855
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5833333333333334,0.75,0.3333333333333333
+Faulty RF Filters (Temporal),anomalous/synthetic/Zone_B/File,0.5,0.8181818181818182,0.38461538461538464
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_B/File,0.5,0.8181818181818182,0.38461538461538464
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_B/File,0.5,0.8181818181818182,0.38461538461538464
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.4375,0.75,0.3333333333333333
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,1.0,0.75,0.3333333333333333
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5833333333333334,0.75,0.3333333333333333
 High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,1.0,0.75,0.42857142857142855
-High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,1.0,0.75,0.42857142857142855
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5833333333333334,0.75,0.42857142857142855
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/File,1.0,0.75,0.3333333333333333
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/File,0.5833333333333334,0.75,0.3333333333333333
 High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.3333333333333333
 Co-Channel Interference (Severe),anomalous/synthetic/Zone_B/Twitch,1.0,0.75,0.4666666666666667
 High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,0.5833333333333334,1.0,0.3333333333333333
-Co-Channel Interference (Severe),anomalous/synthetic/Zone_B/Twitch,1.0,0.75,0.4666666666666667
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_B/Twitch,1.0,0.75,0.5714285714285714
 High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.3333333333333333
-High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.42857142857142855
-Co-Channel Interference (Severe),anomalous/synthetic/Zone_B/Twitch,1.0,0.75,0.4666666666666667
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.3333333333333333
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_B/Twitch,1.0,0.75,0.5714285714285714
 High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.3333333333333333
-High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.42857142857142855
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.3333333333333333
 High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,0.5833333333333334,1.0,0.3333333333333333
 High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.3333333333333333
-High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.42857142857142855
-Co-Channel Interference (Severe),anomalous/synthetic/Zone_B/Twitch,1.0,0.75,0.4666666666666667
-Co-Channel Interference (Severe),anomalous/synthetic/Zone_B/Twitch,1.0,0.75,0.4666666666666667
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.3333333333333333
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_B/Twitch,1.0,0.75,0.5714285714285714
+Co-Channel Interference (Severe),anomalous/synthetic/Zone_B/Twitch,1.0,0.75,0.5714285714285714
 High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.3333333333333333
 High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.3333333333333333
-High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.42857142857142855
+High Network Congestion (Gradual Buildup),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.3333333333333333
 High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.3333333333333333
 High Network Congestion (Sudden Spike),anomalous/synthetic/Zone_B/Twitch,1.0,1.0,0.3333333333333333
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,0.5833333333333334,1.0,0.3333333333333333
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.25
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.25
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.25
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.3333333333333333
-Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,0.45454545454545453,0.42857142857142855,0.5555555555555556
-Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,1.0,0.42857142857142855,0.5555555555555556
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_B/YouTube,1.0,1.0,0.25
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,0.45454545454545453,0.42857142857142855,0.75
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,1.0,0.42857142857142855,0.75
 Faulty Handover Algorithm (Too Frequent),anomalous/synthetic/Zone_C/File,0.6666666666666666,0.6923076923076923,0.5
-Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,1.0,0.42857142857142855,0.4
-Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,1.0,0.42857142857142855,0.4
-Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.375,0.5
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,1.0,0.42857142857142855,0.5555555555555556
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,1.0,0.42857142857142855,0.5555555555555556
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.375,0.38461538461538464
 Faulty Handover Algorithm (Too Frequent),anomalous/synthetic/Zone_C/File,0.5833333333333334,0.6923076923076923,0.5
 Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,0.45454545454545453,0.375,0.5
 Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,0.45454545454545453,0.375,0.5
-Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.375,0.5
 Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.375,0.38461538461538464
-Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,1.0,0.42857142857142855,0.4
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.375,0.38461538461538464
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,1.0,0.42857142857142855,0.5555555555555556
 Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.375,0.38461538461538464
 Faulty Handover Algorithm (Too Frequent),anomalous/synthetic/Zone_C/File,0.6666666666666666,0.6923076923076923,0.5
-Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,0.45454545454545453,0.42857142857142855,0.5555555555555556
-Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,1.0,0.42857142857142855,0.4
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,0.45454545454545453,0.42857142857142855,0.75
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,1.0,0.42857142857142855,0.5555555555555556
 Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.375,0.38461538461538464
 Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,1.0,0.42857142857142855,0.5555555555555556
 Faulty Handover Algorithm (Too Frequent),anomalous/synthetic/Zone_C/File,0.6666666666666666,0.6923076923076923,0.5
 Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.375,0.38461538461538464
 Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,1.0,0.42857142857142855,0.5555555555555556
-Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,1.0,0.42857142857142855,0.4
-Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.375,0.5
-Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.375,0.5
+Doppler Shift (Severe),anomalous/synthetic/Zone_C/File,1.0,0.42857142857142855,0.5555555555555556
 Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.375,0.38461538461538464
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,1.0,0.5833333333333334,0.42857142857142855
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.4375,0.5833333333333334,0.42857142857142855
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.375,0.38461538461538464
+Co-Channel Interference (Mild),anomalous/synthetic/Zone_C/File,1.0,0.375,0.38461538461538464
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,1.0,0.5833333333333334,0.3333333333333333
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.4375,0.5833333333333334,0.3333333333333333
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.4375,0.5833333333333334,0.3333333333333333
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.4375,0.5833333333333334,0.42857142857142855
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.4375,0.5833333333333334,0.25
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.4375,0.5833333333333334,0.3333333333333333
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.4375,0.5833333333333334,0.3333333333333333
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.4375,0.5833333333333334,0.3333333333333333
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.4375,0.5833333333333334,0.3333333333333333
-Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.4375,0.5833333333333334,0.3333333333333333
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.4375,0.5833333333333334,0.25
+Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/Twitch,0.4375,0.5833333333333334,0.25
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/YouTube,1.0,0.5833333333333334,0.3333333333333333
 Antenna Failure,anomalous/synthetic/Zone_C/YouTube,1.0,0.375,0.625
 Buffer Overflow (Gradual Buildup),anomalous/synthetic/Zone_C/YouTube,1.0,0.5833333333333334,0.3333333333333333

@@ -186,12 +186,30 @@ def evaluate(model, frames, rca, cfg, threshold=None):
     return out
 
 
+def set_encoder_trainable(model, flag: bool) -> int:
+    """Freeze/unfreeze the shared trunk during the head-warmup phase."""
+    n = 0
+    for name in model.ENCODER_MODULES:
+        mod = getattr(model, name, None)
+        if mod is None:
+            continue
+        for p in mod.parameters():
+            p.requires_grad = flag
+            n += p.numel()
+    return n
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--epochs", type=int, default=None)
     ap.add_argument("--patience", type=int, default=None)
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--pretrained", action="store_true",
+                    help="init the trunk from exp_008 self-supervised weights")
+    ap.add_argument("--pretrained-path", type=str, default=None)
+    ap.add_argument("--freeze-epochs", type=int, default=3,
+                    help="head warmup: keep the pretrained trunk frozen this long")
     args = ap.parse_args()
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
@@ -211,13 +229,27 @@ def main() -> None:
     prototypes, _ = load_graphs()
     model.set_prototypes(prototypes.to(cfg["device"]))
 
+    pretrained_used = False
+    if args.pretrained:
+        from src.models.pretrain import pretrained_encoder_path
+
+        p = Path(args.pretrained_path) if args.pretrained_path else pretrained_encoder_path()
+        if not p.exists():
+            raise SystemExit(
+                f"missing {p}\nrun: python -m src.experiments.exp_008_pretrain"
+            )
+        payload = torch.load(p, map_location="cpu")
+        n = model.load_encoder_state(payload["encoder_state"])
+        pretrained_used = True
+        print(f"loaded {n} pretrained trunk tensors from {p}", flush=True)
+
     opt = torch.optim.AdamW(model.parameters(), lr=cfg["lr"], weight_decay=cfg["weight_decay"])
     for split in frames:
         frames[split] = {k: v.to(cfg["device"]) if isinstance(v, torch.Tensor) else v for k, v in frames[split].items()}
     best_pr = -1.0
     best_state = None
     history = []
-    progress_fp = CKPT / f"tagn_seed{args.seed}.progress.pt"
+    progress_fp = CKPT / f"tagn_seed{args.seed}{'_pt' if pretrained_used else ''}.progress.pt"
     start_epoch = 0
     if args.resume and progress_fp.exists():
         progress = torch.load(progress_fp, map_location="cpu")
@@ -234,7 +266,15 @@ def main() -> None:
         start_epoch = progress["next_epoch"]
         print(f"resuming at epoch {start_epoch}", flush=True)
 
+    suffix = "_pt" if pretrained_used else ""
     for ep in range(start_epoch, cfg["epochs"]):
+        if pretrained_used:
+            want_trainable = ep >= args.freeze_epochs
+            if ep == args.freeze_epochs or (ep == start_epoch and not want_trainable):
+                n_par = set_encoder_trainable(model, want_trainable)
+                if ep in (start_epoch, args.freeze_epochs):
+                    print(f"epoch {ep}: trunk {'unfrozen' if want_trainable else 'frozen'} "
+                          f"({n_par:,} params)", flush=True)
         loss = train_one_epoch(model, opt, frames, cfg, rng)
         ev = evaluate(model, frames, rca, cfg)["val"]["anomaly"]
         pr = ev["pr_auc"]
@@ -260,43 +300,47 @@ def main() -> None:
             progress_fp,
         )
 
+    tag = f"tagn_seed{args.seed}{suffix}"
     model.load_state_dict(best_state, strict=False)
     val_threshold = evaluate(model, frames, rca, cfg)["val"]["anomaly"]["threshold"]
     out = evaluate(model, frames, rca, cfg, threshold=val_threshold)
-    torch.save(best_state, CKPT / f"tagn_seed{args.seed}.pt")
+    torch.save(best_state, CKPT / f"{tag}.pt")
     if progress_fp.exists():
         progress_fp.unlink()
 
     res = {"seed": args.seed, "test": out["test"], "val": out["val"],
-           "history": history, "best_val_pr_auc": best_pr}
-    with open(RES / f"exp_002_tagn_seed{args.seed}.json", "w") as fh:
+           "history": history, "best_val_pr_auc": best_pr,
+           "pretrained": pretrained_used, "freeze_epochs": args.freeze_epochs}
+    with open(RES / f"exp_002_tagn_seed{args.seed}{suffix}.json", "w") as fh:
         json.dump(res, fh, indent=2)
 
     # figures
     test_m = out["test"]["anomaly"]
-    pd.DataFrame(history).to_csv(TAB / "exp_002_history.csv", index=False)
+    pd.DataFrame(history).to_csv(TAB / f"exp_002_history{suffix}.csv", index=False)
     fig, ax = plt.subplots()
     ax.plot([h["epoch"] for h in history], [h["val_pr_auc"] for h in history], marker="o")
-    ax.set_xlabel("epoch"); ax.set_ylabel("val PR-AUC"); ax.set_title(f"TAGN training (seed {args.seed})")
-    fig.tight_layout(); fig.savefig(FIG / f"exp_002_train_seed{args.seed}.png", dpi=150); plt.close(fig)
+    ax.set_xlabel("epoch"); ax.set_ylabel("val PR-AUC")
+    ax.set_title(f"TAGN training (seed {args.seed}{', pretrained' if pretrained_used else ''})")
+    fig.tight_layout(); fig.savefig(FIG / f"exp_002_train_seed{args.seed}{suffix}.png", dpi=150); plt.close(fig)
 
+    model_name = "tagn_pretrained" if pretrained_used else "tagn"
     append({
         "experiment": "exp_002",
         "seed": args.seed,
-        "task": "anomaly_detection", "model": "tagn",
+        "task": "anomaly_detection", "model": model_name,
         "metrics": {k: v for k, v in test_m.items() if isinstance(v, (int, float))},
     })
     append({
         "experiment": "exp_002", "seed": args.seed, "task": "type_classification",
-        "model": "tagn", "metrics": out["test"]["type"],
+        "model": model_name, "metrics": out["test"]["type"],
     })
     append({
         "experiment": "exp_002", "seed": args.seed, "task": "root_cause",
-        "model": "tagn", "metrics": out["test"]["rca"],
+        "model": model_name, "metrics": out["test"]["rca"],
     })
     append({
         "experiment": "exp_002", "seed": args.seed, "task": "early_warning",
-        "model": "tagn", "metrics": out["test"].get("early_warning", {"n_chunks": 0}),
+        "model": model_name, "metrics": out["test"].get("early_warning", {"n_chunks": 0}),
     })
     print(json.dumps(out["test"], indent=2))
 

@@ -1,0 +1,18 @@
+# Self-supervised pretraining of the TAGN trunk (exp_008).
+# Uses only the unlabelled training windows; val/test are never touched.
+epochs: 12
+batch_size: 128
+lr: 0.0003
+weight_decay: 0.0001
+grad_clip: 1.0
+mask_ratio: 0.35        # fraction of the 16 KPI channels hidden per window
+noise_std: 0.05         # gaussian jitter on visible channels
+channel_drop: 0.15      # contrastive view: channels dropped entirely
+temperature: 0.2        # NT-Xent temperature
+proj_dim: 128
+patience: 4
+device: auto            # auto | cpu | cuda | mps
+weights:
+  recon: 1.0            # masked-KPI reconstruction
+  forecast: 0.5         # next-step forecasting
+  contrastive: 0.5      # NT-Xent over two augmented views
