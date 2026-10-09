@@ -36,12 +36,17 @@ def test_encode_matches_forward_trunk(tagn):
     assert logits["kpi"].shape == (4, N_NUMERIC)
 
 
+HEAD_PREFIXES = (
+    "summary_proj", "summary_head", "summary_residual", "summary_type_head",
+    "summary_loc", "summary_scale",
+    "anom_head", "type_head", "kpi_head", "ew_head",
+)
+
+
 def test_encoder_state_roundtrip(tagn):
     state = tagn.encoder_state()
     assert len(state) > 0
-    assert not any(
-        k.startswith(("anom_head", "type_head", "kpi_head", "ew_head")) for k in state
-    )
+    assert not any(k.startswith(HEAD_PREFIXES) for k in state)
 
     other = TagnModel(model_config())
     for p in other.parameters():
@@ -50,7 +55,7 @@ def test_encoder_state_roundtrip(tagn):
     assert applied == len(state)
 
     for k, v in tagn.state_dict().items():
-        if k.startswith(("anom_head", "type_head", "kpi_head", "ew_head")):
+        if k.startswith(HEAD_PREFIXES):
             continue
         if k in ("prototypes", "static_adj"):
             continue

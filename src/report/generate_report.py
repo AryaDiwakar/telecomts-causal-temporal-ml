@@ -98,6 +98,20 @@ def main() -> None:
     else:
         lines.append("RESULT_PENDING (exp_002 seeds sweep not finished).\n")
 
+    # exp_009 fixed-weight hybrid
+    lines.append("## exp_009 — TAGN + deterministic logistic hybrid\n")
+    hybrid_fp = RESULTS / "exp_009_hybrid_seed42.json"
+    if hybrid_fp.exists():
+        hd = json.loads(hybrid_fp.read_text())
+        lines.append(f"- Fixed TAGN logit weight: **{fmt(hd.get('tagn_weight'))}**\n")
+        lines.append("|expert|ROC-AUC|PR-AUC|TPR@FPR0.01|\n|---|---|---|---|")
+        for name, metrics in hd.get("test", {}).items():
+            lines.append(f"|{name}|{fmt(metrics.get('roc_auc'))}|{fmt(metrics.get('pr_auc'))}|"
+                         f"{fmt(metrics.get('tpr_at_fpr_0.01'))}|")
+        lines.append("")
+    else:
+        lines.append("RESULT_PENDING (exp_009 hybrid not run).\n")
+
     # exp_003 ablations
     lines.append("## exp_003 — Ablations\n")
     abl = sorted(glob.glob(str(RESULTS / "exp_003_ablation_*.json")))

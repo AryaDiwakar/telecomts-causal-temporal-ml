@@ -42,8 +42,11 @@ def extract_features(X: np.ndarray, n_numeric: int = 16) -> np.ndarray:
         st = np.full(N, T * (T - 1) / 2.0)
         stt = np.full(N, np.sum(t * t))
         stx = col @ t
-        denom = N * stt - st * st
-        feats[:, base + 7] = (N * stx - st * sx) / denom
+        # The regression design has T observations per chunk. Using N here
+        # (the number of chunks) silently produced incorrect slopes whenever
+        # the batch size differed from the window length.
+        denom = T * stt - st * st
+        feats[:, base + 7] = (T * stx - st * sx) / denom
         feats[:, base + 8] = np.sum(col ** 2, axis=1)
         feats[:, base + 9] = np.mean(col == 0, axis=1)
         feats[:, base + 10] = q[1] - q[0]

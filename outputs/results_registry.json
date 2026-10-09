@@ -541,5 +541,238 @@
       "rca_type_template_jaccard": 0.7079050852825872,
       "rca_topk_shift_jaccard": 0.7323957582677882
     }
+  },
+  {
+    "experiment": "exp_001",
+    "seed": 42,
+    "task": "anomaly_detection",
+    "model": "unsup_isolation_forest",
+    "metrics": {
+      "n": 4768,
+      "n_positives": 223,
+      "roc_auc": 0.23594942453886647,
+      "pr_auc": 0.02806668572438961,
+      "f1_max": 0.08939667267989578,
+      "precision": 0.04678976080570709,
+      "recall": 1.0,
+      "threshold": -0.6268313560842496,
+      "tpr_at_fpr_0.01": 0.0,
+      "tpr_at_fpr_0.05": 0.0,
+      "threshold_val_tuned": -0.4272864964977957
+    }
+  },
+  {
+    "experiment": "exp_001",
+    "seed": 42,
+    "task": "anomaly_detection",
+    "model": "unsup_one_class_svm",
+    "metrics": {
+      "n": 4768,
+      "n_positives": 223,
+      "roc_auc": 0.1959172598874237,
+      "pr_auc": 0.029383781351264876,
+      "f1_max": 0.08936084952915248,
+      "precision": 0.04677013422818792,
+      "recall": 1.0,
+      "threshold": 132.14987813422542,
+      "tpr_at_fpr_0.01": 0.008968609865470852,
+      "tpr_at_fpr_0.05": 0.04484304932735426,
+      "threshold_val_tuned": 295.58297931235865
+    }
+  },
+  {
+    "experiment": "exp_001",
+    "seed": 42,
+    "task": "anomaly_detection",
+    "model": "unsup_lof",
+    "metrics": {
+      "n": 4768,
+      "n_positives": 223,
+      "roc_auc": 0.04907378630239706,
+      "pr_auc": 0.024094358363354385,
+      "f1_max": 0.08936084952915248,
+      "precision": 0.04677013422818792,
+      "recall": 1.0,
+      "threshold": -40.57149587950599,
+      "tpr_at_fpr_0.01": 0.0,
+      "tpr_at_fpr_0.05": 0.0,
+      "threshold_val_tuned": -10.135723915255324
+    }
+  },
+  {
+    "experiment": "exp_001",
+    "seed": 42,
+    "task": "anomaly_detection",
+    "model": "sup_xgb",
+    "metrics": {
+      "n": 4768,
+      "n_positives": 223,
+      "roc_auc": 0.9335217826715407,
+      "pr_auc": 0.6780042194102675,
+      "f1_max": 0.650887573964497,
+      "precision": 0.9565217391304348,
+      "recall": 0.49327354260089684,
+      "threshold": 0.5237549543380737,
+      "tpr_at_fpr_0.01": 0.5291479820627802,
+      "tpr_at_fpr_0.05": 0.695067264573991,
+      "threshold_val_tuned": 0.0307963564991951
+    }
+  },
+  {
+    "experiment": "exp_001",
+    "seed": 42,
+    "task": "anomaly_detection",
+    "model": "sup_logreg",
+    "metrics": {
+      "n": 4768,
+      "n_positives": 223,
+      "roc_auc": 0.9879895612879673,
+      "pr_auc": 0.9523097261787081,
+      "f1_max": 0.9045454545454545,
+      "precision": 0.9170506912442397,
+      "recall": 0.8923766816143498,
+      "threshold": 0.8374262870919265,
+      "tpr_at_fpr_0.01": 0.9147982062780269,
+      "tpr_at_fpr_0.05": 0.9730941704035875,
+      "threshold_val_tuned": 0.848686082549335
+    }
+  },
+  {
+    "experiment": "exp_001",
+    "seed": 42,
+    "task": "type_classification",
+    "model": "xgb",
+    "metrics": {
+      "type_accuracy": 0.4125560538116592,
+      "type_macro_f1_seen": 0.34694975571668374,
+      "type_micro_f1": 0.4125560538116592,
+      "type_macro_recall_over_seen": 0.4216330858960763,
+      "test_types_present": 10,
+      "test_types_total": 11
+    }
+  },
+  {
+    "experiment": "exp_001",
+    "seed": 42,
+    "task": "root_cause_baselines",
+    "model": "rca",
+    "metrics": {
+      "type_prior_ml": {
+        "jaccard_mean": 0.756894880157212,
+        "micro_f1": 0.8423505047890241
+      },
+      "recording_prior": {
+        "jaccard_mean": 0.817544936379017,
+        "micro_f1": 0.8399666017255775
+      },
+      "input_shift_topK": {
+        "jaccard_mean": 0.36182331619551356,
+        "micro_f1": 0.552247191011236
+      }
+    }
+  },
+  {
+    "experiment": "exp_002",
+    "seed": 42,
+    "task": "anomaly_detection",
+    "model": "tagn",
+    "metrics": {
+      "n": 4768,
+      "n_positives": 223,
+      "roc_auc": 0.9910728292560198,
+      "pr_auc": 0.9662273665663562,
+      "f1_max": 0.8646464646464647,
+      "precision": 0.7867647058823529,
+      "recall": 0.9596412556053812,
+      "threshold": -0.9928131103515625,
+      "tpr_at_fpr_0.01": 0.9596412556053812,
+      "tpr_at_fpr_0.05": 0.9730941704035875,
+      "threshold_val_tuned": -0.9928131103515625
+    }
+  },
+  {
+    "experiment": "exp_002",
+    "seed": 42,
+    "task": "type_classification",
+    "model": "tagn",
+    "metrics": {
+      "accuracy": 0.242152466367713,
+      "macro_f1_seen": 0.24043968872160845,
+      "micro_f1": 0.242152466367713
+    }
+  },
+  {
+    "experiment": "exp_002",
+    "seed": 42,
+    "task": "root_cause",
+    "model": "tagn",
+    "metrics": {
+      "type_template_jaccard": 0.6569001066198376,
+      "topk_shift_jaccard": 0.6656330092428747
+    }
+  },
+  {
+    "experiment": "exp_002",
+    "seed": 42,
+    "task": "early_warning",
+    "model": "tagn",
+    "metrics": {
+      "n_chunks": 60,
+      "median_lag_steps": -63.0,
+      "mean_abs_lead_err_steps": 63.65,
+      "warning_before_onset_frac": 1.0
+    }
+  },
+  {
+    "experiment": "exp_002",
+    "seed": 42,
+    "task": "anomaly_detection",
+    "model": "tagn",
+    "metrics": {
+      "n": 4768,
+      "n_positives": 223,
+      "roc_auc": 0.9920535551312979,
+      "pr_auc": 0.9729842348082339,
+      "f1_max": 0.9145299145299145,
+      "precision": 0.8734693877551021,
+      "recall": 0.9596412556053812,
+      "threshold": -0.13179969787597656,
+      "tpr_at_fpr_0.01": 0.968609865470852,
+      "tpr_at_fpr_0.05": 0.9820627802690582,
+      "threshold_val_tuned": -0.13179969787597656
+    }
+  },
+  {
+    "experiment": "exp_002",
+    "seed": 42,
+    "task": "type_classification",
+    "model": "tagn",
+    "metrics": {
+      "accuracy": 0.4170403587443946,
+      "macro_f1_seen": 0.30958995995092253,
+      "micro_f1": 0.4170403587443946
+    }
+  },
+  {
+    "experiment": "exp_002",
+    "seed": 42,
+    "task": "root_cause",
+    "model": "tagn",
+    "metrics": {
+      "type_template_jaccard": 0.7404972829860723,
+      "topk_shift_jaccard": 0.28726027335892806
+    }
+  },
+  {
+    "experiment": "exp_002",
+    "seed": 42,
+    "task": "early_warning",
+    "model": "tagn",
+    "metrics": {
+      "n_chunks": 60,
+      "median_lag_steps": -11.0,
+      "mean_abs_lead_err_steps": 42.75,
+      "warning_before_onset_frac": 0.55
+    }
   }
 ]

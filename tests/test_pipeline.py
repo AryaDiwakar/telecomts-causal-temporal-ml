@@ -116,6 +116,20 @@ def test_metrics_accept_validation_threshold():
     assert res["recall"] == 0.5
 
 
+def test_masked_hazard_loss_excludes_invalid_steps():
+    sys_path_insert()
+    import torch
+    from src.experiments.common import masked_bce_with_logits
+
+    logits = torch.zeros(1, 2, requires_grad=True)
+    target = torch.tensor([[0.0, 1.0]])
+    mask = torch.tensor([[1.0, 0.0]])
+    expected = torch.nn.functional.binary_cross_entropy_with_logits(
+        logits[:, :1], target[:, :1]
+    )
+    assert torch.allclose(masked_bce_with_logits(logits, target, mask), expected)
+
+
 def sys_path_insert():
     import sys
 

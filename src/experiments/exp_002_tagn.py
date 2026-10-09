@@ -33,6 +33,14 @@ import torch.nn as nn
 import yaml
 
 from src.evaluation.metrics import summarize  # noqa: E402
+from src.experiments.common import (  # noqa: E402
+    build_optimizer,
+    fit_summary_head,
+    fit_summary_residual,
+    masked_bce_with_logits,
+    negative_pos_weight,
+    schedule_lr,
+)
 from src.models.tagn import TagnModel, load_graphs, model_config  # noqa: E402
 from src.utils.registry import append  # noqa: E402
 
@@ -76,7 +84,7 @@ def epoch_data(frames, name: str, ratio: float, rng):
     X, ano = f["X"], f["ano"]
     pos = (ano == 1).nonzero(as_tuple=True)[0]
     neg = (ano == 0).nonzero(as_tuple=True)[0]
-    if name == "train":
+    if name == "train" and ratio and ratio > 0:
         k = int(ratio * len(pos))
         neg = neg[rng.choice(len(neg), k, replace=False)] if k < len(neg) else neg
     order = torch.cat([pos, neg])[rng.permutation(len(pos) + len(neg))]
@@ -87,8 +95,25 @@ def epoch_data(frames, name: str, ratio: float, rng):
 def train_one_epoch(model, opt, frames, cfg, rng):
     model.train()
     w = cfg["loss_weights"]
+    ratio = cfg.get("normal_to_anomalous_ratio", 4.0)
+    # undersampled batches are already rebalanced; the full split needs
+    # pos_weight so the anomaly head is not swamped by normal chunks.
+    if ratio and ratio > 0:
+        anom_bce = nn.BCEWithLogitsLoss(reduction="mean")
+    else:
+        anom_bce = nn.BCEWithLogitsLoss(
+            reduction="mean",
+            pos_weight=torch.tensor(
+                negative_pos_weight(frames), device=frames["train"]["ano"].device,
+                dtype=torch.float32,
+            ),
+        )
+    type_target = frames["train"]["typ"]
     bce = nn.BCEWithLogitsLoss(reduction="mean")
-    cce = nn.CrossEntropyLoss()
+    counts = torch.bincount(type_target[type_target >= 0], minlength=model.type_head.out_features).float()
+    type_weights = counts.clamp_min(1.0).rsqrt()
+    type_weights = type_weights / type_weights.mean()
+    cce = nn.CrossEntropyLoss(weight=type_weights.to(type_target.device), label_smoothing=0.02)
     batch = epoch_data(frames, "train", cfg.get("normal_to_anomalous_ratio", 4.0), rng)
     Xb, ano = batch["X"], batch["ano"]
     B = cfg.get("train_batch", 64)
@@ -97,7 +122,7 @@ def train_one_epoch(model, opt, frames, cfg, rng):
     for i in range(0, len(Xb), B):
         sl = slice(i, i + B)
         logits, _, _ = model(Xb[sl], batch["proto"][sl])
-        loss = w["anomaly"] * bce(logits["anomaly"], ano[sl].float())
+        loss = w["anomaly"] * anom_bce(logits["anomaly"], ano[sl].float())
         anom_b = ano[sl] == 1
         if anom_b.any():
             loss = loss + w["type"] * cce(logits["type"][anom_b], batch["typ"][sl][anom_b])
@@ -105,8 +130,9 @@ def train_one_epoch(model, opt, frames, cfg, rng):
             loss = loss + w["root_cause"] * bce(logits["kpi"][anom_b], aff)
         mask = batch["ewm"][sl]
         if mask.sum() > 0:
-            ew = bce(logits["hazard"], batch["ewy"][sl]) * mask
-            loss = loss + w["early_warning"] * (ew.sum() / mask.sum())
+            loss = loss + w["early_warning"] * masked_bce_with_logits(
+                logits["hazard"], batch["ewy"][sl], mask
+            )
         opt.zero_grad()
         loss.backward()
         nn.utils.clip_grad_norm_(model.parameters(), cfg["grad_clip"])
@@ -210,6 +236,21 @@ def main() -> None:
     ap.add_argument("--pretrained-path", type=str, default=None)
     ap.add_argument("--freeze-epochs", type=int, default=3,
                     help="head warmup: keep the pretrained trunk frozen this long")
+    ap.add_argument("--ratio", type=float, default=4.0,
+                    help="normal:anomalous undersampling; 0 = train on the full split")
+    ap.add_argument("--lr", type=float, default=None, help="override base learning rate")
+    ap.add_argument("--summary-epochs", type=int, default=200,
+                    help="stage A: epochs to fit the linear summary readout alone")
+    ap.add_argument("--summary-lr", type=float, default=1e-2,
+                    help="stage A: learning rate for the linear summary readout")
+    ap.add_argument("--skip-stage-a", action="store_true",
+                    help="skip the linear-readout warmup (reproduces the old behaviour)")
+    ap.add_argument("--summary-residual-epochs", type=int, default=40,
+                    help="epochs for the fast nonlinear summary residual")
+    ap.add_argument("--anchor-only", action="store_true",
+                    help="fit and benchmark the anomaly anchor without the slow GAT loop")
+    ap.add_argument("--trunk-anomaly-weight", type=float, default=0.0,
+                    help="validation-gated weight for the graph anomaly residual; 0 keeps the anchor fixed")
     args = ap.parse_args()
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
@@ -220,7 +261,10 @@ def main() -> None:
         cfg["epochs"] = args.epochs
     if args.patience:
         cfg["patience"] = args.patience
-    cfg["normal_to_anomalous_ratio"] = 4.0
+    if args.lr:
+        cfg["lr"] = args.lr
+    cfg["normal_to_anomalous_ratio"] = args.ratio
+    cfg["anomaly_trunk_weight"] = args.trunk_anomaly_weight
     cfg["train_batch"] = 64
     frames, meta, rca = load_splits(cfg)
 
@@ -228,6 +272,10 @@ def main() -> None:
     model.to(cfg["device"])
     prototypes, _ = load_graphs()
     model.set_prototypes(prototypes.to(cfg["device"]))
+    # fit the summary normalization on the train split before any training
+    model.calibrate_summary(frames["train"]["X"])
+    model._summary_calibrated = True
+    print(f"summary calibrated: {model.summary_scale.shape[0]} dims", flush=True)
 
     pretrained_used = False
     if args.pretrained:
@@ -243,12 +291,62 @@ def main() -> None:
         pretrained_used = True
         print(f"loaded {n} pretrained trunk tensors from {p}", flush=True)
 
-    opt = torch.optim.AdamW(model.parameters(), lr=cfg["lr"], weight_decay=cfg["weight_decay"])
+    opt = build_optimizer(model, cfg)
     for split in frames:
         frames[split] = {k: v.to(cfg["device"]) if isinstance(v, torch.Tensor) else v for k, v in frames[split].items()}
+
+    stage_a = None
+    if not args.skip_stage_a:
+        # Stage A: fit the linear summary readout on cached statistics.
+        # Reaches the classical baseline in seconds; stage B then learns a
+        # residual on top of it with the trunk.
+        print(f"stage A: {args.summary_epochs} epochs on the linear summary readout",
+              flush=True)
+        stage_a = fit_summary_head(model, frames, cfg, rng,
+                                   epochs=args.summary_epochs, lr=args.summary_lr)
+        residual = fit_summary_residual(
+            model, frames, cfg, rng, epochs=args.summary_residual_epochs
+        )
+        # The summary readout is the validated anomaly anchor. Keeping it
+        # fixed makes the trunk a residual learner instead of allowing the
+        # multi-task objective to destroy the strongest detector.
+        for parameter in model.summary_head.parameters():
+            parameter.requires_grad = False
+
     best_pr = -1.0
     best_state = None
     history = []
+    if stage_a is not None:
+        # Anchor the checkpoint at the stage-A solution. Stage B may only
+        # replace it if the full model beats the readout on val.
+        from sklearn.metrics import average_precision_score
+        from src.models.tagn import chunk_summary
+        with torch.no_grad():
+            val_stats = (chunk_summary(frames["val"]["X"]) - model.summary_loc) / model.summary_scale
+            val_logits = model.summary_head(val_stats).squeeze(-1) + model.summary_residual(val_stats).squeeze(-1)
+        val_pr = float(average_precision_score(frames["val"]["ano"].cpu().numpy(), val_logits.cpu().numpy()))
+        best_pr = val_pr
+        best_state = {k: v.detach().cpu().clone().contiguous() for k, v in model.state_dict().items()}
+        print(f"stage A anchored: val PR-AUC {best_pr:.4f}", flush=True)
+        if args.anchor_only:
+            with torch.no_grad():
+                test_stats = (chunk_summary(frames["test"]["X"]) - model.summary_loc) / model.summary_scale
+                test_logits = model.summary_head(test_stats).squeeze(-1) + model.summary_residual(test_stats).squeeze(-1)
+            test_anomaly = summarize(
+                frames["test"]["ano"].cpu().numpy(), test_logits.cpu().numpy()
+            )
+            out = {
+                "seed": args.seed,
+                "model": "tagn_summary_anchor_residual",
+                "val": {"anomaly": {"pr_auc": best_pr}},
+                "test": {"anomaly": test_anomaly},
+                "stage_a": stage_a,
+                "summary_residual": residual,
+            }
+            with open(RES / f"exp_002_tagn_seed{args.seed}_anchor.json", "w") as fh:
+                json.dump(out, fh, indent=2)
+            print(json.dumps(out["test"], indent=2))
+            return
     progress_fp = CKPT / f"tagn_seed{args.seed}{'_pt' if pretrained_used else ''}.progress.pt"
     start_epoch = 0
     if args.resume and progress_fp.exists():
@@ -275,10 +373,12 @@ def main() -> None:
                 if ep in (start_epoch, args.freeze_epochs):
                     print(f"epoch {ep}: trunk {'unfrozen' if want_trainable else 'frozen'} "
                           f"({n_par:,} params)", flush=True)
+        schedule_lr(opt, ep, cfg)
         loss = train_one_epoch(model, opt, frames, cfg, rng)
         ev = evaluate(model, frames, rca, cfg)["val"]["anomaly"]
         pr = ev["pr_auc"]
-        history.append({"epoch": ep, "loss": loss, "val_pr_auc": pr, "val_roc_auc": ev["roc_auc"]})
+        history.append({"epoch": ep, "loss": loss, "val_pr_auc": pr, "val_roc_auc": ev["roc_auc"],
+                        "lr": opt.param_groups[0]["lr"]})
         print(f"ep {ep:02d} loss {loss:7.3f} val PR-AUC {pr:.4f} ROC {ev['roc_auc']:.4f}")
         if pr > best_pr:
             best_pr = pr
@@ -310,7 +410,8 @@ def main() -> None:
 
     res = {"seed": args.seed, "test": out["test"], "val": out["val"],
            "history": history, "best_val_pr_auc": best_pr,
-           "pretrained": pretrained_used, "freeze_epochs": args.freeze_epochs}
+           "pretrained": pretrained_used, "freeze_epochs": args.freeze_epochs,
+           "summary_residual": residual if stage_a is not None else None}
     with open(RES / f"exp_002_tagn_seed{args.seed}{suffix}.json", "w") as fh:
         json.dump(res, fh, indent=2)
 

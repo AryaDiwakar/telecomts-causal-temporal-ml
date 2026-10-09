@@ -43,13 +43,17 @@ This file records the *mechanism* of every model and every experiment, so the
 5. `fuse`: concatenation of temporal context + mean node embedding -> Linear ->
    GRU -> causal step states.
 6. Heads:
-   - anomaly: attention-pooled context -> Logistic (BCE).
-   - type: same context -> 11-way softmax (CE, anomalous chunks only).
+   - anomaly: a validated linear summary anchor plus a compact nonlinear
+     residual over train-only chunk summaries, with the temporal/graph trunk
+     added as a residual path -> Logistic (BCE).
+   - type: same hybrid context -> 11-way softmax (class-weighted CE,
+     anomalous chunks only).
    - kpi (input-driven RCA): time-mean node states -> one logit per KPI
      (multi-label BCE vs template, anomalous only).
    - hazard (early warning): per-step logistic on causal step states (masked
      BCE pre-onset-only).
-7. Joint loss with weights 1.0 / 1.0 / 1.0 / 0.5; AdamW; grad clip 1.0;
+7. Joint loss with weights 1.0 / 1.0 / 1.0 / 0.5; square-root inverse-frequency
+   type weights; AdamW; grad clip 1.0;
    early stop on validation PR-AUC; train undersamples normals to 4:1 per
    epoch.
 
