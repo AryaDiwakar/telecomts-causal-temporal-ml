@@ -24,13 +24,13 @@ setups; but residual scenario-shift remains a dataset-level threat.
 
 ## 3. Evaluation-domain realism
 - Total test set = 223 anomalous chunks concentrated in a handful of bursts;
-  per-type test counts are small (4-92). Macro metrics over types are noisy.
+  per-type test counts are small (8-92). Macro metrics over types are noisy.
 - Many anomalous windows overlap within bursts, making windows highly
   dependent; we aggregate at recording level and report burst-aware numbers,
   but chunk-level i.i.d. assumptions still break formal CIs.
 
 ## 4. Model & compute constraints
-- The proposed model is a compact CPU-trained network (about 456k params, causal
+- The proposed model is a compact CPU-trained network (about 485k params, causal
   conv + GAT + GRU), not a large pretrained representation; results reflect
   its capacity. No hyperparameter search beyond the config defaults.
 - Reported inference/lead-time numbers come from one checkpoint per seed and

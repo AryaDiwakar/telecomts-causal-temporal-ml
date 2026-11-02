@@ -40,6 +40,7 @@ HEAD_PREFIXES = (
     "summary_proj", "summary_head", "summary_residual", "summary_type_head",
     "summary_loc", "summary_scale",
     "anom_head", "type_head", "kpi_head", "ew_head",
+    "rca_adv", "ident_head",
 )
 
 

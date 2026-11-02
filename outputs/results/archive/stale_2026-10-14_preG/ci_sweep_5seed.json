@@ -1,0 +1,226 @@
+{
+  "seeds": [
+    42,
+    123,
+    456,
+    789,
+    1337
+  ],
+  "per_seed": [
+    {
+      "seed": 42,
+      "elapsed_s": 749.1,
+      "tagn_test": {
+        "f1_max": 0.8372093023255814,
+        "pr_auc": 0.9707801174915079,
+        "roc_auc": 0.9904630821826578,
+        "threshold_val_tuned": -0.7166694402694702
+      },
+      "hybrid_test": {
+        "f1_max": 0.954337899543379,
+        "pr_auc": 0.9694129317172251,
+        "roc_auc": 0.9877290868100262
+      }
+    },
+    {
+      "seed": 123,
+      "elapsed_s": 755.0,
+      "tagn_test": {
+        "f1_max": 0.8824742268041237,
+        "pr_auc": 0.9690121907240379,
+        "roc_auc": 0.9915947648576517,
+        "threshold_val_tuned": -0.3728809356689453
+      },
+      "hybrid_test": {
+        "f1_max": 0.9521640091116174,
+        "pr_auc": 0.9707740743971991,
+        "roc_auc": 0.9885430695535922
+      }
+    },
+    {
+      "seed": 456,
+      "elapsed_s": 839.3,
+      "tagn_test": {
+        "f1_max": 0.8739837398373984,
+        "pr_auc": 0.9655306171190353,
+        "roc_auc": 0.9924511733684579,
+        "threshold_val_tuned": -0.3398303985595703
+      },
+      "hybrid_test": {
+        "f1_max": 0.95,
+        "pr_auc": 0.9689963418109051,
+        "roc_auc": 0.9902608198039535
+      }
+    },
+    {
+      "seed": 789,
+      "elapsed_s": 756.6,
+      "tagn_test": {
+        "f1_max": 0.895397489539749,
+        "pr_auc": 0.9720764897253716,
+        "roc_auc": 0.9911132817317607,
+        "threshold_val_tuned": -0.5031888484954834
+      },
+      "hybrid_test": {
+        "f1_max": 0.954337899543379,
+        "pr_auc": 0.9712712903192019,
+        "roc_auc": 0.9883121944481444
+      }
+    },
+    {
+      "seed": 1337,
+      "elapsed_s": 756.9,
+      "tagn_test": {
+        "f1_max": 0.9102564102564102,
+        "pr_auc": 0.9720516963398839,
+        "roc_auc": 0.9910669093815211,
+        "threshold_val_tuned": -0.37192654609680176
+      },
+      "hybrid_test": {
+        "f1_max": 0.9521640091116174,
+        "pr_auc": 0.9700418326250781,
+        "roc_auc": 0.987991534579467
+      }
+    }
+  ],
+  "aggregate": {
+    "tagn_f1_max": {
+      "mean": 0.8799,
+      "std": 0.0275,
+      "min": 0.8372,
+      "max": 0.9103,
+      "ci90_low": 0.8596,
+      "ci90_high": 0.9001,
+      "n": 5
+    },
+    "tagn_pr_auc": {
+      "mean": 0.9699,
+      "std": 0.0027,
+      "min": 0.9655,
+      "max": 0.9721,
+      "ci90_low": 0.9679,
+      "ci90_high": 0.9719,
+      "n": 5
+    },
+    "tagn_roc_auc": {
+      "mean": 0.9913,
+      "std": 0.0007,
+      "min": 0.9905,
+      "max": 0.9925,
+      "ci90_low": 0.9908,
+      "ci90_high": 0.9919,
+      "n": 5
+    },
+    "hybrid_f1_max": {
+      "mean": 0.9526,
+      "std": 0.0018,
+      "min": 0.95,
+      "max": 0.9543,
+      "ci90_low": 0.9513,
+      "ci90_high": 0.9539,
+      "n": 5
+    },
+    "hybrid_pr_auc": {
+      "mean": 0.9701,
+      "std": 0.0009,
+      "min": 0.969,
+      "max": 0.9713,
+      "ci90_low": 0.9694,
+      "ci90_high": 0.9708,
+      "n": 5
+    },
+    "hybrid_roc_auc": {
+      "mean": 0.9886,
+      "std": 0.001,
+      "min": 0.9877,
+      "max": 0.9903,
+      "ci90_low": 0.9878,
+      "ci90_high": 0.9893,
+      "n": 5
+    }
+  },
+  "threshold_free": {
+    "tagn_f1_max": {
+      "mean": 0.9484,
+      "std": 0.0036,
+      "min": 0.9436,
+      "max": 0.9519,
+      "ci90_low": 0.9458,
+      "ci90_high": 0.951,
+      "n": 5
+    },
+    "tagn_pr_auc": {
+      "mean": 0.9699,
+      "std": 0.0027,
+      "min": 0.9655,
+      "max": 0.9721,
+      "ci90_low": 0.9679,
+      "ci90_high": 0.9719,
+      "n": 5
+    },
+    "tagn_roc_auc": {
+      "mean": 0.9913,
+      "std": 0.0007,
+      "min": 0.9905,
+      "max": 0.9925,
+      "ci90_low": 0.9908,
+      "ci90_high": 0.9919,
+      "n": 5
+    },
+    "reference_logreg_f1_max": {
+      "mean": 0.9388,
+      "std": 0.0,
+      "min": 0.9388,
+      "max": 0.9388,
+      "ci90_low": 0.9388,
+      "ci90_high": 0.9388,
+      "n": 5
+    },
+    "reference_logreg_pr_auc": {
+      "mean": 0.9624,
+      "std": 0.0,
+      "min": 0.9624,
+      "max": 0.9624,
+      "ci90_low": 0.9624,
+      "ci90_high": 0.9624,
+      "n": 5
+    },
+    "reference_logreg_roc_auc": {
+      "mean": 0.9841,
+      "std": 0.0,
+      "min": 0.9841,
+      "max": 0.9841,
+      "ci90_low": 0.9841,
+      "ci90_high": 0.9841,
+      "n": 5
+    },
+    "hybrid_f1_max": {
+      "mean": 0.9526,
+      "std": 0.0018,
+      "min": 0.95,
+      "max": 0.9543,
+      "ci90_low": 0.9513,
+      "ci90_high": 0.9539,
+      "n": 5
+    },
+    "hybrid_pr_auc": {
+      "mean": 0.9701,
+      "std": 0.0009,
+      "min": 0.969,
+      "max": 0.9713,
+      "ci90_low": 0.9694,
+      "ci90_high": 0.9708,
+      "n": 5
+    },
+    "hybrid_roc_auc": {
+      "mean": 0.9886,
+      "std": 0.001,
+      "min": 0.9877,
+      "max": 0.9903,
+      "ci90_low": 0.9878,
+      "ci90_high": 0.9893,
+      "n": 5
+    }
+  },
+  "convention_note": "aggregate.* f1_max = exp_002 F1 at val-tuned threshold; threshold_free.* f1_max = max-F1 over thresholds (exp_009 summarize); hybrid present in both is threshold-free"
+}

@@ -1,0 +1,740 @@
+{
+  "seed": 42,
+  "n": 5689,
+  "n_pos": 424,
+  "overall": {
+    "TAGN": {
+      "pr": 0.7533677930898505,
+      "roc": 0.950508430539877
+    },
+    "TCN": {
+      "pr": 0.8056592664536969,
+      "roc": 0.9347529072371841
+    },
+    "GRU": {
+      "pr": 0.7931082181782624,
+      "roc": 0.9447839954129261
+    },
+    "logreg": {
+      "pr": 0.819613249966855,
+      "roc": 0.9309116809116808
+    },
+    "xgb": {
+      "pr": 0.7427484767836048,
+      "roc": 0.8956017398627462
+    },
+    "lof": {
+      "pr": 0.5775575362625054,
+      "roc": 0.9306706803562149
+    },
+    "ocsvm": {
+      "pr": 0.5277659699170391,
+      "roc": 0.8775896360802022
+    },
+    "iforest": {
+      "pr": 0.1922624149434867,
+      "roc": 0.7955692630220932
+    }
+  },
+  "family": {
+    "TAGN": {
+      "template_pr": 0.5560284932232801,
+      "template_roc": 0.9535659380203475,
+      "template_n": 223,
+      "instvar_pr": 0.7907535226997316,
+      "instvar_roc": 0.947116270499355,
+      "instvar_n": 201
+    },
+    "TCN": {
+      "template_pr": 0.5786135284645655,
+      "template_roc": 0.9003513344320521,
+      "template_n": 223,
+      "instvar_pr": 0.9039196052933951,
+      "instvar_roc": 0.9729198263194946,
+      "instvar_n": 201
+    },
+    "GRU": {
+      "template_pr": 0.6410520707245746,
+      "template_roc": 0.9534586213211027,
+      "template_n": 223,
+      "instvar_pr": 0.7915080891489132,
+      "instvar_roc": 0.9351599079625614,
+      "instvar_n": 201
+    },
+    "logreg": {
+      "template_pr": 0.7108836770035011,
+      "template_roc": 0.9607748947061353,
+      "template_n": 223,
+      "instvar_pr": 0.8147325970250476,
+      "instvar_roc": 0.8977798566521616,
+      "instvar_n": 201
+    },
+    "xgb": {
+      "template_pr": 0.6048420085807573,
+      "template_roc": 0.8393324219931096,
+      "template_n": 223,
+      "instvar_pr": 0.8107426465724101,
+      "instvar_roc": 0.9580298885439846,
+      "instvar_n": 201
+    },
+    "lof": {
+      "template_pr": 0.4221591141417979,
+      "template_roc": 0.9174274654095282,
+      "template_n": 223,
+      "instvar_pr": 0.4453397904356805,
+      "instvar_roc": 0.9453634014164694,
+      "instvar_n": 201
+    },
+    "ocsvm": {
+      "template_pr": 0.2852053167140026,
+      "template_roc": 0.8384866641966793,
+      "template_n": 223,
+      "instvar_pr": 0.5066068444507966,
+      "instvar_roc": 0.9209725352345586,
+      "instvar_n": 201
+    },
+    "iforest": {
+      "template_pr": 0.0760104064733915,
+      "template_roc": 0.711411768212964,
+      "template_n": 223,
+      "instvar_pr": 0.15229773897256052,
+      "instvar_roc": 0.8889380259197839,
+      "instvar_n": 201
+    }
+  },
+  "session": {
+    "TAGN": {
+      "unseen_pr": 0.6995212717802018,
+      "unseen_roc": 0.8574588289870441,
+      "unseen_pos": 293,
+      "seen_pr": 0.9361519722239036,
+      "seen_roc": 0.9824838622278557,
+      "seen_pos": 131
+    },
+    "TCN": {
+      "unseen_pr": 0.8063529760219581,
+      "unseen_roc": 0.9215900681489336,
+      "unseen_pos": 293,
+      "seen_pr": 0.7805335816827846,
+      "seen_roc": 0.8720440925428051,
+      "seen_pos": 131
+    },
+    "GRU": {
+      "unseen_pr": 0.7484538578322248,
+      "unseen_roc": 0.9003722235108298,
+      "unseen_pos": 293,
+      "seen_pr": 0.8805425119509587,
+      "seen_roc": 0.9557672523062758,
+      "seen_pos": 131
+    },
+    "logreg": {
+      "unseen_pr": 0.7674675622598506,
+      "unseen_roc": 0.8833267062085114,
+      "unseen_pos": 293,
+      "seen_pr": 0.9371637568215866,
+      "seen_roc": 0.9804717326103309,
+      "seen_pos": 131
+    },
+    "xgb": {
+      "unseen_pr": 0.6895379918747201,
+      "unseen_roc": 0.7560707224670578,
+      "unseen_pos": 293,
+      "seen_pr": 0.9521348877594429,
+      "seen_roc": 0.9914835003476702,
+      "seen_pos": 131
+    },
+    "lof": {
+      "unseen_pr": 0.5436161311078842,
+      "unseen_roc": 0.8357549951953346,
+      "unseen_pos": 293,
+      "seen_pr": 0.6259249166092931,
+      "seen_roc": 0.9413375167440635,
+      "seen_pos": 131
+    },
+    "ocsvm": {
+      "unseen_pr": 0.5078314665378347,
+      "unseen_roc": 0.8452400675966731,
+      "unseen_pos": 293,
+      "seen_pr": 0.586247992549358,
+      "seen_roc": 0.7856532505745558,
+      "seen_pos": 131
+    },
+    "iforest": {
+      "unseen_pr": 0.18511188480742582,
+      "unseen_roc": 0.4831671029523841,
+      "unseen_pos": 293,
+      "seen_pr": 0.32159818174054333,
+      "seen_roc": 0.904774355389078,
+      "seen_pos": 131
+    }
+  },
+  "normal_z": {
+    "TAGN": {
+      "seen_normal_z": -0.2620075416992269,
+      "unseen_normal_z": 0.0727779027338094,
+      "delta": 0.3347854444330363
+    },
+    "TCN": {
+      "seen_normal_z": -0.21009203522379696,
+      "unseen_normal_z": -0.07172297631096056,
+      "delta": 0.1383690589128364
+    },
+    "GRU": {
+      "seen_normal_z": -0.24652237649843026,
+      "unseen_normal_z": 0.0038563059287027926,
+      "delta": 0.25037868242713307
+    },
+    "logreg": {
+      "seen_normal_z": -0.33536050412237156,
+      "unseen_normal_z": 0.2802901795277338,
+      "delta": 0.6156506836501053
+    },
+    "xgb": {
+      "seen_normal_z": -0.22098633668276138,
+      "unseen_normal_z": -0.19399796334334293,
+      "delta": 0.026988373339418448
+    },
+    "lof": {
+      "seen_normal_z": -0.2879039771747622,
+      "unseen_normal_z": 0.30790823497882286,
+      "delta": 0.595812212153585
+    },
+    "ocsvm": {
+      "seen_normal_z": -0.07330036513587149,
+      "unseen_normal_z": 0.015001217801758334,
+      "delta": 0.08830158293762982
+    },
+    "iforest": {
+      "seen_normal_z": -0.42462604377044216,
+      "unseen_normal_z": 1.0486768956127244,
+      "delta": 1.4733029393831665
+    }
+  },
+  "per_type": {
+    "TAGN": {
+      "Antenna Failure": {
+        "n": 38,
+        "recall_fpr1": 0.868421052631579,
+        "ap": 0.8163538349886891
+      },
+      "Buffer Overflow (Gradual Buildup)": {
+        "n": 41,
+        "recall_fpr1": 0.7804878048780488,
+        "ap": 0.753415153785166
+      },
+      "Co-Channel Interference (Mild)": {
+        "n": 15,
+        "recall_fpr1": 0.0,
+        "ap": 0.014888903951426766
+      },
+      "Co-Channel Interference (Severe)": {
+        "n": 69,
+        "recall_fpr1": 0.9710144927536232,
+        "ap": 0.978871224380144
+      },
+      "Doppler Shift (Severe)": {
+        "n": 10,
+        "recall_fpr1": 0.6,
+        "ap": 0.47247912848374557
+      },
+      "Faulty Handover Algorithm (Too Frequent)": {
+        "n": 54,
+        "recall_fpr1": 0.12962962962962962,
+        "ap": 0.12945854476418822
+      },
+      "Faulty RF Filters (Temporal)": {
+        "n": 64,
+        "recall_fpr1": 0.921875,
+        "ap": 0.9049521007844155
+      },
+      "High Network Congestion (Gradual Buildup)": {
+        "n": 12,
+        "recall_fpr1": 0.5,
+        "ap": 0.37690686793188244
+      },
+      "High Network Congestion (Sudden Spike)": {
+        "n": 8,
+        "recall_fpr1": 0.0,
+        "ap": 0.0115570114905882
+      },
+      "Jamming": {
+        "n": 92,
+        "recall_fpr1": 0.03260869565217391,
+        "ap": 0.13428522570239768
+      },
+      "Resource Allocation Bugs": {
+        "n": 21,
+        "recall_fpr1": 0.5714285714285714,
+        "ap": 0.44784082087608645
+      }
+    },
+    "TCN": {
+      "Antenna Failure": {
+        "n": 38,
+        "recall_fpr1": 0.8947368421052632,
+        "ap": 0.7327676544092374
+      },
+      "Buffer Overflow (Gradual Buildup)": {
+        "n": 41,
+        "recall_fpr1": 0.8048780487804879,
+        "ap": 0.7695230544508616
+      },
+      "Co-Channel Interference (Mild)": {
+        "n": 15,
+        "recall_fpr1": 0.0,
+        "ap": 0.0032347621266931963
+      },
+      "Co-Channel Interference (Severe)": {
+        "n": 69,
+        "recall_fpr1": 1.0,
+        "ap": 0.9907181895860435
+      },
+      "Doppler Shift (Severe)": {
+        "n": 10,
+        "recall_fpr1": 0.8,
+        "ap": 0.5023604473369796
+      },
+      "Faulty Handover Algorithm (Too Frequent)": {
+        "n": 54,
+        "recall_fpr1": 0.7407407407407407,
+        "ap": 0.5581549688409927
+      },
+      "Faulty RF Filters (Temporal)": {
+        "n": 64,
+        "recall_fpr1": 0.921875,
+        "ap": 0.8978611823707534
+      },
+      "High Network Congestion (Gradual Buildup)": {
+        "n": 12,
+        "recall_fpr1": 0.5,
+        "ap": 0.35503785836519824
+      },
+      "High Network Congestion (Sudden Spike)": {
+        "n": 8,
+        "recall_fpr1": 0.0,
+        "ap": 0.02092994018271625
+      },
+      "Jamming": {
+        "n": 92,
+        "recall_fpr1": 0.043478260869565216,
+        "ap": 0.16675257956436954
+      },
+      "Resource Allocation Bugs": {
+        "n": 21,
+        "recall_fpr1": 0.6666666666666666,
+        "ap": 0.37348205226046344
+      }
+    },
+    "GRU": {
+      "Antenna Failure": {
+        "n": 38,
+        "recall_fpr1": 0.7894736842105263,
+        "ap": 0.589968570813774
+      },
+      "Buffer Overflow (Gradual Buildup)": {
+        "n": 41,
+        "recall_fpr1": 0.9024390243902439,
+        "ap": 0.832895304773914
+      },
+      "Co-Channel Interference (Mild)": {
+        "n": 15,
+        "recall_fpr1": 0.26666666666666666,
+        "ap": 0.0951940443643283
+      },
+      "Co-Channel Interference (Severe)": {
+        "n": 69,
+        "recall_fpr1": 0.9855072463768116,
+        "ap": 0.9748117842093185
+      },
+      "Doppler Shift (Severe)": {
+        "n": 10,
+        "recall_fpr1": 0.8,
+        "ap": 0.5927746937143679
+      },
+      "Faulty Handover Algorithm (Too Frequent)": {
+        "n": 54,
+        "recall_fpr1": 0.5925925925925926,
+        "ap": 0.5178205464772047
+      },
+      "Faulty RF Filters (Temporal)": {
+        "n": 64,
+        "recall_fpr1": 0.5,
+        "ap": 0.5526741935657234
+      },
+      "High Network Congestion (Gradual Buildup)": {
+        "n": 12,
+        "recall_fpr1": 0.6666666666666666,
+        "ap": 0.5614686188889917
+      },
+      "High Network Congestion (Sudden Spike)": {
+        "n": 8,
+        "recall_fpr1": 0.75,
+        "ap": 0.4472142859106076
+      },
+      "Jamming": {
+        "n": 92,
+        "recall_fpr1": 0.010869565217391304,
+        "ap": 0.16211319772097155
+      },
+      "Resource Allocation Bugs": {
+        "n": 21,
+        "recall_fpr1": 0.6190476190476191,
+        "ap": 0.36739089313593043
+      }
+    },
+    "logreg": {
+      "Antenna Failure": {
+        "n": 38,
+        "recall_fpr1": 0.7105263157894737,
+        "ap": 0.6520164903378554
+      },
+      "Buffer Overflow (Gradual Buildup)": {
+        "n": 41,
+        "recall_fpr1": 0.9512195121951219,
+        "ap": 0.9152559626349455
+      },
+      "Co-Channel Interference (Mild)": {
+        "n": 15,
+        "recall_fpr1": 0.8,
+        "ap": 0.5393429678788018
+      },
+      "Co-Channel Interference (Severe)": {
+        "n": 69,
+        "recall_fpr1": 1.0,
+        "ap": 1.0
+      },
+      "Doppler Shift (Severe)": {
+        "n": 10,
+        "recall_fpr1": 0.8,
+        "ap": 0.7894656661155156
+      },
+      "Faulty Handover Algorithm (Too Frequent)": {
+        "n": 54,
+        "recall_fpr1": 0.37037037037037035,
+        "ap": 0.2598573001580882
+      },
+      "Faulty RF Filters (Temporal)": {
+        "n": 64,
+        "recall_fpr1": 0.921875,
+        "ap": 0.9224453321724789
+      },
+      "High Network Congestion (Gradual Buildup)": {
+        "n": 12,
+        "recall_fpr1": 0.75,
+        "ap": 0.6337253103084729
+      },
+      "High Network Congestion (Sudden Spike)": {
+        "n": 8,
+        "recall_fpr1": 0.625,
+        "ap": 0.22127543106403402
+      },
+      "Jamming": {
+        "n": 92,
+        "recall_fpr1": 0.021739130434782608,
+        "ap": 0.18710919726070285
+      },
+      "Resource Allocation Bugs": {
+        "n": 21,
+        "recall_fpr1": 0.6190476190476191,
+        "ap": 0.6355796266199462
+      }
+    },
+    "xgb": {
+      "Antenna Failure": {
+        "n": 38,
+        "recall_fpr1": 0.7894736842105263,
+        "ap": 0.7643906436381781
+      },
+      "Buffer Overflow (Gradual Buildup)": {
+        "n": 41,
+        "recall_fpr1": 0.9512195121951219,
+        "ap": 0.9640203441870643
+      },
+      "Co-Channel Interference (Mild)": {
+        "n": 15,
+        "recall_fpr1": 0.8666666666666667,
+        "ap": 0.8625264130631531
+      },
+      "Co-Channel Interference (Severe)": {
+        "n": 69,
+        "recall_fpr1": 1.0,
+        "ap": 0.9999999999999998
+      },
+      "Doppler Shift (Severe)": {
+        "n": 10,
+        "recall_fpr1": 0.9,
+        "ap": 0.8824629271437782
+      },
+      "Faulty Handover Algorithm (Too Frequent)": {
+        "n": 54,
+        "recall_fpr1": 0.5370370370370371,
+        "ap": 0.5574007272675686
+      },
+      "Faulty RF Filters (Temporal)": {
+        "n": 64,
+        "recall_fpr1": 0.921875,
+        "ap": 0.8945320193431141
+      },
+      "High Network Congestion (Gradual Buildup)": {
+        "n": 12,
+        "recall_fpr1": 0.9166666666666666,
+        "ap": 0.7663070436507938
+      },
+      "High Network Congestion (Sudden Spike)": {
+        "n": 8,
+        "recall_fpr1": 1.0,
+        "ap": 0.914423076923077
+      },
+      "Jamming": {
+        "n": 92,
+        "recall_fpr1": 0.010869565217391304,
+        "ap": 0.022446817524481563
+      },
+      "Resource Allocation Bugs": {
+        "n": 21,
+        "recall_fpr1": 0.14285714285714285,
+        "ap": 0.029013458614173645
+      }
+    },
+    "lof": {
+      "Antenna Failure": {
+        "n": 38,
+        "recall_fpr1": 0.5789473684210527,
+        "ap": 0.3341006041019672
+      },
+      "Buffer Overflow (Gradual Buildup)": {
+        "n": 41,
+        "recall_fpr1": 0.17073170731707318,
+        "ap": 0.19047142007865153
+      },
+      "Co-Channel Interference (Mild)": {
+        "n": 15,
+        "recall_fpr1": 0.0,
+        "ap": 0.004669357739203146
+      },
+      "Co-Channel Interference (Severe)": {
+        "n": 69,
+        "recall_fpr1": 0.13043478260869565,
+        "ap": 0.2854979628060758
+      },
+      "Doppler Shift (Severe)": {
+        "n": 10,
+        "recall_fpr1": 0.6,
+        "ap": 0.5226937950031256
+      },
+      "Faulty Handover Algorithm (Too Frequent)": {
+        "n": 54,
+        "recall_fpr1": 0.18518518518518517,
+        "ap": 0.09623644542183102
+      },
+      "Faulty RF Filters (Temporal)": {
+        "n": 64,
+        "recall_fpr1": 0.46875,
+        "ap": 0.34836952854932485
+      },
+      "High Network Congestion (Gradual Buildup)": {
+        "n": 12,
+        "recall_fpr1": 0.16666666666666666,
+        "ap": 0.11109642869706497
+      },
+      "High Network Congestion (Sudden Spike)": {
+        "n": 8,
+        "recall_fpr1": 0.0,
+        "ap": 0.01101825660141201
+      },
+      "Jamming": {
+        "n": 92,
+        "recall_fpr1": 0.2717391304347826,
+        "ap": 0.23595897555049053
+      },
+      "Resource Allocation Bugs": {
+        "n": 21,
+        "recall_fpr1": 0.0,
+        "ap": 0.0216820422788659
+      }
+    },
+    "ocsvm": {
+      "Antenna Failure": {
+        "n": 38,
+        "recall_fpr1": 0.34210526315789475,
+        "ap": 0.1923409889900172
+      },
+      "Buffer Overflow (Gradual Buildup)": {
+        "n": 41,
+        "recall_fpr1": 0.4634146341463415,
+        "ap": 0.306195973361886
+      },
+      "Co-Channel Interference (Mild)": {
+        "n": 15,
+        "recall_fpr1": 0.0,
+        "ap": 0.0028527254710051736
+      },
+      "Co-Channel Interference (Severe)": {
+        "n": 69,
+        "recall_fpr1": 0.8115942028985508,
+        "ap": 0.5826386717488174
+      },
+      "Doppler Shift (Severe)": {
+        "n": 10,
+        "recall_fpr1": 0.4,
+        "ap": 0.052956495409412795
+      },
+      "Faulty Handover Algorithm (Too Frequent)": {
+        "n": 54,
+        "recall_fpr1": 0.0,
+        "ap": 0.0831761335437719
+      },
+      "Faulty RF Filters (Temporal)": {
+        "n": 64,
+        "recall_fpr1": 0.0,
+        "ap": 0.1953964015233795
+      },
+      "High Network Congestion (Gradual Buildup)": {
+        "n": 12,
+        "recall_fpr1": 0.16666666666666666,
+        "ap": 0.12873451494320765
+      },
+      "High Network Congestion (Sudden Spike)": {
+        "n": 8,
+        "recall_fpr1": 0.0,
+        "ap": 0.0014139174406175132
+      },
+      "Jamming": {
+        "n": 92,
+        "recall_fpr1": 0.021739130434782608,
+        "ap": 0.09274303712180183
+      },
+      "Resource Allocation Bugs": {
+        "n": 21,
+        "recall_fpr1": 0.19047619047619047,
+        "ap": 0.05945866439510399
+      }
+    },
+    "iforest": {
+      "Antenna Failure": {
+        "n": 38,
+        "recall_fpr1": 0.0,
+        "ap": 0.03251182242566346
+      },
+      "Buffer Overflow (Gradual Buildup)": {
+        "n": 41,
+        "recall_fpr1": 0.07317073170731707,
+        "ap": 0.04791813894338337
+      },
+      "Co-Channel Interference (Mild)": {
+        "n": 15,
+        "recall_fpr1": 0.0,
+        "ap": 0.004648965027462041
+      },
+      "Co-Channel Interference (Severe)": {
+        "n": 69,
+        "recall_fpr1": 0.0,
+        "ap": 0.03322504084891323
+      },
+      "Doppler Shift (Severe)": {
+        "n": 10,
+        "recall_fpr1": 0.0,
+        "ap": 0.017577909001654297
+      },
+      "Faulty Handover Algorithm (Too Frequent)": {
+        "n": 54,
+        "recall_fpr1": 0.1111111111111111,
+        "ap": 0.04603534731489252
+      },
+      "Faulty RF Filters (Temporal)": {
+        "n": 64,
+        "recall_fpr1": 0.0,
+        "ap": 0.0859800637693465
+      },
+      "High Network Congestion (Gradual Buildup)": {
+        "n": 12,
+        "recall_fpr1": 0.08333333333333333,
+        "ap": 0.010295842373430494
+      },
+      "High Network Congestion (Sudden Spike)": {
+        "n": 8,
+        "recall_fpr1": 0.0,
+        "ap": 0.0022217469663105656
+      },
+      "Jamming": {
+        "n": 92,
+        "recall_fpr1": 0.0,
+        "ap": 0.01854886825188913
+      },
+      "Resource Allocation Bugs": {
+        "n": 21,
+        "recall_fpr1": 0.047619047619047616,
+        "ap": 0.03501463943702556
+      }
+    }
+  },
+  "types": [
+    "Antenna Failure",
+    "Buffer Overflow (Gradual Buildup)",
+    "Co-Channel Interference (Mild)",
+    "Co-Channel Interference (Severe)",
+    "Doppler Shift (Severe)",
+    "Faulty Handover Algorithm (Too Frequent)",
+    "Faulty RF Filters (Temporal)",
+    "High Network Congestion (Gradual Buildup)",
+    "High Network Congestion (Sudden Spike)",
+    "Jamming",
+    "Resource Allocation Bugs"
+  ],
+  "class_sensitivity": {
+    "all": {
+      "TAGN": 0.7533677930898505,
+      "TCN": 0.8056592664536969,
+      "GRU": 0.7931082181782624,
+      "logreg": 0.819613249966855,
+      "xgb": 0.7427484767836048,
+      "lof": 0.5775575362625054,
+      "ocsvm": 0.5277659699170391,
+      "iforest": 0.1922624149434867
+    },
+    "no_jam": {
+      "TAGN": 0.7987075440109247,
+      "TCN": 0.8482987278894032,
+      "GRU": 0.8335619173978863,
+      "logreg": 0.8603407721319846,
+      "xgb": 0.8885943236046325,
+      "lof": 0.5336933039848565,
+      "ocsvm": 0.5414298314669725,
+      "iforest": 0.19995148936250814
+    },
+    "template": {
+      "TAGN": 0.5560284932232801,
+      "TCN": 0.5786135284645655,
+      "GRU": 0.6410520707245746,
+      "logreg": 0.7108836770035011,
+      "xgb": 0.6048420085807573,
+      "lof": 0.4221591141417979,
+      "ocsvm": 0.2852053167140026,
+      "iforest": 0.0760104064733915
+    },
+    "gen": {
+      "TAGN": 0.7907535226997316,
+      "TCN": 0.9039196052933951,
+      "GRU": 0.7915080891489132,
+      "logreg": 0.8147325970250476,
+      "xgb": 0.8107426465724101,
+      "lof": 0.4453397904356805,
+      "ocsvm": 0.5066068444507966,
+      "iforest": 0.15229773897256052
+    }
+  },
+  "shortcut_probes": {
+    "RSRP_mean": {
+      "jamming": 1.0,
+      "template": 0.4429255298899514,
+      "inst-var": 0.029668096541373572,
+      "all": 0.27635738166143736
+    },
+    "UL_Protocol_mean": {
+      "jamming": 0.009455342539402013,
+      "template": 0.031159035912929612,
+      "inst-var": 0.04581299145396196,
+      "all": 0.07018987609411667
+    }
+  }
+}

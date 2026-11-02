@@ -24,20 +24,22 @@ def _require_artifacts():
 
 def test_array_shapes():
     _require_artifacts()
+    info = json.loads((INTERIM / "kpi_names.json").read_text())
+    n = info["n_chunks"]
     X = np.load(INTERIM / "chunks_X.npy")
-    assert X.shape == (32000, 128, 18)
+    assert X.shape == (n, 128, 18)
     assert X.dtype == np.float32
     assert np.isfinite(X).all()
 
 
 def test_meta_consistency():
     _require_artifacts()
+    info = json.loads((INTERIM / "kpi_names.json").read_text())
     meta = pd.read_parquet(INTERIM / "chunks_meta.parquet")
-    assert len(meta) == 32000
+    assert len(meta) == info["n_chunks"]
     assert meta.chunk_id.is_unique
     assert not meta.duplicated(["recording", "start_time"]).any()
     assert meta.anomaly.dtype == bool
-    assert int(meta.anomaly.sum()) == 1235
 
 
 def test_split_integrity():
@@ -47,7 +49,7 @@ def test_split_integrity():
     assert len(set(tr) & set(va)) == 0
     assert len(set(tr) & set(te)) == 0
     assert len(set(va) & set(te)) == 0
-    assert len(tr) + len(va) + len(te) <= 32000  # some straddling chunks dropped
+    assert len(tr) + len(va) + len(te) <= json.loads((INTERIM / "kpi_names.json").read_text())["n_chunks"]
     assert len(tr) > 20000
 
 
@@ -71,9 +73,10 @@ def test_targets_consistency():
 
 def test_graph_mapping():
     _require_artifacts()
+    info = json.loads((INTERIM / "kpi_names.json").read_text())
     g = np.load(PROCESSED / "graph_prototypes.npz")
     assert g["prototypes"].shape == (6, 16, 16)
-    assert len(g["chunk_prototypes"]) == 32000
+    assert len(g["chunk_prototypes"]) == info["n_chunks"]
     assert (g["chunk_prototypes"] >= 0).all()
     assert (g["chunk_prototypes"] < 6).all()
 

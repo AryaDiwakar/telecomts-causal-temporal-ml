@@ -1,0 +1,119 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\title{Causal-Temporal Machine Learning for Root-Cause Localization in 5G Networks:\\ A Benchmark Audit and a Cautionary Evaluation}
+\author{Nagi Reddy SaiBaba (23BDS0019) \and Arya Diwakar (23BDS0023) \and Jeswanth G (23BDS0212)}
+\date{\today}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We audit TelecomTS and find that our initial headline does not survive
+correction of the benchmark. We repair a train/test background leak and
+injection-label errors, expose a per-fault-type template shortcut, add
+instance-varying injections that test it, and retrain on the repaired split (5,689 test
+windows, 424 positives, 26 recordings). The prior result collapses. TAGN, our
+temporal-attention graph network, reaches 0.7589 PR-AUC across five seeds,
+below TCN (0.8606) and logistic regression (0.8196). Removing the graph raises
+PR-AUC from 0.7439 to 0.7581: the graph is not a marginal contributor, it is
+worse than no graph in a single-seed ablation. The learned graph estimates
+statistical dependencies; it is not a verified causal graph. The intervention-based RCA metric fails its own positive control:
+the ground-truth root set scores 0.496 $\pm$ 0.052, essentially the
+random-root null at 0.503 $\pm$ 0.016; the full true set against a matched
+random set gives 0.508 $\pm$ 0.085. The predicted-root score
+(0.567 $\pm$ 0.235) is unstable across seeds, ranging from 0.304 to 0.976, not
+evidence of localization. The old argmax-lag early-warning number is also an
+artifact: under a calibrated event-level protocol, detection at a 1\%
+false-alarm budget is 3.7\%, with per-step AUC 0.495. We claim no
+state-of-the-art model. We claim a corrected benchmark, a validation protocol
+that separates real RCA from benchmark artifacts, and a decisive negative
+result: the graph provides no clear detection benefit in the ablation, the
+causal interpretation fails validation, and our initial headline is unsupported.
+\end{abstract}
+
+\section{Audit and Repairs}
+We audited TelecomTS along four axes: split integrity, preprocessing leakage,
+ground-truth validity, and metric protocol. Three findings changed the numbers:
+(G5) a train/test background leak in which a test anomaly's normal source was
+chunk-split into train; (G2--G4) injection label errors (identity/inert effects
+labeled, multi-event windows under-labeled, \texttt{end\_time} 10$\times$ too
+large); and a template shortcut in which the affected-KPI set is constant per
+fault type. An input-free type-oracle reaches 0.971 top-$k$ Jaccard on the
+shipped data, above every trained model; after instance-varying injection the
+ceiling drops to 0.661. We bind sources atomically to their injected twins,
+regenerate the corpus (280 spurious labels removed across 237/714 windows),
+and refit scalers and graph prototypes per leave-recordings-out fold. The
+repaired test set has $n=5{,}689$, 424 positives, and 26 recordings. The
+repairs are not cosmetic. They reverse the headline.
+
+\section{Detection}
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+Model & PR-AUC & ROC-AUC \\
+\midrule
+TCN & \textbf{0.8606} & 0.9438 \\
+LogReg & 0.8196 & 0.9309 \\
+TAGN (graph + summary, 5 seeds) & 0.7589 & \textbf{0.9543} \\
+GRU & 0.7635 & 0.9399 \\
+\bottomrule
+\end{tabular}
+\caption{Setting I, repaired split, recording-level cluster-bootstrap protocol.}
+\end{table}
+
+TAGN does not win. It trails TCN and logistic regression on mean PR-AUC. Its
+best seed (1337, 0.8278) edges logistic regression but remains below TCN. Paired
+cluster-bootstrap tests against LogReg are negative on 4/5 seeds and every 95\%
+interval includes zero: no advantage is detectable, and TAGN loses on the point
+estimate. The single-seed component ablation is also negative. Removing the graph gives
+0.7581 PR versus 0.7439 for the full model, so the graph is not neutral;
+no\_graph is the best variant. Message passing contributes nothing beyond
+summary statistics.
+
+\section{Interventional Fidelity Fails Its Positive Control}
+We define a model-internal do-style perturbation by zeroing selected normalized
+KPI channels and re-scoring the anomaly head. The fidelity is the fraction of
+windows in which intervening on a candidate root set reduces the score more
+than intervening on a matched random non-root set. A valid metric must pass a
+positive control on the ground-truth affected-KPI set. It does not: across five
+checkpoints and 424 anomalous test windows from 13 recordings, true roots score
+0.496 $\pm$ 0.052 at $k=3$, 0.476 $\pm$ 0.086 at $k=5$, and
+0.519 $\pm$ 0.137 at $k=7$, while random roots score
+0.503 $\pm$ 0.016, 0.506 $\pm$ 0.026, and 0.495 $\pm$ 0.025. The full true set
+against a matched random set gives 0.508 $\pm$ 0.085, so truncation is not the
+reason for the failure. This is not a borderline result: the ground-truth-root
+score is at chance and overlaps the matched random-root null. The predicted-root score is
+0.567 $\pm$ 0.235, but it is unstable across seeds (0.304 to 0.976); one
+checkpoint drives the mean. Because the positive control fails, we do not
+interpret this as evidence of causal localization. The earlier pilot value of
+0.465 is invalid: it used a single checkpoint without matched controls and is
+not reproducible under the corrected implementation. The learned graph is a
+statistical dependency graph, not a verified causal DAG; the intervention is a
+model-internal perturbation, not a physical do-operation.
+
+\section{Early Warning}
+The usual argmax-lag score reports 65.2\% ``warning before onset,'' but the
+argmax can occur after onset and is not calibrated to a false-alarm budget. We
+instead choose a threshold on validation normal windows and require the first
+pre-onset alarm, then report event-level detection and false alarms. Over five
+seeds and 93 test events, a 1\% false-alarm budget yields 3.7\% detection
+(0.018 false alarms per normal window); at 5\% it yields 10.1\% detection
+(0.096 false alarms per window). Per-step AUC is 0.495 and AP is 0.006. The old
+number is not an early-warning result. Under a calibrated protocol the hazard
+head is near chance and is not usable as an early-warning system on this data.
+
+\section{Conclusion}
+The audit changes the conclusions. After repair, TAGN trails TCN and logistic
+regression on mean PR-AUC, the single-seed graph ablation favors no graph, the intervention metric fails its positive control, and the
+calibrated hazard head is near chance. The learned graph is a dependency
+estimate, not a causal mechanism. We put intervention-based RCA on trial and it
+failed; we replaced the broken early-warning metric and the head failed there
+too. These are decisive audit findings. We release the pipeline, the repaired
+split, the validation scripts, and the test suite so that others can reproduce
+the audit and apply the same controls to their own claims. The initial headline
+does not hold under the repaired benchmark and protocol.
+
+\end{document}

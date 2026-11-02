@@ -1,0 +1,42 @@
+=== resume start Thu Oct 15 19:01:38 IST 2026 ===
+[19:01:38] RUN python3 -m src.experiments.exp_002_tagn --seed 123
+[19:15:34] rc=0 python3 -m src.experiments.exp_002_tagn --seed 123
+[19:15:34] RUN python3 -m src.experiments.exp_002_tagn --seed 456
+[19:29:47] rc=0 python3 -m src.experiments.exp_002_tagn --seed 456
+[19:29:47] RUN python3 -m src.experiments.exp_002_tagn --seed 789
+[19:44:12] rc=0 python3 -m src.experiments.exp_002_tagn --seed 789
+[19:44:12] RUN python3 -m src.experiments.exp_002_tagn --seed 1337
+[19:57:27] rc=0 python3 -m src.experiments.exp_002_tagn --seed 1337
+[19:57:27] RUN python3 -m scripts.rca_from_checkpoint
+[19:59:05] rc=0 python3 -m scripts.rca_from_checkpoint
+[19:59:05] RUN python3 -m scripts.bootstrap_ci --seeds 42 123 456 789 1337
+[20:01:05] rc=0 python3 -m scripts.bootstrap_ci --seeds 42 123 456 789 1337
+[20:01:05] RUN python3 -m scripts.paired_test --baseline logreg
+[20:03:30] rc=0 python3 -m scripts.paired_test --baseline logreg
+[20:03:30] RUN python3 -m src.experiments.exp_005_loro --seed 42
+[20:58:58] rc=0 python3 -m src.experiments.exp_005_loro --seed 42
+[20:58:58] RUN python3 -m src.experiments.exp_003_ablations --variant full
+[21:05:36] rc=0 python3 -m src.experiments.exp_003_ablations --variant full
+[21:05:36] RUN python3 -m src.experiments.exp_003_ablations --variant no_graph
+[21:07:21] rc=0 python3 -m src.experiments.exp_003_ablations --variant no_graph
+[21:07:21] RUN python3 -m src.experiments.exp_003_ablations --variant static_graph
+[21:14:07] rc=0 python3 -m src.experiments.exp_003_ablations --variant static_graph
+[21:14:07] RUN python3 -m src.experiments.exp_003_ablations --variant undirected
+[21:20:54] rc=0 python3 -m src.experiments.exp_003_ablations --variant undirected
+[21:20:54] RUN python3 -m src.experiments.exp_003_ablations --variant no_nodeconv
+[21:27:39] rc=0 python3 -m src.experiments.exp_003_ablations --variant no_nodeconv
+[21:27:39] RUN python3 -m src.experiments.exp_003_ablations --variant hazard_only
+[21:39:58] rc=0 python3 -m src.experiments.exp_003_ablations --variant hazard_only
+[21:39:58] RUN python3 -m src.experiments.exp_013_temporal_baselines --seed 42 --model gru
+[21:41:29] rc=0 python3 -m src.experiments.exp_013_temporal_baselines --seed 42 --model gru
+[21:41:29] RUN python3 -m src.experiments.exp_013_temporal_baselines --seed 42 --model tcn
+[21:41:56] rc=0 python3 -m src.experiments.exp_013_temporal_baselines --seed 42 --model tcn
+[21:41:56] RUN python3 -m src.experiments.exp_013_temporal_baselines --seed 123 --model gru
+[21:43:03] rc=0 python3 -m src.experiments.exp_013_temporal_baselines --seed 123 --model gru
+[21:43:03] RUN python3 -m src.experiments.exp_013_temporal_baselines --seed 123 --model tcn
+[21:43:36] rc=0 python3 -m src.experiments.exp_013_temporal_baselines --seed 123 --model tcn
+[21:43:36] RUN python3 -m src.experiments.exp_013_temporal_baselines --seed 456 --model gru
+[21:44:45] rc=0 python3 -m src.experiments.exp_013_temporal_baselines --seed 456 --model gru
+[21:44:45] RUN python3 -m src.experiments.exp_013_temporal_baselines --seed 456 --model tcn
+[21:45:08] rc=0 python3 -m src.experiments.exp_013_temporal_baselines --seed 456 --model tcn
+=== resume finished Thu Oct 15 21:45:08 IST 2026 ===

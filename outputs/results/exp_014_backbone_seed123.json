@@ -1,0 +1,11 @@
+{
+  "experiment": "exp_014",
+  "phase": 1,
+  "seed": 123,
+  "epochs": 20,
+  "metrics": {
+    "pr_auc": 0.7843072001032859,
+    "roc_auc": 0.9436331953627551,
+    "n_test": 5689
+  }
+}

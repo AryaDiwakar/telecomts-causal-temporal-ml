@@ -7,61 +7,91 @@
   ],
   "counts": {
     "train": {
-      "n": 22278,
-      "n_anomalous": 778,
+      "n": 22009,
+      "n_anomalous": 1235,
       "n_recordings": 31,
       "types": {
-        "Co-Channel Interference (Mild)": 131,
+        "Buffer Overflow (Gradual Buildup)": 163,
+        "High Network Congestion (Gradual Buildup)": 156,
+        "Co-Channel Interference (Mild)": 147,
+        "Doppler Shift (Severe)": 131,
+        "Faulty Handover Algorithm (Too Frequent)": 119,
+        "Antenna Failure": 117,
+        "Faulty RF Filters (Temporal)": 97,
         "Jamming": 93,
-        "Buffer Overflow (Gradual Buildup)": 86,
-        "High Network Congestion (Gradual Buildup)": 81,
-        "Antenna Failure": 73,
-        "Co-Channel Interference (Severe)": 70,
-        "Doppler Shift (Severe)": 58,
-        "Faulty RF Filters (Temporal)": 57,
-        "Resource Allocation Bugs": 50,
-        "High Network Congestion (Sudden Spike)": 40,
-        "Faulty Handover Algorithm (Too Frequent)": 39
+        "High Network Congestion (Sudden Spike)": 82,
+        "Co-Channel Interference (Severe)": 80,
+        "Resource Allocation Bugs": 50
       },
-      "onset_gt0": 248
+      "onset_gt0": 325
     },
     "val": {
-      "n": 4683,
-      "n_anomalous": 129,
-      "n_recordings": 26,
+      "n": 4841,
+      "n_anomalous": 185,
+      "n_recordings": 18,
       "types": {
         "Jamming": 94,
+        "Co-Channel Interference (Mild)": 32,
         "Antenna Failure": 15,
+        "Co-Channel Interference (Severe)": 15,
         "Faulty RF Filters (Temporal)": 10,
+        "High Network Congestion (Gradual Buildup)": 9,
         "Faulty Handover Algorithm (Too Frequent)": 5,
         "Buffer Overflow (Gradual Buildup)": 5
       },
-      "onset_gt0": 20
+      "onset_gt0": 36
     },
     "test": {
-      "n": 4768,
-      "n_anomalous": 223,
-      "n_recordings": 30,
+      "n": 5689,
+      "n_anomalous": 424,
+      "n_recordings": 26,
       "types": {
         "Jamming": 92,
+        "Co-Channel Interference (Severe)": 69,
+        "Faulty RF Filters (Temporal)": 64,
+        "Faulty Handover Algorithm (Too Frequent)": 54,
         "Buffer Overflow (Gradual Buildup)": 41,
-        "Antenna Failure": 19,
+        "Antenna Failure": 38,
+        "Resource Allocation Bugs": 21,
         "Co-Channel Interference (Mild)": 15,
-        "Co-Channel Interference (Severe)": 12,
         "High Network Congestion (Gradual Buildup)": 12,
-        "Faulty RF Filters (Temporal)": 10,
         "Doppler Shift (Severe)": 10,
-        "High Network Congestion (Sudden Spike)": 8,
-        "Faulty Handover Algorithm (Too Frequent)": 4
+        "High Network Congestion (Sudden Spike)": 8
       },
-      "onset_gt0": 60
+      "onset_gt0": 93
     }
   },
   "audit": {
     "atomic_recordings": {
       "anomalous/jammer/File": "train",
       "anomalous/jammer/Twitch": "val",
-      "anomalous/jammer/YouTube": "test"
+      "anomalous/jammer/YouTube": "test",
+      "anomalous/synthetic_gen/stationary/Zone_A/congestion/YouTube": "train",
+      "anomalous/synthetic_gen/stationary/Zone_B/congestion/YouTube": "train",
+      "anomalous/synthetic_gen/stationary/Zone_C/congestion/YouTube": "train",
+      "anomalous/synthetic_gen/stationary/Zone_A/congestion/Twitch": "train",
+      "anomalous/synthetic_gen/stationary/Zone_B/congestion/Twitch": "train",
+      "anomalous/synthetic_gen/stationary/Zone_C/congestion/Twitch": "train",
+      "anomalous/synthetic_gen/stationary/Zone_A/congestion/File": "val",
+      "anomalous/synthetic_gen/stationary/Zone_B/congestion/File": "val",
+      "anomalous/synthetic_gen/stationary/Zone_C/congestion/File": "test",
+      "anomalous/synthetic_gen/mobile/YouTube": "test",
+      "anomalous/synthetic_gen/mobile/Twitch": "test",
+      "anomalous/synthetic_gen/mobile/File": "test"
+    },
+    "background_source_pairs": {
+      "normal/stationary/Zone_A/congestion/YouTube": "train",
+      "normal/stationary/Zone_B/congestion/YouTube": "train",
+      "normal/stationary/Zone_C/congestion/YouTube": "train",
+      "normal/stationary/Zone_A/congestion/Twitch": "train",
+      "normal/stationary/Zone_B/congestion/Twitch": "train",
+      "normal/stationary/Zone_C/congestion/Twitch": "train",
+      "normal/stationary/Zone_A/congestion/File": "val",
+      "normal/stationary/Zone_B/congestion/File": "val",
+      "normal/stationary/Zone_C/congestion/File": "test",
+      "normal/mobile/YouTube": "test",
+      "normal/mobile/Twitch": "test",
+      "normal/mobile/File": "test"
     },
     "dropped_clusters": {
       "anomalous/synthetic/Zone_A/YouTube": 76,
@@ -70,28 +100,16 @@
       "anomalous/synthetic/Zone_C/Twitch": 8
     },
     "dropped_chunks": {
-      "normal/mobile/File": 8,
-      "normal/mobile/Twitch": 8,
-      "normal/mobile/YouTube": 8,
-      "normal/stationary/Zone_A/congestion/File": 8,
-      "normal/stationary/Zone_A/congestion/Twitch": 8,
-      "normal/stationary/Zone_A/congestion/YouTube": 8,
       "normal/stationary/Zone_A/no_congestion/File": 8,
       "normal/stationary/Zone_A/no_congestion/Twitch": 7,
       "normal/stationary/Zone_A/no_congestion/YouTube": 8,
-      "normal/stationary/Zone_B/congestion/File": 8,
-      "normal/stationary/Zone_B/congestion/Twitch": 8,
-      "normal/stationary/Zone_B/congestion/YouTube": 8,
       "normal/stationary/Zone_B/no_congestion/File": 8,
       "normal/stationary/Zone_B/no_congestion/Twitch": 8,
       "normal/stationary/Zone_B/no_congestion/YouTube": 8,
-      "normal/stationary/Zone_C/congestion/File": 8,
-      "normal/stationary/Zone_C/congestion/Twitch": 8,
-      "normal/stationary/Zone_C/congestion/YouTube": 8,
       "normal/stationary/Zone_C/no_congestion/File": 8,
       "normal/stationary/Zone_C/no_congestion/Twitch": 7,
       "normal/stationary/Zone_C/no_congestion/YouTube": 8
     }
   },
-  "dropped_total": 271
+  "dropped_total": 175
 }

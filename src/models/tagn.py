@@ -28,12 +28,30 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import torch.autograd as autograd
 
 ROOT = Path(__file__).resolve().parents[2]
 PROCESSED = ROOT / "data" / "processed"
 
 N_NUMERIC = 16
 N_PROTO = 2
+
+
+class _GradReverse(autograd.Function):
+    @staticmethod
+    def forward(ctx, x, lam):
+        ctx.lam = lam
+        return x.view_as(x)
+
+    @staticmethod
+    def backward(ctx, grad_output):
+        return -ctx.lam * grad_output, None
+
+
+def grad_reverse(x, lam):
+    if lam <= 0.0:
+        return x
+    return _GradReverse.apply(x, lam)
 
 
 def model_config():
@@ -108,11 +126,17 @@ N_PROTO_SUMMARY = N_PROTO * 2  # first timestep + window mean, per protocol chan
 SUMMARY_DIM = N_NUMERIC * STATS_PER_KPI + N_PROTO_SUMMARY
 
 
-def chunk_summary(x: torch.Tensor) -> torch.Tensor:
+def chunk_summary(
+    x: torch.Tensor, target_dim: int | None = None
+) -> torch.Tensor:
     """Per-chunk statistical summary of a window.
 
     x: [B, T, C] -> [B, SUMMARY_DIM]. Matches ``extract_features`` so the
     anomaly head can express the classical baseline as a special case.
+
+    The final-dimension guard applies to the canonical 16-KPI schema. Pass
+    ``target_dim`` when summarizing a different observation space (e.g. the
+    K=10 shared cross-vendor space in exp_010) to keep the invariant explicit.
     """
     if x.ndim != 3:
         raise ValueError(f"expected [B,T,C], got {tuple(x.shape)}")
@@ -152,8 +176,9 @@ def chunk_summary(x: torch.Tensor) -> torch.Tensor:
     summary = torch.cat(
         [base, extra, x[:, 0, N_NUMERIC:N_NUMERIC + N_PROTO], proto.mean(dim=1)], dim=-1
     )
-    if summary.shape[-1] != SUMMARY_DIM:
-        raise ValueError(f"summary dim {summary.shape[-1]} != {SUMMARY_DIM}")
+    expect = SUMMARY_DIM if target_dim is None else target_dim
+    if summary.shape[-1] != expect:
+        raise ValueError(f"summary dim {summary.shape[-1]} != {expect}")
     return summary
 
 
@@ -323,6 +348,13 @@ class TagnModel(nn.Module):
         self.type_head = nn.Linear(d, n_types)
         self.kpi_head = nn.Linear(d, 1)
         self.ew_head = nn.Sequential(nn.Linear(d, d), nn.GELU(), nn.Linear(d, 1))
+        self.rca_adv = nn.Sequential(
+            nn.Linear(N_NUMERIC, d), nn.GELU(), nn.Linear(d, n_types)
+        )
+        self.ident_head = nn.Sequential(
+            nn.Linear(2, d), nn.GELU(), nn.Linear(d, 1)
+        )
+        self.adv_lambda = float(cfg.get("grl_lambda", 0.0))
         # Start the anomaly readouts at exactly zero: with a default init the
         # trunk path fits the training split first, which collapses
         # sigmoid(logit)-y and starves summary_head of gradient. Starting from
@@ -378,7 +410,8 @@ class TagnModel(nn.Module):
         total_sq = torch.zeros(SUMMARY_DIM, dtype=torch.float64)
         with torch.no_grad():
             for i in range(0, len(X), batch):
-                s = chunk_summary(X[i:i + batch]).double()
+                # MPS has no float64; accumulate the summary moments on CPU
+                s = chunk_summary(X[i:i + batch]).cpu().double()
                 total += s.sum(dim=0)
                 total_sq += (s * s).sum(dim=0)
                 n += len(s)
@@ -460,6 +493,7 @@ class TagnModel(nn.Module):
         # per-step hazard head remains strictly causal.
         head_context = pooled + self.summary_proj(summary)
 
+        kpi_logits = self.kpi_head(node_feats.mean(dim=1)).squeeze(-1)  # [B,16]
         logits = {
             "anomaly": (
                 self.summary_head(summary)
@@ -468,9 +502,15 @@ class TagnModel(nn.Module):
                 * self.anom_head(self.drop(head_context))
             ).squeeze(-1),
             "type": self.type_head(head_context) + self.summary_type_head(summary),
-            "kpi": self.kpi_head(node_feats.mean(dim=1)).squeeze(-1),  # [B,16] per-node score
+            "kpi": kpi_logits,  # [B,16] per-node score
             "hazard": self.ew_head(h).squeeze(-1),                     # [B,T]
         }
+        try:
+            logits["rca_adv"] = self.rca_adv(
+                grad_reverse(kpi_logits, self.adv_lambda)
+            )
+        except Exception:
+            pass
         # explicit template-consistent root-cause: map type logits -> template mask
         return logits, node_feats, h
 

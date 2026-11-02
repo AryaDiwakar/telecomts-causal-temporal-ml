@@ -1,0 +1,8 @@
+{
+  "experiment": "exp_016",
+  "phase": 3,
+  "seed": 42,
+  "metrics": {
+    "interventional_fidelity": 0.0
+  }
+}

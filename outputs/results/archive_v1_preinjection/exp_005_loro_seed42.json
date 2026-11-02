@@ -1,0 +1,147 @@
+{
+  "folds": [
+    {
+      "fold": 0,
+      "test_anomaly": {
+        "n": 9871,
+        "n_positives": 234,
+        "roc_auc": 0.8771100344204008,
+        "pr_auc": 0.4745087974494492,
+        "f1_max": 0.04632745990892893,
+        "precision": 0.023713011755168222,
+        "recall": 1.0,
+        "threshold": -3.7603535652160645,
+        "tpr_at_fpr_0.01": 0.4444444444444444,
+        "tpr_at_fpr_0.05": 0.47863247863247865,
+        "threshold_val_tuned": -3.7603535652160645
+      },
+      "test_type": {
+        "accuracy": 0.10683760683760683,
+        "macro_f1_seen": 0.08039948606116615,
+        "micro_f1": 0.10683760683760683
+      },
+      "test_rca": {
+        "type_template_jaccard": 0.5846139793255178,
+        "topk_shift_jaccard": 0.6965777100392485
+      },
+      "best_val_pr_auc": -0.0,
+      "n_test_anom": 234
+    },
+    {
+      "fold": 1,
+      "test_anomaly": {
+        "n": 9863,
+        "n_positives": 226,
+        "roc_auc": 0.9667744432639321,
+        "pr_auc": 0.6948725201028949,
+        "f1_max": 0.16772151898734178,
+        "precision": 0.09209383145091225,
+        "recall": 0.9380530973451328,
+        "threshold": 0.11678984761238098,
+        "tpr_at_fpr_0.01": 0.6371681415929203,
+        "tpr_at_fpr_0.05": 0.8407079646017699,
+        "threshold_val_tuned": 0.11678984761238098
+      },
+      "test_type": {
+        "accuracy": 0.3893805309734513,
+        "macro_f1_seen": 0.21255602760820544,
+        "micro_f1": 0.3893805309734513
+      },
+      "test_rca": {
+        "type_template_jaccard": 0.722662551312994,
+        "topk_shift_jaccard": 0.7349184738565271
+      },
+      "best_val_pr_auc": 0.8017592980601842,
+      "n_test_anom": 226
+    },
+    {
+      "fold": 2,
+      "test_anomaly": {
+        "n": 6770,
+        "n_positives": 449,
+        "roc_auc": 0.756064294470054,
+        "pr_auc": 0.498364502320701,
+        "f1_max": 0.5408805031446541,
+        "precision": 0.9197860962566845,
+        "recall": 0.3830734966592428,
+        "threshold": 1.0511422157287598,
+        "tpr_at_fpr_0.01": 0.41648106904231624,
+        "tpr_at_fpr_0.05": 0.47216035634743875,
+        "threshold_val_tuned": 1.0511422157287598
+      },
+      "test_type": {
+        "accuracy": 0.2383073496659243,
+        "macro_f1_seen": 0.27450489707807774,
+        "micro_f1": 0.2383073496659243
+      },
+      "test_rca": {
+        "type_template_jaccard": 0.643802392855845,
+        "topk_shift_jaccard": 0.6579199259043358
+      },
+      "best_val_pr_auc": 0.9673276160285978,
+      "n_test_anom": 449
+    },
+    {
+      "fold": 3,
+      "test_anomaly": {
+        "n": 1427,
+        "n_positives": 191,
+        "roc_auc": 0.9068477947779527,
+        "pr_auc": 0.7880717518516878,
+        "f1_max": 0.28272251308900526,
+        "precision": 0.1649214659685864,
+        "recall": 0.9895287958115183,
+        "threshold": -3.575312614440918,
+        "tpr_at_fpr_0.01": 0.5916230366492147,
+        "tpr_at_fpr_0.05": 0.6910994764397905,
+        "threshold_val_tuned": -3.575312614440918
+      },
+      "test_type": {
+        "accuracy": 0.5497382198952879,
+        "macro_f1_seen": 0.2132398178909807,
+        "micro_f1": 0.5497382198952879
+      },
+      "test_rca": {
+        "type_template_jaccard": 0.8337539423926859,
+        "topk_shift_jaccard": 0.798572515326442
+      },
+      "best_val_pr_auc": -0.0,
+      "n_test_anom": 191
+    },
+    {
+      "fold": 4,
+      "test_anomaly": {
+        "n": 4069,
+        "n_positives": 135,
+        "roc_auc": 0.9582556628819974,
+        "pr_auc": 0.5729152536284207,
+        "f1_max": 0.48826291079812206,
+        "precision": 0.6666666666666666,
+        "recall": 0.3851851851851852,
+        "threshold": 2.894284725189209,
+        "tpr_at_fpr_0.01": 0.4,
+        "tpr_at_fpr_0.05": 0.8666666666666667,
+        "threshold_val_tuned": 2.894284725189209
+      },
+      "test_type": {
+        "accuracy": 0.2740740740740741,
+        "macro_f1_seen": 0.3012040892533801,
+        "micro_f1": 0.2740740740740741
+      },
+      "test_rca": {
+        "type_template_jaccard": 0.7546925605258938,
+        "topk_shift_jaccard": 0.7739901662123885
+      },
+      "best_val_pr_auc": 0.9220728164470313,
+      "n_test_anom": 135
+    }
+  ],
+  "aggregate": {
+    "anomaly_pr_auc": 0.6057465650706307,
+    "anomaly_roc_auc": 0.8930104459628675,
+    "type_accuracy": 0.3116675562892689,
+    "type_macro_f1_seen": 0.216380863578362,
+    "rca_type_template_jaccard": 0.7079050852825872,
+    "rca_topk_shift_jaccard": 0.7323957582677882
+  }
+}

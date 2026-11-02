@@ -1,0 +1,114 @@
+{
+  "type_map": {
+    "Antenna Failure": 0,
+    "Buffer Overflow (Gradual Buildup)": 1,
+    "Co-Channel Interference (Mild)": 2,
+    "Co-Channel Interference (Severe)": 3,
+    "Doppler Shift (Severe)": 4,
+    "Faulty Handover Algorithm (Too Frequent)": 5,
+    "Faulty RF Filters (Temporal)": 6,
+    "High Network Congestion (Gradual Buildup)": 7,
+    "High Network Congestion (Sudden Spike)": 8,
+    "Jamming": 9,
+    "Resource Allocation Bugs": 10
+  },
+  "rca_templates": {
+    "Jamming": [
+      "DL_BLER",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_BLER",
+      "UL_MCS"
+    ],
+    "High Network Congestion (Gradual Buildup)": [
+      "DL_BLER",
+      "DL_NumberOfPackets",
+      "Estimated_UL_Buffer",
+      "PRB_Utilization_UL",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_BLER",
+      "UL_NPRB"
+    ],
+    "Co-Channel Interference (Severe)": [
+      "DL_BLER",
+      "DL_NumberOfPackets",
+      "PRB_Utilization_DL",
+      "PRB_Utilization_UL",
+      "RSRP",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_BLER",
+      "UL_NPRB",
+      "UL_NumberOfPackets",
+      "UL_SNR"
+    ],
+    "Faulty RF Filters (Temporal)": [
+      "DL_BLER",
+      "PRB_Utilization_DL",
+      "PRB_Utilization_UL",
+      "RSRP",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_BLER",
+      "UL_NPRB",
+      "UL_SNR"
+    ],
+    "Doppler Shift (Severe)": [
+      "RSRP",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_MCS"
+    ],
+    "Resource Allocation Bugs": [
+      "PRB_Utilization_UL",
+      "PRBs_DL_Current",
+      "RX_Bytes",
+      "UL_NPRB"
+    ],
+    "Antenna Failure": [
+      "DL_BLER",
+      "DL_NumberOfPackets",
+      "PRBs_DL_Current",
+      "RSRP",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_BLER",
+      "UL_NumberOfPackets",
+      "UL_SNR"
+    ],
+    "Co-Channel Interference (Mild)": [
+      "DL_BLER",
+      "PRB_Utilization_DL",
+      "PRB_Utilization_UL",
+      "UL_BLER",
+      "UL_SNR"
+    ],
+    "High Network Congestion (Sudden Spike)": [
+      "DL_NumberOfPackets",
+      "Estimated_UL_Buffer",
+      "PRB_Utilization_UL",
+      "UL_BLER"
+    ],
+    "Faulty Handover Algorithm (Too Frequent)": [
+      "DL_BLER",
+      "DL_NumberOfPackets",
+      "Estimated_UL_Buffer",
+      "RSRP",
+      "RX_Bytes",
+      "UL_BLER",
+      "UL_NumberOfPackets",
+      "UL_SNR"
+    ],
+    "Buffer Overflow (Gradual Buildup)": [
+      "DL_BLER",
+      "DL_NumberOfPackets",
+      "Estimated_UL_Buffer",
+      "PRB_Utilization_DL",
+      "PRB_Utilization_UL",
+      "TX_Bytes",
+      "UL_NPRB"
+    ]
+  },
+  "ew_horizon": 50
+}

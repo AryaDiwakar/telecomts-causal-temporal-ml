@@ -12,6 +12,7 @@ __pycache__/
 data/raw/**
 data/interim/chunks_X.npy
 data/raw/download.log
+data/external/SpotLight/raw/
 
 # Interrupted/resumable local training state
 checkpoints/**/*.progress.pt

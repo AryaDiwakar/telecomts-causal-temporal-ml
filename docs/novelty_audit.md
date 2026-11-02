@@ -41,3 +41,25 @@ do NOT claim. It is written to keep any write-up honest.
 Any paper found only on mirror/aggregator sites (not the primary venue) is
 listed separately in `docs/literature_review.md` and is never used as
 authoritative support.
+
+## Citation verification (2026-10-13)
+
+The three prior-work citations used to motivate the shortcut audit were checked
+against primary sources and are confirmed real:
+
+- **arXiv:2606.22450** — Fard, Komarov, Wunder, *Cross-Layer Intrusion Detection
+  in 5G O-RAN: Gains and Limits of Fusing Radio Telemetry with Network Flow
+  Records*, submitted 21 Jun 2026; accepted at IEEE CSR 2026 (Lisbon). Supports
+  "the field measures evaluation artifacts in RAN telemetry."
+- **arXiv:2603.09675** — Bello, Chiarlone, Fiori, García González, Larroca, *GNNs
+  for Time Series Anomaly Detection: An Open-Source Framework and a Critical
+  Evaluation*, 10 Mar 2026. Supports "metric design/thresholding obscures TSAD
+  comparisons."
+- **KAC** — Salavati, Wu, Wan, Darbari, Hong (University of Connecticut · Nokia),
+  *KPI-Aware Multimodal Anomaly Detection for 5G and Open RAN Telemetry*, IEEE
+  ICDM 2026 Applied Track. Reports TelecomTS F1 0.960 / SpotLight F1 0.950 on
+  their own splits — these are the bars we reference, with the caveat that they
+  are not measured under our audited split.
+
+Related but not relied upon: **arXiv:2604.17616** — Mishra, *Conditional
+Attribution for Root Cause Analysis in Time-Series Anomaly Detection*, 2026.

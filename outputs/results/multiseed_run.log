@@ -1,0 +1,31 @@
+=== seed 42 ===
+device: cpu
+epoch 1/20 train_loss=0.0999 val_loss=0.0933
+epoch 2/20 train_loss=0.0644 val_loss=0.2564
+epoch 3/20 train_loss=0.0519 val_loss=0.1311
+epoch 4/20 train_loss=0.0413 val_loss=0.1634
+early stop
+TEST PR-AUC=0.8437 ROC-AUC=0.9654
+registry: appended exp_014 (COMPLETE) -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+=== seed 123 ===
+device: cpu
+epoch 1/20 train_loss=0.1070 val_loss=0.0884
+epoch 2/20 train_loss=0.0693 val_loss=0.0822
+epoch 3/20 train_loss=0.0622 val_loss=0.1163
+epoch 4/20 train_loss=0.0422 val_loss=0.1984
+epoch 5/20 train_loss=0.0401 val_loss=0.1947
+early stop
+TEST PR-AUC=0.7843 ROC-AUC=0.9436
+registry: appended exp_014 (COMPLETE) -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+=== seed 456 ===
+device: cpu
+epoch 1/20 train_loss=0.1139 val_loss=0.1030
+epoch 2/20 train_loss=0.0705 val_loss=0.1320
+epoch 3/20 train_loss=0.0522 val_loss=0.1541
+epoch 4/20 train_loss=0.0455 val_loss=0.1206
+early stop
+TEST PR-AUC=0.7877 ROC-AUC=0.9369
+registry: appended exp_014 (COMPLETE) -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json
+done
+scripts/run_phase1_multiseed.sh: line 8: EOF: command not found
+done

@@ -57,6 +57,34 @@ def load_splits():
     return frames, meta, rca
 
 
+def split_indices() -> dict:
+    return dict(np.load(PROCESSED / "split_indices.npz"))
+
+
+def chunk_groups(chunk_ids) -> np.ndarray:
+    """Recording id per chunk, for cluster-bootstrap resampling (finding M5)."""
+    meta = pd.read_parquet(INTERIM / "chunks_meta.parquet")
+    return meta.iloc[np.asarray(chunk_ids)]["recording"].to_numpy()
+
+
+@torch.no_grad()
+def anomaly_scores(model, frames, split="test", batch: int = 128):
+    """Per-chunk anomaly logits and labels for one split.
+
+    Used by scripts/bootstrap_ci.py to obtain the raw predictions needed for a
+    cluster bootstrap without retraining.
+    """
+    model.eval()
+    f = frames[split]
+    chunks = []
+    for i in range(0, len(f["X"]), batch):
+        lg, _, _ = model(f["X"][i:i + batch], f["proto"][i:i + batch])
+        chunks.append(lg["anomaly"])
+    scores = torch.cat(chunks).detach().cpu().numpy()
+    y = f["ano"].detach().cpu().numpy()
+    return y, scores
+
+
 def epoch_data(frames, name: str, ratio: float, rng):
     f = frames[name]
     ano = f["ano"]
@@ -124,10 +152,12 @@ def fit_summary_head(model, frames, cfg, rng, epochs=None, lr=None, batch=256) -
     warmup = min(5, max(1, epochs // 10))
 
     with torch.no_grad():
-        stats = {
-            name: (chunk_summary(frames[name]["X"]) - model.summary_loc) / model.summary_scale
-            for name in ("train", "val")
-        }
+        stats = {}
+        for name in ("train", "val"):
+            sx = frames[name]["X"]
+            loc = model.summary_loc.to(sx.device) if model.summary_loc.device != sx.device else model.summary_loc
+            sc = model.summary_scale.to(sx.device) if model.summary_scale.device != sx.device else model.summary_scale
+            stats[name] = (chunk_summary(sx) - loc) / sc
     y_tr = frames["train"]["ano"].float()
     y_va = frames["val"]["ano"].cpu().numpy()
     pos = (y_tr == 1).nonzero(as_tuple=True)[0]
@@ -154,7 +184,12 @@ def fit_summary_head(model, frames, cfg, rng, epochs=None, lr=None, batch=256) -
 
     def val_pr() -> float:
         with torch.no_grad():
-            return float(average_precision_score(y_va, model.summary_head(stats["val"]).squeeze(-1).cpu().numpy()))
+            sv = stats["val"]
+            head = model.summary_head
+            if head.weight.device != sv.device:
+                head = type(head)(head.in_features, head.out_features).to(sv.device)
+                head.load_state_dict({k:v.to(sv.device) for k,v in model.summary_head.state_dict().items()})
+            return float(average_precision_score(y_va, head(sv).squeeze(-1).cpu().numpy()))
 
     best = -1.0
     best_state = {k: v.detach().cpu().clone() for k, v in model.summary_head.state_dict().items()}
@@ -225,10 +260,12 @@ def fit_summary_residual(model, frames, cfg, rng, epochs=40, lr=3e-3, batch=256)
     from src.models.tagn import chunk_summary
 
     with torch.no_grad():
-        stats = {
-            name: (chunk_summary(frames[name]["X"]) - model.summary_loc) / model.summary_scale
-            for name in ("train", "val")
-        }
+        stats = {}
+        for name in ("train", "val"):
+            sx = frames[name]["X"]
+            loc = model.summary_loc.to(sx.device) if model.summary_loc.device != sx.device else model.summary_loc
+            sc = model.summary_scale.to(sx.device) if model.summary_scale.device != sx.device else model.summary_scale
+            stats[name] = (chunk_summary(sx) - loc) / sc
     y_tr = frames["train"]["ano"].float()
     y_va = frames["val"]["ano"].cpu().numpy()
     pos = (y_tr == 1).nonzero(as_tuple=True)[0]
@@ -378,8 +415,9 @@ def evaluate(model, frames, rca, cfg, split="test", threshold=None):
     for i in range(0, len(f["X"]), B):
         lg, _, _ = model(f["X"][i:i + B], f["proto"][i:i + B])
         for k in logits_list:
-            logits_list[k].append(lg[k])
-    cat = {k: torch.cat(v).detach().cpu().numpy() for k, v in logits_list.items()}
+            if k in lg:
+                logits_list[k].append(lg[k])
+    cat = {k: torch.cat(v).detach().cpu().numpy() for k, v in logits_list.items() if v}
     ano = f["ano"].detach().cpu().numpy()
     from src.evaluation.metrics import summarize
 
@@ -412,6 +450,11 @@ def evaluate(model, frames, rca, cfg, split="test", threshold=None):
             "type_template_jaccard": float(np.mean(jac_t)),
             "topk_shift_jaccard": float(np.mean(jac_k)),
         }
+        # fixed-k ranking metrics (Recall@k / MRR / MAP); see metrics.rca_ranking_metrics
+        from src.evaluation.metrics import rca_ranking_metrics
+
+        gt_sets = [set(np.where(gt[j])[0]) for j in range(len(gt))]
+        out["rca"].update(rca_ranking_metrics(cat["kpi"][anom_i], gt_sets))
     ons = f["ons"].detach().cpu().numpy()
     oi = np.where((ano == 1) & (ons > 0))[0]
     if len(oi):

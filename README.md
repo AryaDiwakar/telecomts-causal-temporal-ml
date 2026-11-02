@@ -27,41 +27,35 @@ docs/               schema, leakage, literature, gap, methodology,
 tests/              pipeline sanity tests
 ```
 
-## Key results so far (exp_001, seed 42, test split)
+## Key results (v3, leak-free split)
 
-The numbers below are the last completed **pre-TAGN-v2** run and are retained
-as a baseline, not as results for the upgraded model. TAGN-v2 changes graph
-message direction, uses edge strengths in attention, adds causal channel
-normalization, and adds a chunk-statistics branch. All TAGN experiments must
-be rerun before making comparisons.
+The citable, current numbers are in **`docs/results_v3.md`** and
+`outputs/tables/headline_v3.{md,csv}`: test set **n = 5,689**, 424 positives,
+26 recordings, validation-tuned thresholds, recording-level cluster-bootstrap
+CIs.
 
-| model | ROC-AUC | PR-AUC | notes |
-|---|---|---|---|
-| Isolation Forest | 0.25 | 0.03 | below random — anomaly manifold is dense |
-| LOF (unsup.) | 0.24 | 0.03 | same |
-| One-Class SVM | 0.69 | 0.08 | |
-| XGBoost (sup.) | 0.92 | 0.67 | |
-| Logistic Regr. (sup.) | 0.97 | 0.76 | |
+Setting I (pooled window), mean PR-AUC / ROC-AUC:
 
-Root-cause baselines: recording-prior Jaccard **0.82** > ML type-prior **0.76**
-> input-driven top-K **0.37** — strong evidence of the recording-memorization
-shortcut; motivates leave-recording-out (Setting II).
+| model | PR-AUC | ROC-AUC |
+|---|---|---|
+| TCN (temporal deep) | **0.8606** | 0.9438 |
+| LogReg (hand features) | 0.8196 | 0.9309 |
+| GRU (temporal deep) | 0.7635 | 0.9399 |
+| TAGN (graph + summary) | 0.7589 | **0.9543** |
+| XGBoost (hand features) | 0.7427 | 0.8956 |
+| LOF / OneClassSVM / IsolationForest | 0.5776 / 0.5278 / 0.1923 | 0.9307 / 0.8776 / 0.7956 |
 
-exp_002 (TAGN) has completed runs for all five configured seeds. The aggregate
-results and full experiment matrix are in `outputs/report.md`.
+After the G5 split repair (finding G5, `docs/benchmark_audit_v3.md`), **TAGN
+does not beat the classical or temporal baselines on PR-AUC** (paired ΔPR is
+negative on 4/5 seeds vs LogReg) and Setting I (0.7589) ≈ Setting II (0.7689).
+The graph is detection-neutral in the ablation. This reverses the earlier
+headline; see §6 of `docs/results_v3.md`.
 
-## Latest verified anomaly result
-
-The corrected chronological benchmark now reports logistic regression at
-PR-AUC **0.9523** / ROC-AUC **0.9880**. The TAGN anomaly anchor uses the same
-train-only normalization and an explicitly checked classical-statistics
-prefix, followed by a frozen linear anchor and a nonlinear residual. Its
-validated anchor-only artifact reaches PR-AUC **0.9730** / ROC-AUC **0.9921**
-on the held-out test split. A fixed 50/50 logit ensemble with a deterministic
-logistic expert reaches PR-AUC **0.9774** / ROC-AUC **0.9926**
-(`outputs/results/exp_009_hybrid_seed42.json`).
-These are verified chronological anomaly-head results; leave-recording-out and
-external published-baseline comparisons are still required for an SOTA claim.
+The older "acceptance gate" numbers that previously appeared here (LogReg
+0.9523 / anchor 0.9730 / ensemble 0.9774 PR-AUC) were measured on a different,
+smaller test set and — for the Track-2 synthetic recordings — with the test
+sessions' backgrounds present in training. They are **invalid and must not be
+cited**; the pre-repair artefacts are archived under `outputs/results/archive/`.
 
 Run the fast benchmark with:
 

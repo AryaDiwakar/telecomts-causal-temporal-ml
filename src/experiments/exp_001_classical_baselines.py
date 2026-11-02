@@ -25,6 +25,8 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import RocCurveDisplay, average_precision_score
 from sklearn.neighbors import LocalOutlierFactor
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 from sklearn.svm import OneClassSVM
 from xgboost import XGBClassifier
 
@@ -115,22 +117,28 @@ def main() -> None:
         n_neighbors=20, contamination="auto", novelty=True, n_jobs=-1
     )
 
+    # sklearn's IsolationForest/OneClassSVM/LOF ``score_samples`` return a value
+    # that is HIGHER for normal points, so the anomaly score is its negation.
+    # Using it un-negated flips the ranking (ROC-AUC < 0.5); see
+    # docs/benchmark_audit_v3.md (finding M2).
     for name, model in unsup.items():
         model.fit(norm_tr_fit)
-        s_test = model.score_samples(Fte)
-        s_val = model.score_samples(Fva)
-        res = summarize(yte, s_test)
-        res["threshold_val_tuned"] = val_tuned_threshold(yva, s_val)
-        res.update(pr_f1_at_threshold(yte, s_test))
+        s_test = -model.score_samples(Fte)
+        s_val = -model.score_samples(Fva)
+        thr = val_tuned_threshold(yva, s_val)
+        res = summarize(yte, s_test, threshold=thr)
+        res["threshold_val_tuned"] = thr
+        res["f1_max_test_optimal_optimistic"] = pr_f1_at_threshold(yte, s_test)["f1_max"]
         results[f"unsup_{name}"] = res
         print(name, res)
 
     lof.fit(norm_tr_fit)
-    s_test = lof.score_samples(Fte)
-    s_val = lof.score_samples(Fva)
-    res = summarize(yte, s_test)
-    res["threshold_val_tuned"] = val_tuned_threshold(yva, s_val)
-    res.update(pr_f1_at_threshold(yte, s_test))
+    s_test = -lof.score_samples(Fte)
+    s_val = -lof.score_samples(Fva)
+    thr = val_tuned_threshold(yva, s_val)
+    res = summarize(yte, s_test, threshold=thr)
+    res["threshold_val_tuned"] = thr
+    res["f1_max_test_optimal_optimistic"] = pr_f1_at_threshold(yte, s_test)["f1_max"]
     results["unsup_lof"] = res
     print("lof", res)
 
@@ -147,15 +155,22 @@ def main() -> None:
             random_state=SEED,
             n_jobs=-1,
         ),
-        "logreg": LogisticRegression(max_iter=5000, class_weight="balanced", n_jobs=-1),
+        # Standardise features for the linear model (fit on train only) so lbfgs
+        # converges; the raw-energy features otherwise have a large dynamic range
+        # and hit the iteration cap (docs/benchmark_audit_v3.md, exp_001 C-baseline).
+        "logreg": make_pipeline(
+            StandardScaler(),
+            LogisticRegression(max_iter=20000, class_weight="balanced"),
+        ),
     }
     for name, model in sup.items():
         model.fit(Ftr, ytr)
         s_val = model.predict_proba(Fva)[:, 1]
         s_test = model.predict_proba(Fte)[:, 1]
-        res = summarize(yte, s_test)
-        res["threshold_val_tuned"] = val_tuned_threshold(yva, s_val)
-        res.update(pr_f1_at_threshold(yte, s_test))
+        thr = val_tuned_threshold(yva, s_val)
+        res = summarize(yte, s_test, threshold=thr)
+        res["threshold_val_tuned"] = thr
+        res["f1_max_test_optimal_optimistic"] = pr_f1_at_threshold(yte, s_test)["f1_max"]
         results[f"sup_{name}"] = res
         print(name, res)
 
@@ -279,20 +294,39 @@ def main() -> None:
     # ---------------- ROC / PR curves ----------------
     from sklearn.metrics import PrecisionRecallDisplay, RocCurveDisplay
 
-    scorer_funs = {
-        "XGBoost (sup.)": ("sup_xgb", "prob"),
-        "LogReg (sup.)": ("sup_logreg", "prob"),
-        "IsolationForest": ("unsup_isolation_forest", "score"),
-        "One-Class SVM": ("unsup_one_class_svm", "score"),
-        "LOF": ("unsup_lof", "score"),
+    # NOTE: build this map explicitly. The old loop tested ``key in unsup`` with
+    # keys like "unsup_isolation_forest" while ``unsup`` is keyed
+    # "isolation_forest", so the membership test was always False and every
+    # unsupervised curve silently used LOF's scores (all three identical).
+    score_cache: dict[str, np.ndarray] = {
+        "XGBoost (sup.)": sup["xgb"].predict_proba(Fte)[:, 1],
+        "LogReg (sup.)": sup["logreg"].predict_proba(Fte)[:, 1],
+        "IsolationForest": -unsup["isolation_forest"].score_samples(Fte),
+        "One-Class SVM": -unsup["one_class_svm"].score_samples(Fte),
+        "LOF": -lof.score_samples(Fte),
     }
-    score_cache: dict[str, np.ndarray] = {}
-    for name, (key, kind) in scorer_funs.items():
-        if kind == "prob":
-            model_key = key.replace("sup_", "")  # sup dict keyed by "xgb"/"logreg"
-            score_cache[name] = sup[model_key].predict_proba(Fte)[:, 1]
-        else:
-            score_cache[name] = unsup[key].score_samples(Fte) if key in unsup else lof.score_samples(Fte)
+
+    # Persist test predictions so classical baselines can get cluster-bootstrap
+    # CIs on exactly the same chunks as TAGN (scripts/bootstrap_ci.py, finding M5).
+    preds_dir = RES / "preds"
+    preds_dir.mkdir(parents=True, exist_ok=True)
+    te_ids = np.where(test_mask)[0]
+    clean = {
+        "XGBoost (sup.)": "xgb",
+        "LogReg (sup.)": "logreg",
+        "IsolationForest": "iforest",
+        "One-Class SVM": "ocsvm",
+        "LOF": "lof",
+    }
+    np.savez_compressed(
+        preds_dir / "exp_001_test_preds.npz",
+        chunk_ids=te_ids,
+        y=yte,
+        groups=meta_te["recording"].to_numpy().astype(str),
+        **{clean[name]: sc for name, sc in score_cache.items()},
+    )
+    print(f"wrote {preds_dir / 'exp_001_test_preds.npz'} ({len(score_cache)} scorers)",
+          flush=True)
 
     fig, axes = plt.subplots(1, 2, figsize=(13, 5.5))
     for name in score_cache:

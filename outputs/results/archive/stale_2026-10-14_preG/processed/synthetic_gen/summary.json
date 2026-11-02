@@ -1,0 +1,10 @@
+{
+  "seed": 2026,
+  "n_recordings": 12,
+  "n_anomalous_windows": 714,
+  "n_events": 33,
+  "mean_direction_accuracy": 1.0,
+  "bounds_respected_all": true,
+  "nan_inf_total": 0,
+  "multi_type_dropped_total": 4
+}

@@ -1,0 +1,82 @@
+# KPI crosswalk TelecomTS <-> SpotLight (MobiCom 2024, Microsoft Cambridge 5G testbed).
+#
+# Purpose: a defensible shared observation space for the RANTransfer evaluation.
+# Every TelecomTS numeric KPI is mapped to its best SpotLight channel (radio.csv
+# unless noted). Quality labels are enforced:
+#   direct  - same physical quantity, same units/purpose
+#   proxy   - nearest available surrogate (semantics differ; disclosed)
+#   gap     - no SpotLight counterpart -> excluded from the shared space
+#
+# Only {direct, proxy} KPIs enter the shared "K=13" space used for transfer.
+# SpotLight per-step values are aggregated to a 1 s grid (mean for rates and
+# levels, max for counters/CPU) by src/data/adapters/spotlight.py.
+#
+# Provenance: schema/radio_kpi.md and schema/platform_kpi.md in
+# github.com/netsys-edinburgh/SpotLight (paper: MobiCom 2024).
+
+telecomts_to_spotlight:
+  RSRP:                    {channel: null,                quality: gap,   note: "no RSRP; only CSI/SINR exposed"}
+  DL_BLER:                 {channel: mac_dl_harq_nack_rate, quality: proxy, note: "DL HARQ NACK rate as BLER surrogate"}
+  DL_MCS:                  {channel: l1_avg_mcs,          quality: direct}
+  UL_BLER:                 {channel: mac_ul_CRC_Loss_Rate, quality: proxy, note: "UL CRC loss rate as BLER surrogate"}
+  UL_MCS:                  {channel: l1_avg_UL_mcs,       quality: direct}
+  UL_NPRB:                 {channel: l1_avg_UL_prbSize,   quality: direct}
+  UL_SNR:                  {channel: mac_sinr_update_mean, quality: proxy, note: "cell-wide SINR mean (per-step max/min/mean are logged)"}
+  TX_Bytes:                {channel: BHTX_In_size,        quality: direct, note: "DL ingress traffic aggregate (core->CU)"}
+  RX_Bytes:                {channel: BHRX_In_size,        quality: direct, note: "UL traffic toward core"}
+  Estimated_UL_Buffer:     {channel: mac_bsr_update_mean, quality: proxy, note: "MAC buffer-status-report level"}
+  PRBs_DL_Current:         {channel: l1_avg_prbSize,      quality: direct}
+  PRBs_UL_Current:         {channel: l1_avg_UL_prbSize,   quality: direct}
+  PRB_Utilization_DL:      {channel: null,                quality: gap,   note: "no scheduler utilization; only PRB usage"}
+  PRB_Utilization_UL:      {channel: null,                quality: gap,   note: "no scheduler utilization; only PRB usage"}
+  UL_NumberOfPackets:      {channel: ul_fapi_total_pusch_count, quality: direct}
+  DL_NumberOfPackets:      {channel: dl_fapi_total_pdsch_count, quality: direct}
+
+# Channels used only for the SELF-DERIVED anomaly labels (see adapter docstring).
+# Labels flag sustained robust-z deviations in the per-run monitor channel(s).
+label_monitors:
+  pdcp_worker:   {table: platform, channel: gnb_cu_pdcp_0_0_pdcp_worker_0_max,       agg: max}
+  f1_cu_worker:  {table: platform, channel: gnb_cu_pdcp_0_0_f1_worker_0_max,         agg: max}
+  txctrl:        {table: platform, channel: gnb_du_layer2_TxCtrl_DU1_C0_max,         agg: max}
+  txctrl_runtime: {table: platform, channel: gnb_du_layer2_TxCtrl_DU1_C0_total_runtime, agg: max, note: "DU scheduler occupancy captured by BCC per-sample runtime"}
+  f1_du_worker:  {table: platform, channel: gnb_du_layer2_f1_du_worker_0_max,        agg: max}
+  sinr:          {table: radio,    channel: mac_sinr_update_min,                     agg: mean}
+  crc_loss_rate: {table: radio,    channel: mac_ul_CRC_Loss_Rate,                    agg: mean}
+  nack_rate:     {table: radio,    channel: mac_dl_harq_nack_rate,                   agg: mean}
+  mcs:           {table: radio,    channel: l1_avg_mcs,                              agg: mean}
+  fh_bytes:      {table: radio,    channel: MHTX_In_size,                            agg: mean, note: "fronthaul DL traffic (CU->DU)"}
+
+# Default per-run class -> monitor column set used to derive anomaly steps.
+# The class is taken from the run folder. Injected mechanism per the paper:
+#   PDCP  -> CU contention (pdcp_worker_0 stressed)
+#   MAC   -> scheduler contention (TxCtrl_DU thread busy-looped)
+#   RADIO -> external interference (USRP on the carrier -> SINR/MCS/CRC path)
+#   NETWORK -> FH link contention (fronthaul packet path)
+#   MIXED -> any combination -> union of PDCP/MAC/RADIO monitors
+#   MIXED -> any combination -> union of PDCP/MAC/RADIO monitors
+#
+# Injection is a ~1 s stress burst (stress-ng proc/CPU) repeated roughly every
+# 10 s, so deviation is judged on SINGLE 1 s steps; the sustained check keeps
+# short noise spikes but accepted at min_sustained_steps=1 because a genuine
+# burst is ~1 s (see sample labels in netsys-edinburgh/SpotLight).
+monitor_sets:
+  PDCP:     [pdcp_worker, f1_cu_worker]
+  MAC:      [txctrl, txctrl_runtime, f1_du_worker]
+  RADIO:    [sinr, crc_loss_rate, nack_rate, mcs]
+  NETWORK:  [fh_bytes, sinr, crc_loss_rate]
+  MIXED:    [pdcp_worker, f1_du_worker, sinr, crc_loss_rate, nack_rate]
+
+label_rules:
+  robust_z_threshold: 5.0        # |robust z| >= threshold marks a deviating step
+  min_sustained_steps: 1         # 1 s injection bursts; >= this many consecutive steps
+  window_label_fraction: 0.02    # window flagged positive if >= this fraction of steps deviates
+  z_floor_sd: 1.0                # per-run MAD floor (SD) used to stabilize z
+
+window:
+  t_seconds: 128                 # window length in 1 s steps (matches TelecomTS 128-step budget)
+  stride_seconds: 128            # non-overlapping windows (KAC-style any-exposure windowing)
+  min_positive_fraction: 0.05    # sanity cap; windows exceeding this are candidates, see adapter
+
+agg:
+  radio: mean                    # feature aggregation over a 1 s grid
+  platform: max                  # CPU/runtime channels: take the 1 s max

@@ -1,0 +1,205 @@
+# Track 2 - synthetic fault injection spec (configs/synthetic.yaml)
+#
+# Re-implements the TelecomTS synthetic anomaly pipeline (arXiv:2510.06063,
+# Appendix C). The paper publishes the 8 function classes and the injection
+# procedure but NOT the numeric parameter ranges. We therefore:
+#   * recover the per-type affected-KPI templates from the shipped dataset
+#     itself (all 10 templates below match the shipped chunked.jsonl),
+#   * publish our own parameter ranges (physical/symptom-motivated, uniformly
+#     sampled per event, exactly as the paper's procedure),
+#   * reproduce the paper's boundary clipping (soft bounds + saturation) and
+#     windowing (length 128, stride 32, drop all-normal and multi-type windows).
+# All parameters and seeds here are DISJOINT from the original dataset.
+# Additionally, each event activates a random 50-100% subset of its type's
+# affected-KPI set, so generated data carries INSTANCE-VARYING KPI-level ground
+# truth (in the original data the affected set is constant per type).
+
+track2:
+  out_root: "data/raw/TelecomTS/anomalous/synthetic_gen"
+  source_root: "data/raw/TelecomTS/normal"
+  window_length: 128            # steps per chunk (paper: 128 @ 10 Hz = 12.8 s)
+  stride: 32                    # paper: sliding stride 32
+  sampling_rate: 10
+  # Inject only onto recordings whose raw length matches the paper's synthetic
+  # set (10k steps). The 100k-step no_congestion traces stay reserved/unused so
+  # generated recordings keep the same window scale as the original data.
+  max_source_rows: 15000
+
+  # Exponential inter-arrival / duration priors (paper: exponential with
+  # empirically motivated rates; rates not published - ours below). Steps are
+  # raw timesteps @ 10 Hz (100 steps = 10 s).
+  schedule:
+    inter_arrival_mean_steps: 2600
+    duration_mean_steps: 550
+    max_events: 80              # safety cap per recording
+    min_duration_steps: 48
+
+  # KPI soft bounds; transformed values are truncated to these ranges. When a
+  # KPI saturates at a bound we add small zero-mean noise to the saturated
+  # points (paper Appendix C: "inject noise at the saturated data points").
+  boundaries:
+    RSRP: [-120.0, -40.0]
+    DL_BLER: [0.0, 1.0]
+    DL_MCS: [0.0, 28.0]
+    UL_BLER: [0.0, 1.0]
+    UL_MCS: [0.0, 28.0]
+    UL_NPRB: [0.0, 273.0]
+    UL_SNR: [0.0, 40.0]
+    TX_Bytes: [0.0, 50000000.0]
+    RX_Bytes: [0.0, 50000000.0]
+    Estimated_UL_Buffer: [0.0, 5000000.0]
+    PRBs_DL_Current: [0.0, 273.0]
+    PRBs_UL_Current: [0.0, 273.0]
+    PRB_Utilization_DL: [0.0, 100.0]
+    PRB_Utilization_UL: [0.0, 100.0]
+    UL_NumberOfPackets: [0.0, 100000.0]
+    DL_NumberOfPackets: [0.0, 100000.0]
+
+  # The 8 function classes from the paper's Table 9. `u` is normalized time
+  # within the event, u in [0,1]. Parameters are uniformly sampled per event
+  # (shared across its affected KPIs where `shared: true`).
+  functions:
+    constant_shift:            # y += delta
+      params: {delta: [lo, hi]}
+    constant_scale:            # y *= factor
+      params: {factor: [lo, hi]}
+    linear_growth:             # y += delta * u
+      params: {delta: [lo, hi]}
+    exponential_growth:        # y *= exp(rate * u)
+      params: {rate: [lo, hi]}
+    logistic_growth:           # y += L / (1 + exp(-k*(u - 0.5)))
+      params: {L: [lo, hi], k: [lo, hi]}
+    sinusoidal_add:            # y += amp * sin(2*pi*freq*u + phase)
+      params: {amp: [lo, hi], freq: [lo, hi], phase: [0.0, 6.283185307179586]}
+      shared: [freq, phase]
+    sinusoidal_scale:          # y *= (1 + amp * sin(2*pi*freq*u + phase))
+      params: {amp: [lo, hi], freq: [lo, hi], phase: [0.0, 6.283185307179586]}
+      shared: [freq, phase]
+
+  # Per-anomaly-type effects. KPI sets below are the exact templates recovered
+  # from data/raw/TelecomTS/anomalous/synthetic/**/processed/chunked.jsonl.
+  # Each effect: {kpi, func, params: {name: [lo, hi]}} sampled per event.
+  anomalies:
+    - name: "Antenna Failure"
+      effects:
+        - {kpi: RSRP, func: constant_shift, params: {delta: [-14.0, -6.0]}}
+        - {kpi: UL_SNR, func: constant_shift, params: {delta: [-12.0, -4.0]}}
+        - {kpi: DL_MCS, func: constant_shift, params: {delta: [-4.0, -1.0]}}
+        - {kpi: UL_MCS, func: constant_shift, params: {delta: [-4.0, -1.0]}}
+        - {kpi: DL_BLER, func: constant_scale, params: {factor: [2.0, 6.0]}}
+        - {kpi: UL_BLER, func: constant_scale, params: {factor: [2.0, 5.0]}}
+        - {kpi: TX_Bytes, func: constant_scale, params: {factor: [0.3, 0.7]}}
+        - {kpi: RX_Bytes, func: constant_scale, params: {factor: [0.3, 0.7]}}
+        - {kpi: UL_NumberOfPackets, func: constant_scale, params: {factor: [0.4, 0.8]}}
+        - {kpi: DL_NumberOfPackets, func: constant_scale, params: {factor: [0.4, 0.8]}}
+        - {kpi: PRBs_DL_Current, func: constant_shift, params: {delta: [-15.0, -5.0]}}
+        - {kpi: PRBs_UL_Current, func: constant_shift, params: {delta: [-5.0, -1.0]}}
+        - {kpi: Estimated_UL_Buffer, func: constant_shift, params: {delta: [0.0, 200.0]}}
+
+    - name: "Buffer Overflow (Gradual Buildup)"
+      effects:
+        - {kpi: Estimated_UL_Buffer, func: logistic_growth, params: {L: [3000.0, 9000.0], k: [4.0, 10.0]}}
+        - {kpi: PRB_Utilization_DL, func: linear_growth, params: {delta: [30.0, 60.0]}}
+        - {kpi: PRB_Utilization_UL, func: linear_growth, params: {delta: [20.0, 40.0]}}
+        - {kpi: UL_BLER, func: constant_scale, params: {factor: [2.0, 5.0]}}
+        - {kpi: DL_BLER, func: constant_scale, params: {factor: [2.0, 4.0]}}
+        - {kpi: TX_Bytes, func: constant_scale, params: {factor: [0.4, 0.85]}}
+        - {kpi: RX_Bytes, func: constant_scale, params: {factor: [0.4, 0.85]}}
+        - {kpi: UL_NumberOfPackets, func: constant_scale, params: {factor: [0.4, 0.8]}}
+        - {kpi: DL_NumberOfPackets, func: constant_scale, params: {factor: [0.4, 0.8]}}
+        - {kpi: UL_NPRB, func: linear_growth, params: {delta: [0.0, 20.0]}}
+
+    - name: "Co-Channel Interference (Mild)"
+      effects:
+        - {kpi: UL_SNR, func: constant_shift, params: {delta: [-6.0, -2.0]}}
+        - {kpi: RSRP, func: constant_shift, params: {delta: [-5.0, -2.0]}}
+        - {kpi: DL_BLER, func: constant_scale, params: {factor: [1.5, 3.0]}}
+        - {kpi: UL_BLER, func: constant_scale, params: {factor: [1.5, 3.0]}}
+        - {kpi: PRB_Utilization_DL, func: constant_shift, params: {delta: [5.0, 15.0]}}
+        - {kpi: PRB_Utilization_UL, func: constant_shift, params: {delta: [5.0, 15.0]}}
+        - {kpi: TX_Bytes, func: constant_scale, params: {factor: [0.6, 0.9]}}
+        - {kpi: RX_Bytes, func: constant_scale, params: {factor: [0.6, 0.9]}}
+
+    - name: "Co-Channel Interference (Severe)"
+      effects:
+        - {kpi: UL_SNR, func: constant_shift, params: {delta: [-16.0, -8.0]}}
+        - {kpi: RSRP, func: constant_shift, params: {delta: [-10.0, -4.0]}}
+        - {kpi: DL_BLER, func: constant_scale, params: {factor: [4.0, 8.0]}}
+        - {kpi: UL_BLER, func: constant_scale, params: {factor: [4.0, 7.0]}}
+        - {kpi: PRB_Utilization_DL, func: constant_shift, params: {delta: [10.0, 25.0]}}
+        - {kpi: PRB_Utilization_UL, func: constant_shift, params: {delta: [10.0, 25.0]}}
+        - {kpi: TX_Bytes, func: constant_scale, params: {factor: [0.2, 0.5]}}
+        - {kpi: RX_Bytes, func: constant_scale, params: {factor: [0.2, 0.5]}}
+        - {kpi: UL_NumberOfPackets, func: constant_scale, params: {factor: [0.3, 0.6]}}
+        - {kpi: DL_NumberOfPackets, func: constant_scale, params: {factor: [0.3, 0.6]}}
+        - {kpi: UL_NPRB, func: constant_shift, params: {delta: [0.0, 10.0]}}
+
+    - name: "Doppler Shift (Severe)"
+      effects:
+        - {kpi: RSRP, func: sinusoidal_add, params: {amp: [2.0, 6.0], freq: [0.5, 2.0]}}
+        - {kpi: UL_SNR, func: sinusoidal_add, params: {amp: [3.0, 8.0], freq: [0.5, 2.0]}}
+        - {kpi: DL_MCS, func: constant_shift, params: {delta: [-3.0, -1.0]}}
+        - {kpi: UL_MCS, func: constant_shift, params: {delta: [-3.0, -1.0]}}
+        - {kpi: TX_Bytes, func: constant_scale, params: {factor: [0.5, 0.85]}}
+        - {kpi: RX_Bytes, func: constant_scale, params: {factor: [0.5, 0.85]}}
+        - {kpi: UL_NPRB, func: sinusoidal_add, params: {amp: [5.0, 15.0], freq: [0.5, 2.0]}}
+
+    - name: "Faulty Handover Algorithm (Too Frequent)"
+      effects:
+        - {kpi: RSRP, func: sinusoidal_add, params: {amp: [3.0, 8.0], freq: [0.5, 2.0]}}
+        - {kpi: UL_SNR, func: sinusoidal_add, params: {amp: [4.0, 10.0], freq: [0.5, 2.0]}}
+        - {kpi: DL_BLER, func: sinusoidal_scale, params: {amp: [0.3, 0.8], freq: [0.5, 2.0]}}
+        - {kpi: UL_BLER, func: sinusoidal_scale, params: {amp: [0.3, 0.8], freq: [0.5, 2.0]}}
+        - {kpi: DL_NumberOfPackets, func: constant_scale, params: {factor: [1.2, 2.5]}}
+        - {kpi: UL_NumberOfPackets, func: constant_scale, params: {factor: [1.2, 2.0]}}
+        - {kpi: TX_Bytes, func: constant_scale, params: {factor: [0.6, 0.9]}}
+        - {kpi: RX_Bytes, func: constant_scale, params: {factor: [0.6, 0.9]}}
+        - {kpi: Estimated_UL_Buffer, func: constant_shift, params: {delta: [0.0, 400.0]}}
+
+    - name: "Faulty RF Filters (Temporal)"
+      effects:
+        - {kpi: UL_SNR, func: linear_growth, params: {delta: [-10.0, -3.0]}}
+        - {kpi: RSRP, func: constant_shift, params: {delta: [-8.0, -3.0]}}
+        - {kpi: DL_BLER, func: constant_scale, params: {factor: [3.0, 6.0]}}
+        - {kpi: UL_BLER, func: constant_scale, params: {factor: [3.0, 6.0]}}
+        - {kpi: PRB_Utilization_DL, func: constant_shift, params: {delta: [5.0, 20.0]}}
+        - {kpi: PRB_Utilization_UL, func: constant_shift, params: {delta: [5.0, 20.0]}}
+        - {kpi: TX_Bytes, func: constant_scale, params: {factor: [0.4, 0.7]}}
+        - {kpi: RX_Bytes, func: constant_scale, params: {factor: [0.4, 0.7]}}
+        - {kpi: UL_NPRB, func: linear_growth, params: {delta: [0.0, 15.0]}}
+
+    - name: "High Network Congestion (Gradual Buildup)"
+      effects:
+        - {kpi: PRB_Utilization_DL, func: linear_growth, params: {delta: [30.0, 60.0]}}
+        - {kpi: PRB_Utilization_UL, func: linear_growth, params: {delta: [20.0, 50.0]}}
+        - {kpi: Estimated_UL_Buffer, func: linear_growth, params: {delta: [2000.0, 5000.0]}}
+        - {kpi: DL_BLER, func: constant_scale, params: {factor: [2.0, 5.0]}}
+        - {kpi: UL_BLER, func: constant_scale, params: {factor: [2.0, 5.0]}}
+        - {kpi: TX_Bytes, func: constant_scale, params: {factor: [0.5, 0.85]}}
+        - {kpi: RX_Bytes, func: constant_scale, params: {factor: [0.5, 0.85]}}
+        - {kpi: DL_NumberOfPackets, func: linear_growth, params: {delta: [0.0, 300.0]}}
+        - {kpi: UL_NPRB, func: linear_growth, params: {delta: [0.0, 15.0]}}
+
+    - name: "High Network Congestion (Sudden Spike)"
+      effects:
+        - {kpi: PRB_Utilization_DL, func: exponential_growth, params: {rate: [0.8, 2.0]}}
+        - {kpi: PRB_Utilization_UL, func: exponential_growth, params: {rate: [0.8, 2.0]}}
+        - {kpi: Estimated_UL_Buffer, func: exponential_growth, params: {rate: [0.5, 1.5]}}
+        - {kpi: DL_BLER, func: constant_scale, params: {factor: [3.0, 6.0]}}
+        - {kpi: UL_BLER, func: constant_scale, params: {factor: [3.0, 6.0]}}
+        - {kpi: DL_NumberOfPackets, func: constant_shift, params: {delta: [100.0, 400.0]}}
+        - {kpi: UL_NumberOfPackets, func: constant_shift, params: {delta: [100.0, 400.0]}}
+        - {kpi: TX_Bytes, func: constant_scale, params: {factor: [0.3, 0.6]}}
+        - {kpi: RX_Bytes, func: constant_scale, params: {factor: [0.3, 0.6]}}
+
+    - name: "Resource Allocation Bugs"
+      effects:
+        - {kpi: PRBs_DL_Current, func: sinusoidal_add, params: {amp: [10.0, 25.0], freq: [0.5, 2.0]}}
+        - {kpi: PRBs_UL_Current, func: sinusoidal_add, params: {amp: [3.0, 10.0], freq: [0.5, 2.0]}}
+        - {kpi: PRB_Utilization_DL, func: sinusoidal_add, params: {amp: [10.0, 25.0], freq: [0.5, 2.0]}}
+        - {kpi: PRB_Utilization_UL, func: sinusoidal_add, params: {amp: [10.0, 25.0], freq: [0.5, 2.0]}}
+        - {kpi: DL_BLER, func: sinusoidal_scale, params: {amp: [0.2, 0.5], freq: [0.5, 2.0]}}
+        - {kpi: UL_BLER, func: sinusoidal_scale, params: {amp: [0.2, 0.5], freq: [0.5, 2.0]}}
+        - {kpi: TX_Bytes, func: constant_scale, params: {factor: [0.5, 0.8]}}
+        - {kpi: RX_Bytes, func: constant_scale, params: {factor: [0.5, 0.8]}}
+        - {kpi: UL_NPRB, func: sinusoidal_add, params: {amp: [5.0, 15.0], freq: [0.5, 2.0]}}

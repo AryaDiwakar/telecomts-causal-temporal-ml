@@ -1,0 +1,118 @@
+{
+  "model": "tagn_grl",
+  "seed": 42,
+  "test": {
+    "n": 4969,
+    "n_positives": 424,
+    "roc_auc": 0.9566151898208689,
+    "pr_auc": 0.9226470682078194,
+    "f1_max": 0.9077306733167082,
+    "precision": 0.9629629629629629,
+    "recall": 0.8584905660377359,
+    "threshold": -0.28583601117134094,
+    "tpr_at_fpr_0.01": 0.875,
+    "tpr_at_fpr_0.05": 0.910377358490566,
+    "threshold_val_tuned": -0.28583601117134094
+  },
+  "test_rca": {
+    "type_template_jaccard": 0.4712592046318462,
+    "topk_shift_jaccard": 0.5703647178293405
+  },
+  "rca_by_subset": {
+    "instance_varying": 0.508,
+    "template": 0.6265
+  },
+  "tcrl": {
+    "probe_acc": 0.8867924528301886,
+    "macro_f1": 0.847055532878142,
+    "majority": 0.2169811320754717,
+    "tcrl": 0.8554216867469879,
+    "n": 424
+  },
+  "rcai": {
+    "stability_mean": 0.9992200439661784
+  },
+  "coverage_risk": {
+    "best_jaccard": 0.5703647178293405,
+    "s_mean": 0.9992200439661784,
+    "cov_stability": [
+      {
+        "coverage": 0.1,
+        "jaccard": 0.5717222592222593
+      },
+      {
+        "coverage": 0.25,
+        "jaccard": 0.5506652414671283
+      },
+      {
+        "coverage": 0.5,
+        "jaccard": 0.5663366900395203
+      },
+      {
+        "coverage": 0.75,
+        "jaccard": 0.5760793975416616
+      },
+      {
+        "coverage": 0.9,
+        "jaccard": 0.5720071922827829
+      },
+      {
+        "coverage": 1.0,
+        "jaccard": 0.5703647178293405
+      }
+    ],
+    "cov_neg_entropy": [
+      {
+        "coverage": 0.1,
+        "jaccard": 0.499215070643642
+      },
+      {
+        "coverage": 0.25,
+        "jaccard": 0.4921700416983435
+      },
+      {
+        "coverage": 0.5,
+        "jaccard": 0.5348033517844838
+      },
+      {
+        "coverage": 0.75,
+        "jaccard": 0.5767908454229209
+      },
+      {
+        "coverage": 0.9,
+        "jaccard": 0.563687515459169
+      },
+      {
+        "coverage": 1.0,
+        "jaccard": 0.5703647178293405
+      }
+    ],
+    "cov_learned": [
+      {
+        "coverage": 0.1,
+        "jaccard": 0.499215070643642
+      },
+      {
+        "coverage": 0.25,
+        "jaccard": 0.4921700416983435
+      },
+      {
+        "coverage": 0.5,
+        "jaccard": 0.5348033517844838
+      },
+      {
+        "coverage": 0.75,
+        "jaccard": 0.5766510830190075
+      },
+      {
+        "coverage": 0.9,
+        "jaccard": 0.563687515459169
+      },
+      {
+        "coverage": 1.0,
+        "jaccard": 0.5703647178293405
+      }
+    ]
+  },
+  "best_jaccard": 0.5703647178293405
+}

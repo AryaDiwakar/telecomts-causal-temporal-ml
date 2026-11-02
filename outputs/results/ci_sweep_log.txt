@@ -1,0 +1,44 @@
+
+=== sweep started 2026-10-12 14:07:07 seeds=[42, 123, 456, 789, 1337] loro=False
+[14:07:07] exp_002 seed 42: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_002_tagn --seed 42
+[14:18:50] exp_002 seed 42 rc=0
+[14:18:50] exp_009 seed 42: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_009_hybrid --seed 42
+[14:19:36] exp_009 seed 42 rc=0
+{"seed": 42, "elapsed_s": 749.1, "tagn_test": {"f1_max": 0.8372093023255814, "pr_auc": 0.9707801174915079, "roc_auc": 0.9904630821826578, "threshold_val_tuned": -0.7166694402694702}, "hybrid_test": {"f1_max": 0.954337899543379, "pr_auc": 0.9694129317172251, "roc_auc": 0.9877290868100262}}
+[14:19:36] exp_002 seed 123: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_002_tagn --seed 123
+[14:31:25] exp_002 seed 123 rc=0
+[14:31:25] exp_009 seed 123: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_009_hybrid --seed 123
+[14:32:11] exp_009 seed 123 rc=0
+{"seed": 123, "elapsed_s": 755.0, "tagn_test": {"f1_max": 0.8824742268041237, "pr_auc": 0.9690121907240379, "roc_auc": 0.9915947648576517, "threshold_val_tuned": -0.3728809356689453}, "hybrid_test": {"f1_max": 0.9521640091116174, "pr_auc": 0.9707740743971991, "roc_auc": 0.9885430695535922}}
+[14:32:11] exp_002 seed 456: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_002_tagn --seed 456
+[14:45:22] exp_002 seed 456 rc=0
+[14:45:22] exp_009 seed 456: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_009_hybrid --seed 456
+[14:46:10] exp_009 seed 456 rc=0
+{"seed": 456, "elapsed_s": 839.3, "tagn_test": {"f1_max": 0.8739837398373984, "pr_auc": 0.9655306171190353, "roc_auc": 0.9924511733684579, "threshold_val_tuned": -0.3398303985595703}, "hybrid_test": {"f1_max": 0.95, "pr_auc": 0.9689963418109051, "roc_auc": 0.9902608198039535}}
+[14:46:10] exp_002 seed 789: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_002_tagn --seed 789
+[14:58:00] exp_002 seed 789 rc=0
+[14:58:00] exp_009 seed 789: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_009_hybrid --seed 789
+[14:58:46] exp_009 seed 789 rc=0
+{"seed": 789, "elapsed_s": 756.6, "tagn_test": {"f1_max": 0.895397489539749, "pr_auc": 0.9720764897253716, "roc_auc": 0.9911132817317607, "threshold_val_tuned": -0.5031888484954834}, "hybrid_test": {"f1_max": 0.954337899543379, "pr_auc": 0.9712712903192019, "roc_auc": 0.9883121944481444}}
+[14:58:47] exp_002 seed 1337: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_002_tagn --seed 1337
+[15:10:36] exp_002 seed 1337 rc=0
+[15:10:36] exp_009 seed 1337: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_009_hybrid --seed 1337
+[15:11:23] exp_009 seed 1337 rc=0
+{"seed": 1337, "elapsed_s": 756.9, "tagn_test": {"f1_max": 0.9102564102564102, "pr_auc": 0.9720516963398839, "roc_auc": 0.9910669093815211, "threshold_val_tuned": -0.37192654609680176}, "hybrid_test": {"f1_max": 0.9521640091116174, "pr_auc": 0.9700418326250781, "roc_auc": 0.987991534579467}}
+=== sweep done 2026-10-12 15:11:23
+
+=== sweep started 2026-10-13 11:50:29 seeds=[42, 123, 456, 789, 1337] loro=False
+[11:50:29] exp_002 seed 42: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_002_tagn --seed 42
+
+=== sweep started 2026-10-13 11:55:50 seeds=[42, 123, 456, 789, 1337] loro=False
+[11:55:50] exp_002 seed 42: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_002_tagn --seed 42
+[12:09:36] exp_002 seed 42 rc=0
+[12:09:36] exp_009 seed 42: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_009_hybrid --seed 42
+[12:11:03] exp_009 seed 42 rc=0
+{"seed": 42, "elapsed_s": 913.6, "tagn_test": {"f1_max": 0.9117291414752116, "pr_auc": 0.9254941249713615, "roc_auc": 0.9555659339518857, "threshold_val_tuned": -0.08086216449737549}, "hybrid_test": {"f1_max": 0.9133663366336634, "pr_auc": 0.9127634490770272, "roc_auc": 0.9413802229279531}}
+[12:11:03] exp_002 seed 123: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_002_tagn --seed 123
+[12:34:58] exp_002 seed 123 rc=0
+[12:34:58] exp_009 seed 123: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_009_hybrid --seed 123
+[12:36:30] exp_009 seed 123 rc=0
+{"seed": 123, "elapsed_s": 1526.5, "tagn_test": {"f1_max": 0.9009661835748792, "pr_auc": 0.9269669827531754, "roc_auc": 0.9571309961184797, "threshold_val_tuned": -0.5525380373001099}, "hybrid_test": {"f1_max": 0.9097744360902256, "pr_auc": 0.909687354031641, "roc_auc": 0.9412572389314404}}
+[12:36:30] exp_002 seed 456: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m src.experiments.exp_002_tagn --seed 456

@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from src.evaluation.metrics import summarize  # noqa: E402
+from src.evaluation.metrics import pr_f1_at_threshold, summarize  # noqa: E402
 from src.experiments.exp_002_tagn import load_splits  # noqa: E402
 from src.models.tagn import TagnModel, chunk_summary, load_graphs, model_config  # noqa: E402
 
@@ -84,6 +84,13 @@ def main() -> None:
         for name in ("val", "test")
     }
 
+    def test_summary(val_scores: np.ndarray, test_scores: np.ndarray) -> dict:
+        """Operating point at the *validation*-tuned threshold, not test-tuned."""
+        thr = float(pr_f1_at_threshold(y["val"], val_scores)["threshold"])
+        out = summarize(y["test"], test_scores, threshold=thr)
+        out["threshold_val_tuned"] = thr
+        return out
+
     result = {
         "seed": args.seed,
         "checkpoint": str(checkpoint),
@@ -94,14 +101,28 @@ def main() -> None:
             "hybrid": summarize(y["val"], hybrid_scores["val"]),
         },
         "test": {
-            "tagn": summarize(y["test"], learned_scores["test"]),
-            "reference_logreg": summarize(y["test"], reference_scores["test"]),
-            "hybrid": summarize(y["test"], hybrid_scores["test"]),
+            "tagn": test_summary(learned_scores["val"], learned_scores["test"]),
+            "reference_logreg": test_summary(reference_scores["val"], reference_scores["test"]),
+            "hybrid": test_summary(hybrid_scores["val"], hybrid_scores["test"]),
         },
     }
     RES.mkdir(parents=True, exist_ok=True)
     with open(RES / f"exp_009_hybrid_seed{args.seed}.json", "w") as fh:
         json.dump(result, fh, indent=2)
+
+    # register results (Phase 6: previously exp_009 was never registered)
+    from src.utils.registry import append  # noqa: E402
+
+    for expert in ("tagn", "reference_logreg", "hybrid"):
+        m = result["test"][expert]
+        append({
+            "experiment": "exp_009",
+            "seed": args.seed,
+            "task": "anomaly_detection",
+            "model": f"exp_009_{expert}",
+            "variant": f"w={w:g}",
+            "metrics": {k: v for k, v in m.items() if isinstance(v, (int, float))},
+        })
     print(json.dumps(result["test"], indent=2))
 
 

@@ -72,25 +72,52 @@ def assign_splits(meta: pd.DataFrame, cfg: dict) -> tuple[dict[str, np.ndarray],
     assignments: dict[int, str] = {}
     audit: dict[str, dict] = {}
 
-    # --- jammer recordings: single continuous fault -> assign whole recording,
-    #     chronologically within stratum (File -> train, Twitch -> val,
-    #     YouTube -> test) so one fault event never spans splits ---
+    # --- atomic strata: whole recordings assigned by chronological rank, so a
+    #     single fault event never spans splits. ---
+    #     * jammer: continuous single fault.
+    #     * synthetic_gen (Track 2): injected KPI-level ground truth is
+    #       instance-varying per event; the within-recording temporal split put
+    #       every injected window in train (events cluster early), so val/test
+    #       saw zero non-template RCA windows. Assign whole injected recordings
+    #       and reserve a larger test share (0.5/0.15/0.35) so the corrected,
+    #       non-template RCA ground truth is represented in val and test.
     anomalous_recordings = (
         meta[meta.anomaly].groupby("recording")["chunk_id"].count().index.tolist()
     )
-    atomic_recs = [r for r in anomalous_recordings if "/jammer/" in r]
-    strata: dict[str, list[str]] = {}
-    for rec in atomic_recs:
-        strata.setdefault("jammer", []).append(rec)
-    for stratum, recs in strata.items():
+    strata: dict[str, tuple[list[str], tuple[float, float, float]]] = {}
+
+    # G5: each Track-2 synthetic recording is injected onto a `normal/<rel>`
+    # source, and its non-injected timesteps are bit-identical to that source.
+    # If the source landed in train while its injected twin landed in test, the
+    # test window's *background* would be memorisable from train. Bind the two
+    # atomically to one split so a source is never in train when its injected
+    # twin is not.
+    normal_recs = set(meta.loc[~meta.anomaly, "recording"].unique())
+    gen_to_src: dict[str, str] = {}
+    for rec in meta["recording"].unique():
+        if "/synthetic_gen/" in rec:
+            src = rec.replace("anomalous/synthetic_gen/", "normal/")
+            if src in normal_recs:
+                gen_to_src[rec] = src
+    src_of = {}
+    for g, s in gen_to_src.items():
+        if s in src_of and src_of[s] != g:
+            raise ValueError(f"source {s} shared by {src_of[s]} and {g}")
+
+    for rec in anomalous_recordings:
+        if "/jammer/" in rec:
+            strata.setdefault("jammer", ([], ratios))[0].append(rec)
+        elif "/synthetic_gen/" in rec:
+            strata.setdefault("synthetic_gen", ([], (0.5, 0.15, 0.35)))[0].append(rec)
+    for stratum, (recs, stratum_ratios) in strata.items():
         recs_sorted = sorted(
             recs,
             key=lambda r: meta[meta.recording == r].start_time.min(),
         )
         n = len(recs_sorted)
         if n >= 3:
-            n_train = max(1, int(round(ratios[0] * n)))
-            n_val = max(1, int(round(ratios[1] * n)))
+            n_train = max(1, int(round(stratum_ratios[0] * n)))
+            n_val = max(1, int(round(stratum_ratios[1] * n)))
             n_test = n - n_train - n_val
             if n_val + n_test >= n:
                 n_val, n_test = 1, 1
@@ -106,6 +133,12 @@ def assign_splits(meta: pd.DataFrame, cfg: dict) -> tuple[dict[str, np.ndarray],
             for cid in meta.loc[meta.recording == r, "chunk_id"]:
                 assignments[int(cid)] = split
             audit.setdefault("atomic_recordings", {})[r] = split
+            # bind the injected recording's background source to the same split
+            src = gen_to_src.get(r)
+            if src is not None:
+                for cid in meta.loc[meta.recording == src, "chunk_id"]:
+                    assignments[int(cid)] = split
+                audit.setdefault("background_source_pairs", {})[src] = split
 
     # --- remaining recordings: time-based split ---
     done = set(a for a in assignments)
@@ -193,7 +226,9 @@ def fit_scaler(X: np.ndarray, train_idx: np.ndarray, method: str) -> dict:
     return {"method": method, "loc": loc.tolist(), "scale": scale.tolist()}
 
 
-def build_targets(meta: pd.DataFrame, cfg: dict, kpis: list[str]) -> dict:
+def build_targets(
+    meta: pd.DataFrame, cfg: dict, kpis: list[str], train_idx: np.ndarray | None = None
+) -> dict:
     n = len(meta)
     horizon = cfg["windowing"].get("forecast_horizon", EW_HORIZON_DEFAULT)
     kpi_index = {k: i for i, k in enumerate(kpis)}
@@ -210,14 +245,31 @@ def build_targets(meta: pd.DataFrame, cfg: dict, kpis: list[str]) -> dict:
             y_type[i] = type_map[row.anomaly_type]
 
     y_affected = np.zeros((n, len(kpis)), dtype=np.float32)
-    templates: dict[str, list[str]] = {}
     for i, row in enumerate(meta.itertuples()):
         if row.anomaly:
             aff = json.loads(row.affected_kpis)
-            templates[row.anomaly_type] = aff
             for k in aff:
                 if k in kpi_index:
                     y_affected[i, kpi_index[k]] = 1.0
+
+    # RCA templates: derive from TRAIN anomalous chunks only, by majority vote.
+    # The previous implementation used the last anomalous chunk over the whole
+    # dataset (val/test included) -> label contamination and a non-representative
+    # per-type set (docs/benchmark_audit_v3.md, finding G1).
+    from collections import Counter
+
+    source = np.asarray(train_idx) if train_idx is not None else np.arange(n)
+    counts: dict[str, Counter] = {}
+    for i in source:
+        row = meta.iloc[int(i)]
+        if row.anomaly:
+            key = tuple(sorted(json.loads(row.affected_kpis)))
+            counts.setdefault(row.anomaly_type, Counter())[key] += 1
+    templates: dict[str, list[str]] = {}
+    for tname, counter in counts.items():
+        # deterministic majority: highest count, ties broken lexicographically
+        best = max(counter.items(), key=lambda kv: (kv[1], kv[0]))[0]
+        templates[tname] = list(best)
 
     # early-warning hazard labels: 1 at pre-onset steps where onset within horizon
     y_ew = np.zeros((n, CHUNK_STEPS), dtype=np.float32)
@@ -241,7 +293,13 @@ def build_targets(meta: pd.DataFrame, cfg: dict, kpis: list[str]) -> dict:
         "offset": offset,
         "y_ew": y_ew,
         "ew_mask": ew_mask,
-    }, {"type_map": type_map, "rca_templates": templates, "ew_horizon": horizon}
+    }, {
+        "type_map": type_map,
+        "rca_templates": templates,
+        "ew_horizon": horizon,
+        "rca_template_source": "train",
+        "rca_template_criterion": "majority",
+    }
 
 
 def main() -> None:
@@ -258,7 +316,7 @@ def main() -> None:
     train_idx, val_idx, test_idx = splits["train"], splits["val"], splits["test"]
 
     scaler = fit_scaler(X, train_idx, cfg["windowing"]["normalization_method"])
-    targets, label_info = build_targets(meta, cfg, kpis)
+    targets, label_info = build_targets(meta, cfg, kpis, train_idx)
 
     np.savez_compressed(
         PROCESSED / "split_indices.npz",

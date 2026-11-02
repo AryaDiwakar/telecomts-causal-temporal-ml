@@ -1,0 +1,40 @@
+{
+  "benchmark_version": "v3",
+  "dataset": {
+    "name": "TelecomTS",
+    "track2": "instance-varying synthetic injection",
+    "data_fingerprint": "4283de90111375c3"
+  },
+  "config_hash": "038f3fe328f11160",
+  "code_revision": "1d24faa-dirty",
+  "splits": {
+    "protocol": "temporal_within_recording",
+    "ratios": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "train": 22735,
+    "val": 4739,
+    "test": 4969,
+    "test_positives": 424
+  },
+  "preprocessing": {
+    "scaler": "train-only robust z-score",
+    "rca_templates_source": "train",
+    "rca_templates_criterion": "majority"
+  },
+  "protocols": [
+    "P-det (pooled window; val-tuned threshold)",
+    "P-rca-template (train-majority templates)",
+    "P-rca-instance (fixed-k Recall@k / MRR / MAP)",
+    "P-ew (hazard head)",
+    "P-loro (recording-grouped 5-fold)"
+  ],
+  "evaluation_rules": [
+    "val-tuned operating thresholds",
+    "provenance required for COMPLETE",
+    "no test-set model/seed/weight selection",
+    "shortcut baselines reported for RCA"
+  ]
+}

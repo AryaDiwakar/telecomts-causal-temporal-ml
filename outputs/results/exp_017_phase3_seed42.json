@@ -1,0 +1,10 @@
+{
+  "experiment": "exp_017",
+  "phase": 3,
+  "seed": 42,
+  "metrics": {
+    "pr_auc": 0.789332274291578,
+    "roc_auc": 0.9312859485029297,
+    "interventional_fidelity": 0.465
+  }
+}

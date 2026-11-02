@@ -1,0 +1,124 @@
+{
+  "classes": [
+    "MAC",
+    "MIXED",
+    "NETWORK",
+    "PDCP",
+    "RADIO"
+  ],
+  "feature_kpis": [
+    "mac_dl_harq_nack_rate",
+    "l1_avg_mcs",
+    "mac_ul_CRC_Loss_Rate",
+    "l1_avg_UL_mcs",
+    "l1_avg_UL_prbSize",
+    "mac_sinr_update_mean",
+    "BHTX_In_size",
+    "BHRX_In_size",
+    "mac_bsr_update_mean",
+    "l1_avg_prbSize"
+  ],
+  "n_positive": 185,
+  "n_runs": 16,
+  "n_windows": 475,
+  "per_run": [
+    {
+      "cls": "MAC",
+      "n_positive": 2,
+      "n_windows": 25,
+      "run": "MAC__MAC2"
+    },
+    {
+      "cls": "MIXED",
+      "n_positive": 19,
+      "n_windows": 32,
+      "run": "MIXED__MIXED__mixed1"
+    },
+    {
+      "cls": "MIXED",
+      "n_positive": 12,
+      "n_windows": 56,
+      "run": "MIXED__MIXED__mixed2"
+    },
+    {
+      "cls": "MIXED",
+      "n_positive": 21,
+      "n_windows": 21,
+      "run": "MIXED__MIXED__mixed3"
+    },
+    {
+      "cls": "MIXED",
+      "n_positive": 21,
+      "n_windows": 107,
+      "run": "MIXED__MIXED__mixed4"
+    },
+    {
+      "cls": "MIXED",
+      "n_positive": 22,
+      "n_windows": 22,
+      "run": "MIXED__MIXED__mixed5"
+    },
+    {
+      "cls": "MIXED",
+      "n_positive": 24,
+      "n_windows": 112,
+      "run": "MIXED__MIXED__mixed6"
+    },
+    {
+      "cls": "MIXED",
+      "n_positive": 1,
+      "n_windows": 1,
+      "run": "MIXED__MIXED_SHORT__mixed1"
+    },
+    {
+      "cls": "MIXED",
+      "n_positive": 1,
+      "n_windows": 1,
+      "run": "MIXED__MIXED_SHORT__mixed2"
+    },
+    {
+      "cls": "MIXED",
+      "n_positive": 1,
+      "n_windows": 1,
+      "run": "MIXED__MIXED_SHORT__mixed3"
+    },
+    {
+      "cls": "MIXED",
+      "n_positive": 1,
+      "n_windows": 1,
+      "run": "MIXED__MIXED_SHORT__mixed4"
+    },
+    {
+      "cls": "MIXED",
+      "n_positive": 1,
+      "n_windows": 1,
+      "run": "MIXED__MIXED_SHORT__mixed5"
+    },
+    {
+      "cls": "MIXED",
+      "n_positive": 1,
+      "n_windows": 1,
+      "run": "MIXED__MIXED_SHORT__mixed6"
+    },
+    {
+      "cls": "NETWORK",
+      "n_positive": 12,
+      "n_windows": 23,
+      "run": "NETWORK"
+    },
+    {
+      "cls": "PDCP",
+      "n_positive": 21,
+      "n_windows": 27,
+      "run": "PDCP"
+    },
+    {
+      "cls": "RADIO",
+      "n_positive": 25,
+      "n_windows": 44,
+      "run": "RADIO"
+    }
+  ],
+  "positive_rate": 0.3894736842105263,
+  "window_t": 128
+}

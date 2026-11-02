@@ -326,19 +326,24 @@ def main() -> None:
             val_logits = model.summary_head(val_stats).squeeze(-1) + model.summary_residual(val_stats).squeeze(-1)
         val_pr = float(average_precision_score(frames["val"]["ano"].cpu().numpy(), val_logits.cpu().numpy()))
         best_pr = val_pr
+        val_anomaly = summarize(frames["val"]["ano"].cpu().numpy(), val_logits.cpu().numpy())
         best_state = {k: v.detach().cpu().clone().contiguous() for k, v in model.state_dict().items()}
         print(f"stage A anchored: val PR-AUC {best_pr:.4f}", flush=True)
         if args.anchor_only:
             with torch.no_grad():
                 test_stats = (chunk_summary(frames["test"]["X"]) - model.summary_loc) / model.summary_scale
                 test_logits = model.summary_head(test_stats).squeeze(-1) + model.summary_residual(test_stats).squeeze(-1)
+            # Operating point uses the validation-tuned threshold, not a
+            # test-tuned one (docs/benchmark_audit_v3.md, finding R3).
             test_anomaly = summarize(
-                frames["test"]["ano"].cpu().numpy(), test_logits.cpu().numpy()
+                frames["test"]["ano"].cpu().numpy(),
+                test_logits.cpu().numpy(),
+                threshold=val_anomaly["threshold"],
             )
             out = {
                 "seed": args.seed,
                 "model": "tagn_summary_anchor_residual",
-                "val": {"anomaly": {"pr_auc": best_pr}},
+                "val": {"anomaly": val_anomaly},
                 "test": {"anomaly": test_anomaly},
                 "stage_a": stage_a,
                 "summary_residual": residual,

@@ -35,7 +35,7 @@
       "UDP": 3
     }
   },
-  "n_chunks": 32000,
+  "n_chunks": 32714,
   "chunk_length": 128,
   "n_channels": 18
 }

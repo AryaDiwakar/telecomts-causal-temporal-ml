@@ -1,0 +1,31 @@
+{
+  "test_subsets": [
+    {
+      "subset": "all_test",
+      "n_windows": 424,
+      "n_types": 11,
+      "max_distinct_sets_per_type": 4,
+      "mean_distinct_sets_per_type": 1.636,
+      "test_type_oracle_jaccard": 0.8238,
+      "test_global_majority_jaccard": 0.5517
+    },
+    {
+      "subset": "template_test(shipped)",
+      "n_windows": 223,
+      "n_types": 10,
+      "max_distinct_sets_per_type": 1,
+      "mean_distinct_sets_per_type": 1.0,
+      "test_type_oracle_jaccard": 0.9705,
+      "test_global_majority_jaccard": 0.542
+    },
+    {
+      "subset": "instance_varying_test(track2)",
+      "n_windows": 201,
+      "n_types": 5,
+      "max_distinct_sets_per_type": 3,
+      "mean_distinct_sets_per_type": 1.8,
+      "test_type_oracle_jaccard": 0.6611,
+      "test_global_majority_jaccard": 0.5625
+    }
+  ]
+}

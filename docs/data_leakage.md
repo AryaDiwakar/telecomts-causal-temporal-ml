@@ -28,6 +28,24 @@ same recording in different splits share raw timesteps (checked in the
 pipeline); train contains all 11 anomaly types, test 10/11 (Resource
 Allocation Bugs is chronologically absent from test — reported as-is).
 
+### 1a. Track-2 synthetic backgrounds (finding G5)
+
+Each Track-2 synthetic recording is produced by injecting faults into a
+`normal/<rel>` **source** recording (`src/data/synthetic_inject.py`). The
+non-injected timesteps are therefore *bit-identical* to that source's signal.
+The original split left the source on its own 70/15/15 timeline, so a test
+synthetic window's background could be identical to a training chunk — an
+unacknowledged memorisation channel (**G5**).
+
+Fix: `prepare.py` binds each injected recording and its source to **one split,
+atomically** (`split_stats.json::audit.background_source_pairs`). A source is
+never in train unless its injected twin is also in train. Consequently the
+synthetic recordings are assigned whole (0.50 / 0.15 / 0.35 train/val/test) and
+their sources follow. The repaired test split has **5,689 chunks / 424
+positives / 26 recordings** (the four test-held sources contribute their clean
+background alongside their injected twins). All reported results are retrained
+on this repaired split.
+
 ## 2. Built-in shortcuts we refuse to exploit
 
 1. **Affected-KPI templates are type-derived constants.** Because

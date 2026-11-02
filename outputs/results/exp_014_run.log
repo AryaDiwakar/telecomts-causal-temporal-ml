@@ -1,0 +1,8 @@
+device: cpu
+epoch 1/10 train_loss=0.1090 val_loss=0.1048
+epoch 2/10 train_loss=0.0692 val_loss=0.1250
+epoch 3/10 train_loss=0.0571 val_loss=0.1078
+epoch 4/10 train_loss=0.0449 val_loss=0.1596
+early stop
+TEST PR-AUC=0.8320 ROC-AUC=0.9660
+registry: appended exp_014 (COMPLETE) -> /Users/aryadiwakar/telecomts-causal-temporal-ml/outputs/results_registry.json

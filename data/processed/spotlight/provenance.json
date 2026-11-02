@@ -1,0 +1,43 @@
+{
+  "config_sha256": "14bae4244100bd7f7a8f9a10f7d8f5646fd56c242aa8a28e3de9ab544e9e0a46",
+  "download": {
+    "date": "2026-10-12",
+    "note": "public Drive tree, gdown folder download; baseline zips partially fetched, not used here",
+    "url": "https://drive.google.com/drive/folders/1x7WnU6q9EodacUdh3iXRmi9FWrMD3rME"
+  },
+  "label_policy": "self-derived robust-z from documented injection mechanism (no public per-step labels); see configs/kpi_crosswalk.yaml",
+  "source_files": {
+    "data/external/SpotLight/raw/Anomaly/MAC/MAC2/platform.csv": "c8c9ebf67c07f68498d9c193fb2d4392cc73d8f2c927de93f289d807ffdf62c9",
+    "data/external/SpotLight/raw/Anomaly/MAC/MAC2/radio.csv": "f5e23f3e2c4eed5a31d631bf05188c503f27798e6bc89308aa73191895fa0ccb",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED/mixed1/platform.csv": "45231f8d327c72640bcc523deb7b5efa37469020ebcf297b0c20927feaece4b2",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED/mixed1/radio.csv": "088bf1abdc37dcb6ef845970f09c0b8d09fec45e93a7c9842c8077b75afb12cb",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED/mixed2/platform.csv": "5ce554393747c6355eee81db05f2ea73d26bd33bf3684c8282a6835e4b066d5d",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED/mixed2/radio.csv": "13fc40f5f0ddb6266235c4a546d7e04a956ed843519d2d131f30545b1ad76539",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED/mixed3/platform.csv": "3f4f6760bfcd2c81b79fd27b7ec333fb01560e86cdd90231e23b298adf2c6bdc",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED/mixed3/radio.csv": "fefc6052b19bd5e8b38bb4b5a47195ca6ab9d52677f0127f74f91c0bcc41a5af",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED/mixed4/platform.csv": "8a3cbd36c2832474d2f6edd5390190cc9e0dacc0b64db783ee0f520bddf88f56",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED/mixed4/radio.csv": "56076980eb1ede20035e1ee54bacaf337b930c3f761f5542ea6836108f062aa1",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED/mixed5/platform.csv": "126eb5b749aa9cd31ebbf3cb530412580b57c7df89bd608de5084c2d41fd6d08",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED/mixed5/radio.csv": "5d770e7ed9a5d02d7f6d1e611e99a4d2731b65cbaa132ac246ec07da607adf92",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED/mixed6/platform.csv": "0f14637c18cf276a586300cc36f56f150028a8f12700bd2481ea7c400002024c",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED/mixed6/radio.csv": "0262047b6146bc9381b28820f36aba11067a2c14498df5882d6212de88c447a2",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED_SHORT/mixed1/platform.csv": "72cfd9004d741ac3cf8052ef87ded562bf6dcc4c12d1d12bae1dd5b1ac59326e",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED_SHORT/mixed1/radio.csv": "b3ee7c2364c3b621cc31ca6cf033f95a7422a9ef77fc98e19c5454244c4ecf29",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED_SHORT/mixed2/platform.csv": "8c6325748bd50b4ed4e0a7ef38f63f1525909c0eb7416545e2f438512a3ec91a",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED_SHORT/mixed2/radio.csv": "7961be9bfea6a8302654ead49461a4482150e66ac10c22bca7ccdea5872c9f41",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED_SHORT/mixed3/platform.csv": "3acb4f004f1e54f5170cba914b9f2e0ac7fe85e5a22df75b125ed2d8eb0ceb6d",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED_SHORT/mixed3/radio.csv": "b5527d243efd7826ec6f55d19199fc32d4afcc8617bac55b774a7dc018c6e2c6",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED_SHORT/mixed4/platform.csv": "bed9f68a1ac85e0d81b9bdd0410c8a6b3193b915f892d656f0526eedeb44a2fd",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED_SHORT/mixed4/radio.csv": "9abb311edcc7bf12b2c01d286f986598818040c22e839f50e4a443a50120379b",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED_SHORT/mixed5/platform.csv": "8627a636c32a09b45c1df940df9ecd4916429f67539c799a5210db6d83ceae1b",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED_SHORT/mixed5/radio.csv": "ffe7ecc730beecbfdea20b3d3c0533d267b59cdcb976cce5c974f2cd5d16a4a5",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED_SHORT/mixed6/platform.csv": "b7e5e1f35aecf31e23e09fb1241278b941a3fa4e2765e6e64804da4cb61f9bf6",
+    "data/external/SpotLight/raw/Anomaly/MIXED/MIXED_SHORT/mixed6/radio.csv": "17a2e3620eb49a85752315be4bab41bb4cadbcca16cec87c5442c20688605246",
+    "data/external/SpotLight/raw/Anomaly/NETWORK/platform.csv": "884f31ba634998aac8bca30fdf207ae86a874ed7a10ce410c77f1f3d71287c79",
+    "data/external/SpotLight/raw/Anomaly/NETWORK/radio.csv": "3ac4ab5ad5114745d4b15f073459f27e2f32e48cf2b91c292e55c1fdcf43821d",
+    "data/external/SpotLight/raw/Anomaly/PDCP/platform.csv": "efd2ac5dd138615c3d8bb211eff61d59b63697bb230c359827cf1c71074f2b0f",
+    "data/external/SpotLight/raw/Anomaly/PDCP/radio.csv": "65c9240d8983d3ffc0b1f13e02af650e4adc86b04eaa0abd6d3f0fbf8b2ab1b0",
+    "data/external/SpotLight/raw/Anomaly/RADIO/platform.csv": "7502438c61994d43615112f1905d9a705d558f2d34a089ce915af20b27ca5499",
+    "data/external/SpotLight/raw/Anomaly/RADIO/radio.csv": "8d738f39a143480807696cc100e11207e0cf631fcdb5fb2b704a92066fba4d2a"
+  }
+}

@@ -32,19 +32,6 @@
       "UL_NPRB",
       "UL_NumberOfPackets"
     ],
-    "Co-Channel Interference (Severe)": [
-      "DL_BLER",
-      "DL_NumberOfPackets",
-      "PRB_Utilization_DL",
-      "PRB_Utilization_UL",
-      "RSRP",
-      "RX_Bytes",
-      "TX_Bytes",
-      "UL_BLER",
-      "UL_NPRB",
-      "UL_NumberOfPackets",
-      "UL_SNR"
-    ],
     "Faulty RF Filters (Temporal)": [
       "DL_BLER",
       "PRB_Utilization_DL",
@@ -91,6 +78,19 @@
       "UL_NumberOfPackets",
       "UL_SNR"
     ],
+    "Co-Channel Interference (Severe)": [
+      "DL_BLER",
+      "DL_NumberOfPackets",
+      "PRB_Utilization_DL",
+      "PRB_Utilization_UL",
+      "RSRP",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_BLER",
+      "UL_NPRB",
+      "UL_NumberOfPackets",
+      "UL_SNR"
+    ],
     "Co-Channel Interference (Mild)": [
       "DL_BLER",
       "PRB_Utilization_DL",
@@ -103,16 +103,10 @@
       "UL_SNR"
     ],
     "High Network Congestion (Sudden Spike)": [
-      "DL_BLER",
       "DL_NumberOfPackets",
       "Estimated_UL_Buffer",
-      "PRB_Utilization_DL",
       "PRB_Utilization_UL",
-      "RX_Bytes",
-      "TX_Bytes",
-      "UL_BLER",
-      "UL_NPRB",
-      "UL_NumberOfPackets"
+      "UL_BLER"
     ],
     "Faulty Handover Algorithm (Too Frequent)": [
       "DL_BLER",
@@ -138,5 +132,7 @@
       "UL_NumberOfPackets"
     ]
   },
-  "ew_horizon": 50
+  "ew_horizon": 50,
+  "rca_template_source": "train",
+  "rca_template_criterion": "majority"
 }

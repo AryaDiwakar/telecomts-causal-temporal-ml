@@ -1,0 +1,202 @@
+{
+  "type_map": {
+    "Antenna Failure": 0,
+    "Buffer Overflow (Gradual Buildup)": 1,
+    "Co-Channel Interference (Mild)": 2,
+    "Co-Channel Interference (Severe)": 3,
+    "Doppler Shift (Severe)": 4,
+    "Faulty Handover Algorithm (Too Frequent)": 5,
+    "Faulty RF Filters (Temporal)": 6,
+    "High Network Congestion (Gradual Buildup)": 7,
+    "High Network Congestion (Sudden Spike)": 8,
+    "Jamming": 9,
+    "Resource Allocation Bugs": 10
+  },
+  "ew_horizon": 50,
+  "rca_templates": {
+    "Jamming": [
+      "DL_BLER",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_BLER",
+      "UL_MCS"
+    ],
+    "High Network Congestion (Gradual Buildup)": [
+      "DL_BLER",
+      "DL_NumberOfPackets",
+      "Estimated_UL_Buffer",
+      "PRB_Utilization_DL",
+      "PRB_Utilization_UL",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_BLER",
+      "UL_NPRB",
+      "UL_NumberOfPackets"
+    ],
+    "Faulty RF Filters (Temporal)": [
+      "DL_BLER",
+      "PRB_Utilization_DL",
+      "PRB_Utilization_UL",
+      "RSRP",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_BLER",
+      "UL_NPRB",
+      "UL_SNR"
+    ],
+    "Doppler Shift (Severe)": [
+      "DL_MCS",
+      "RSRP",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_MCS",
+      "UL_NPRB",
+      "UL_SNR"
+    ],
+    "Resource Allocation Bugs": [
+      "DL_BLER",
+      "PRB_Utilization_DL",
+      "PRB_Utilization_UL",
+      "PRBs_DL_Current",
+      "PRBs_UL_Current",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_BLER",
+      "UL_NPRB"
+    ],
+    "Antenna Failure": [
+      "DL_BLER",
+      "DL_MCS",
+      "DL_NumberOfPackets",
+      "Estimated_UL_Buffer",
+      "PRBs_DL_Current",
+      "PRBs_UL_Current",
+      "RSRP",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_BLER",
+      "UL_MCS",
+      "UL_NumberOfPackets",
+      "UL_SNR"
+    ],
+    "Co-Channel Interference (Severe)": [
+      "DL_BLER",
+      "DL_NumberOfPackets",
+      "PRB_Utilization_DL",
+      "PRB_Utilization_UL",
+      "RSRP",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_BLER",
+      "UL_NPRB",
+      "UL_NumberOfPackets",
+      "UL_SNR"
+    ],
+    "Co-Channel Interference (Mild)": [
+      "DL_BLER",
+      "PRB_Utilization_DL",
+      "PRB_Utilization_UL",
+      "RSRP",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_BLER",
+      "UL_NPRB",
+      "UL_SNR"
+    ],
+    "High Network Congestion (Sudden Spike)": [
+      "DL_NumberOfPackets",
+      "Estimated_UL_Buffer",
+      "PRB_Utilization_UL",
+      "UL_BLER"
+    ],
+    "Faulty Handover Algorithm (Too Frequent)": [
+      "DL_NumberOfPackets",
+      "Estimated_UL_Buffer",
+      "RSRP",
+      "UL_BLER",
+      "UL_SNR"
+    ],
+    "Buffer Overflow (Gradual Buildup)": [
+      "DL_BLER",
+      "DL_NumberOfPackets",
+      "Estimated_UL_Buffer",
+      "PRB_Utilization_DL",
+      "PRB_Utilization_UL",
+      "RX_Bytes",
+      "TX_Bytes",
+      "UL_BLER",
+      "UL_NPRB",
+      "UL_NumberOfPackets"
+    ]
+  },
+  "rca_template_source": "train",
+  "rca_template_criterion": "majority",
+  "provenance": {
+    "Jamming": {
+      "chosen_n": 93,
+      "n_train_anomalous": 93,
+      "n_distinct_sets": 1,
+      "is_train_majority": true
+    },
+    "High Network Congestion (Gradual Buildup)": {
+      "chosen_n": 81,
+      "n_train_anomalous": 156,
+      "n_distinct_sets": 4,
+      "is_train_majority": true
+    },
+    "Faulty RF Filters (Temporal)": {
+      "chosen_n": 84,
+      "n_train_anomalous": 97,
+      "n_distinct_sets": 3,
+      "is_train_majority": true
+    },
+    "Doppler Shift (Severe)": {
+      "chosen_n": 58,
+      "n_train_anomalous": 131,
+      "n_distinct_sets": 4,
+      "is_train_majority": true
+    },
+    "Resource Allocation Bugs": {
+      "chosen_n": 50,
+      "n_train_anomalous": 50,
+      "n_distinct_sets": 1,
+      "is_train_majority": true
+    },
+    "Antenna Failure": {
+      "chosen_n": 73,
+      "n_train_anomalous": 117,
+      "n_distinct_sets": 4,
+      "is_train_majority": true
+    },
+    "Co-Channel Interference (Severe)": {
+      "chosen_n": 80,
+      "n_train_anomalous": 80,
+      "n_distinct_sets": 1,
+      "is_train_majority": true
+    },
+    "Co-Channel Interference (Mild)": {
+      "chosen_n": 131,
+      "n_train_anomalous": 147,
+      "n_distinct_sets": 2,
+      "is_train_majority": true
+    },
+    "High Network Congestion (Sudden Spike)": {
+      "chosen_n": 42,
+      "n_train_anomalous": 82,
+      "n_distinct_sets": 2,
+      "is_train_majority": true
+    },
+    "Faulty Handover Algorithm (Too Frequent)": {
+      "chosen_n": 47,
+      "n_train_anomalous": 119,
+      "n_distinct_sets": 3,
+      "is_train_majority": true
+    },
+    "Buffer Overflow (Gradual Buildup)": {
+      "chosen_n": 86,
+      "n_train_anomalous": 163,
+      "n_distinct_sets": 4,
+      "is_train_majority": true
+    }
+  }
+}

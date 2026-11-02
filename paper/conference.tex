@@ -1,0 +1,382 @@
+% !TEX program = pdflatex
+\documentclass[conference]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{multirow}
+
+\title{Causal-Temporal Machine Learning for Root-Cause Localization in 5G Networks: A Benchmark Audit and a Cautionary Evaluation}
+
+\author{
+\IEEEauthorblockN{Nagi Reddy SaiBaba}
+\IEEEauthorblockA{Reg. No. 23BDS0019\\
+Vellore Institute of Technology\\
+Vellore, India}
+\and
+\IEEEauthorblockN{Arya Diwakar}
+\IEEEauthorblockA{Reg. No. 23BDS0023\\
+Vellore Institute of Technology\\
+Vellore, India}
+\and
+\IEEEauthorblockN{Jeswanth G}
+\IEEEauthorblockA{Reg. No. 23BDS0212\\
+Vellore Institute of Technology\\
+Vellore, India}
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We audit TelecomTS and find that our initial headline does not survive correction of the benchmark. The audit identifies a train/test background leak, injection-label errors, and a per-fault-type root-cause template shortcut; we repair the leak and labels, add instance-varying injections to test the shortcut, and retrain on the repaired split (5,689 windows, 424 positives, 26 recordings). TAGN reaches 0.7589 PR-AUC across five seeds, below TCN (0.8606) and logistic regression (0.8196) on mean PR-AUC. In a single-seed ablation, removing the graph raises PR-AUC from 0.7439 to 0.7581, providing no clear detection benefit for message passing. The learned graph estimates statistical dependencies; it is not a verified causal graph. The intervention-based RCA fidelity metric fails its positive control: ground-truth roots score 0.496 $\pm$ 0.052, near the matched random-root score of 0.503 $\pm$ 0.016; the full true-root set scores 0.508 $\pm$ 0.085. Predicted-root scores vary from 0.304 to 0.976 across checkpoints, so they do not establish localization. Event-level evaluation replaces a misleading argmax-lag score: the hazard head detects 3.7\% of events at a targeted 1\% false-alarm rate, with per-step AUC 0.495. The contribution is an empirical benchmark audit, a repaired evaluation, and control-based evidence that the original detection, RCA, and early-warning interpretations do not hold under these tests—not a state-of-the-art model or a verified causal method.
+\end{abstract}
+
+\begin{IEEEkeywords}
+5G RAN, root-cause localization, temporal graph neural network, benchmark audit, leakage-safe evaluation, interventional diagnostic, early warning
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+Our initial story on TelecomTS was simple: a graph neural network beats classical baselines, localizes root causes, and justifies a causal-temporal design. This paper audits that story rather than proposing another architecture. The test anomalies were scored on sessions whose normal background was in training; injection labels included identity and inert effects; and the shipped root-cause KPI set was constant per fault type. These defects bias their respective detection and RCA results. We corrected the leak and labels, rebuilt the evaluation with instance-varying injections, and retrained every model. The headline reverses.
+
+TAGN, our temporal-attention graph network, does not win on mean PR-AUC. Removing the graph is the best detection ablation. The intervention-based RCA score does not survive its own positive control: true roots score at chance against the matched random-root null. The early-warning number that looked strong came from a metric that can score post-onset steps. These are not marginal misses. They are decisive failures of the benchmark and of the evaluation protocol.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+\item We provide a reproducible audit of split integrity, injection-label validity, RCA-template shortcuts, and leave-recordings-out preprocessing. We repair the background leak and label errors, quantify the type-to-template shortcut, and add instance-varying injections so the evaluation tests beyond the shipped templates.
+\item We measure the audit's effect on model conclusions: after repair, TAGN trails TCN and logistic regression on mean PR-AUC, while a single-seed ablation favors removing the graph. The inferred graph is a dependency estimate, not a causal mechanism.
+\item We test intervention-based RCA against a matched null and a ground-truth positive control. The metric fails: the true-root score is at chance and overlaps the random-root null. Predicted-root scores are unstable across seeds, not evidence of localization.
+\item We replace the argmax-lag early-warning heuristic with a false-alarm-calibrated event-level protocol. Under the protocol the hazard head is near chance; the old number was an artifact.
+\end{enumerate}
+
+We do not claim a new model or state of the art. The contribution is the benchmark audit and the evidence it produces: which defects changed the conclusions, how the repaired evaluation behaves, and which causal-RCA and early-warning claims fail their controls. Section~II reviews related work, Section~III describes the audit and repairs, Section~IV presents TAGN and the diagnostic, Section~V reports experiments, Section~VI discusses the implications, and Section~VII states limitations.
+
+\section{Related Work}
+
+\subsection{Multivariate time-series anomaly detection and RCA}
+
+Graph-based detectors such as GDN learn a sensor graph and flag deviations from a learned normal model \cite{deng2021gdn}. Later work combines causal discovery with anomaly detection and root-cause analysis, often by learning a directed graph and using it for message passing or attribution. These methods establish the design pattern ``structure learning $\rightarrow$ graph network $\rightarrow$ localization.'' Our question is different: we ask whether the structure actually helps on a public 5G benchmark once leakage and label shortcuts are removed, and whether an intervention-based RCA score survives a control.
+
+\subsection{5G RAN observability}
+
+TelecomTS is a public 5G RAN observability corpus with 32k windows over 18 KPI channels, 11 anomaly types, and per-window affected-KPI annotations \cite{feng2025telecomts}. SpotLight is an independently collected 5G Open RAN testbed with radio and platform telemetry \cite{sun2024spotlight}. KAC reports strong anomaly-classification results on TelecomTS and SpotLight under its own splits \cite{salavati2026kac}. Simba applies a GNN-plus-Transformer model to 5G RAN KPI localization \cite{simba2024}. We use TelecomTS as the primary benchmark, SpotLight as a preliminary external check, and do not compare numbers across incompatible protocols.
+
+\subsection{Evaluation rigor}
+
+Overlapping windows are a recurring source of pseudo-replication in time-series anomaly detection: treating them as independent samples makes confidence intervals optimistic. Recent critical evaluations show that metric design and thresholding can obscure comparisons \cite{bello2026gnn_tsad}, and audits of RAN telemetry show that evaluation artifacts can dominate reported gains \cite{fard2026crosslayer}. We therefore use recording-level cluster bootstrap intervals, paired tests on shared chunks, leave-recordings-out refits, and explicit template-versus-instance-varying reporting.
+
+\subsection{Causal language}
+
+Granger causality and transfer entropy are classic pairwise directed-dependence measures \cite{granger1969,schreiber2000}; GraphicalLasso estimates a sparse partial-correlation skeleton \cite{friedman2008glasso}. None of these identifies a physical causal DAG from observational telemetry. We use the word ``causal'' only for causal convolutions and for a model-internal do-style perturbation. The learned graph is a \emph{dependency} graph, not a verified causal graph.
+
+\section{Benchmark Audit and Repairs}
+
+\subsection{The audit}
+
+We audited TelecomTS along four axes: split integrity, preprocessing leakage, ground-truth validity, and metric protocol. Three findings changed the numbers; a fourth changed the leave-recordings-out protocol. The repairs are not cosmetic. They reverse the headline. Table~\ref{tab:audit} summarizes them.
+
+\begin{table*}[t]
+\centering
+\caption{Audit findings and repairs.}
+\label{tab:audit}
+\small
+\begin{tabular}{p{0.17\textwidth}p{0.35\textwidth}p{0.41\textwidth}}
+\toprule
+Finding & Effect & Repair \\
+\midrule
+G5: background leak & test anomalies scored on a session whose normal background was in train & bind each source atomically to its injected twin; test 4,969 $\rightarrow$ 5,689 \\
+G2--G4: label errors & identity/inert effects labeled, multi-event windows under-labeled, \texttt{end\_time} 10$\times$ too large & regenerate corpus; 280 spurious labels removed across 237/714 windows \\
+Template shortcut & one affected-KPI set per fault type; input-free oracle reaches 0.971 Jaccard & Track-2 instance-varying injection; oracle ceiling drops to 0.661 \\
+R4: LORO leakage & global scaler and graph prototypes fit on all recordings & refit scaler and prototypes per fold \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\paragraph{G5: background leak.}
+In the pre-repair split, every injected Track-2 recording's normal source was itself chunk-split across splits. For example, \texttt{normal/mobile/File} contributed 215 chunks to train, 43 to validation, and 43 to test, while its injected twin \texttt{anomalous/synthetic\_gen/mobile/File} was atomically in test. The model therefore trained on the very session whose test anomalies it was scored on. The leak did the work. We bind each source atomically to its injected twin's split. The test set grows from 4,969 to 5,689 chunks and still contains 424 positives. TAGN's pooled PR-AUC falls from roughly 0.92 to 0.7589. The repair does not shave the headline; it reverses it.
+
+\paragraph{G2--G4: label repairs.}
+Identity and inert effects were labeled as affected, multi-event windows were under-labeled, and \texttt{end\_time} was ten times too large. We fixed the injector and regenerated the corpus. The KPI time series are unchanged to better than $6\times10^{-11}$ (JSON round-trip only). We removed 280 spurious affected-KPI labels across 237 of 714 windows. Detection labels are unaffected, so this changes RCA ground truth, not detection.
+
+\paragraph{R4: LORO refit.}
+Leave-recordings-out previously used a globally fit scaler and graph prototypes, leaking test recordings into training statistics. We now refit both per fold.
+
+\subsection{Template shortcut quantification}
+
+On the shipped data, 956 anomalous windows across 10 types have exactly one affected-KPI set per type. An input-free type-oracle that emits the type's template reaches 0.971 top-$k$ Jaccard, above every trained model. After our Track-2 injection produces instance-varying affected sets, the oracle ceiling drops to 0.661. We report detection and RCA separately on template versus instance-varying windows. This is the core of the audit: on the shipped benchmark, RCA is a lookup table keyed by fault type. The model does not have to localize anything.
+
+\subsection{Repaired split and protocol}
+
+The final test set has $n=5{,}689$ windows, 424 positives, and 26 recordings. Operating points are tuned on validation data. All intervals are 95\% recording-level cluster bootstrap intervals, and paired tests are computed on shared chunks. All numbers below are on this split.
+
+\section{Method}
+
+\subsection{TAGN architecture}
+
+TAGN has three parts. A temporal backbone applies dilated causal convolutions and a GRU over 18 KPI channels (16 numeric KPIs plus two protocol channels). A graph module discovers a per-chunk KPI dependency graph via GraphicalLasso and transfer entropy, clusters the graphs into KMeans prototypes, and applies multi-head graph attention over the 16 KPI nodes. Multi-task heads predict anomaly (binary), fault type (11-way), root cause (16 multi-label logits), and a per-step hazard for early warning. The model has about 485k parameters and is CPU-trainable.
+
+\subsection{Scenario context is excluded from the headline model}
+
+The reported model uses the KPI series, the learned graph, and an explicit summary-statistics branch. We do not feed zone, mobility, or application identity to the headline model: those fields can encode recording identity and manufacture exactly the shortcut the audit is meant to remove. A separate three-modality fusion prototype exists in the repository, but its smoke-test result is not used as evidence in this paper.
+
+\subsection{The graph is a dependency estimate}
+
+The graph module estimates statistical dependence. GraphicalLasso finds a sparse partial-correlation skeleton, and transfer entropy adds directed edges. Edges are threshold-dependent, and the prototypes summarize bin-level topologies. We do not claim that these edges are physical causal effects, and we do not have a ground-truth DAG for TelecomTS. In the ablation, removing the graph is the best variant. The graph is a descriptive summary, not a causal mechanism.
+
+\subsection{Intervention-based RCA diagnostic}
+
+We define a model-internal do-style perturbation. For a window $x$ and a KPI set $S$, let $x_{\mathrm{do}(S)}$ be $x$ with the normalized channels in $S$ set to zero (their training mean). Let $s(\cdot)$ be the anomaly score. The score drop is
+\begin{equation}
+\Delta(S) = s(x) - s(x_{\mathrm{do}(S)}).
+\end{equation}
+For a candidate root set $R$ and a matched random non-root set $C$ of the same size, the interventional RCA fidelity is
+\begin{equation}
+F = \frac{1}{N}\sum_{i=1}^{N}\left[\mathbb{1}(\Delta_i(R)>\Delta_i(C)) + \tfrac{1}{2}\mathbb{1}(\Delta_i(R)=\Delta_i(C))\right].
+\end{equation}
+A value near 1 means that intervening on the candidate roots reduces the anomaly score more often than intervening on a random set.
+
+This is a model-internal sensitivity diagnostic, not an identified physical intervention. To validate it, we require three controls. The \emph{positive control} uses the ground-truth affected-KPI set: a valid metric should score above chance. The \emph{negative control} uses a random root set: it should score near 0.5. The \emph{null control} uses a random root set against a random non-root set. We also report sensitivity to the set size $k$ and to the model seed. If the positive control fails, the metric is not evidence of RCA quality, regardless of how high the predicted-root score is.
+
+\subsection{Deferral-aware RCA}
+
+An attribution-stability signal (rank correlation of attributions under input perturbation) and attribution entropy feed a calibrator that estimates $P(\text{top-}k\text{ correct})$. Low-confidence windows are deferred rather than emitting a possibly wrong root set. We report coverage-risk curves rather than a bare point score. The gain is modest and is reported as preliminary.
+
+\section{Experiments}
+
+\subsection{Setup}
+
+We use seeds 42, 123, 456, 789, and 1337. Baselines are logistic regression, XGBoost, isolation forest, LOF, one-class SVM, TCN, and GRU. Metrics are PR-AUC, ROC-AUC, F1-max, TPR at 1\% and 5\% FPR, type accuracy, RCA Recall@$k$/MRR/MAP, interventional fidelity, and event-level early-warning detection. Intervals are 95\% cluster bootstrap over the 26 test recordings. Paired tests use the same chunks for both models.
+
+\subsection{Detection}
+
+Table~\ref{tab:detection} reports pooled-window detection (Setting~I). TAGN does not win. Its five-seed mean is 0.7589 PR-AUC, below TCN (0.8606) and logistic regression (0.8196). Its best seed (1337, 0.8278) edges logistic regression but remains below TCN. TAGN has the best mean ROC-AUC (0.9543), but ROC-AUC is not the metric that matters at this positive rate, and its PR-AUC spread across seeds is large ($\pm$0.041) relative to the gap. The graph does not rescue it.
+
+\begin{table*}[t]
+\centering
+\caption{Setting I: pooled-window detection on the repaired split. Intervals are 95\% recording-level cluster bootstrap.}
+\label{tab:detection}
+\small
+\begin{tabular}{lcccc}
+\toprule
+Model & Seeds & PR-AUC (mean $\pm$ sd) & PR 95\% CI & ROC-AUC (mean $\pm$ sd) \\
+\midrule
+TCN & 3 & \textbf{0.8606} $\pm$ 0.0589 & [0.5722, 0.9748] & 0.9438 $\pm$ 0.0100 \\
+LogReg & 1 & 0.8196 & [0.6265, 0.9387] & 0.9309 \\
+TAGN (graph + summary) & 5 & 0.7589 $\pm$ 0.0413 & [0.4713, 0.9777] & \textbf{0.9543} $\pm$ 0.0069 \\
+GRU & 3 & 0.7635 $\pm$ 0.0266 & [0.4657, 0.9308] & 0.9399 $\pm$ 0.0078 \\
+XGBoost & 1 & 0.7427 & [0.4519, 0.9628] & 0.8956 \\
+LOF & 1 & 0.5776 & [0.3145, 0.8195] & 0.9307 \\
+OneClassSVM & 1 & 0.5278 & [0.2493, 0.8282] & 0.8776 \\
+IsolationForest & 1 & 0.1923 & [0.0738, 0.5855] & 0.7956 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Table~\ref{tab:paired} reports paired cluster-bootstrap differences against logistic regression, the strongest PR baseline. On four of five seeds the PR difference is negative, and every 95\% interval includes zero. The correct statistical statement is that no advantage is detectable; the practical statement is that TAGN loses on the point estimate. On ROC-AUC the sign is consistently positive, but only seed 1337 excludes zero. A paired test that ignored recording clustering would be anti-conservative, so we do not use one.
+
+\begin{table}[t]
+\centering
+\caption{Paired cluster bootstrap, TAGN vs.\ LogReg, on shared chunks.}
+\label{tab:paired}
+\footnotesize
+\begin{tabular}{lccc}
+\toprule
+Seed & $\Delta$PR & $p(\Delta\mathrm{PR}\le 0)$ & $\Delta$ROC \\
+\midrule
+42 & $-0.0662$ & 0.7860 & $+0.0196$ \\
+123 & $-0.0896$ & 0.8805 & $+0.0208$ \\
+456 & $-0.0605$ & 0.7745 & $+0.0271$ \\
+789 & $-0.0956$ & 0.8900 & $+0.0160$ \\
+1337 & $+0.0082$ & 0.3740 & $+0.0334$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Component ablation}
+
+Table~\ref{tab:ablation} reports the component ablation with a shared stage-A anchor. Every variant sits within 0.028 PR of the frozen anchor (0.7305). Removing the graph entirely (0.7581) is the highest PR in the table. The graph is not neutral; no\_graph is better. Training only the hazard head reproduces the anchor. The graph, the node convolution, and edge directionality are detection-neutral; they contribute nothing measurable. RCA and type accuracy are also barely graph-dependent. This is consistent with the pooled and leave-recordings-out results being similar (0.7589 vs.\ 0.7689): there is no transferable graph signal beyond summary statistics on this dataset.
+
+\begin{table}[t]
+\centering
+\caption{Component ablation at a shared stage-A anchor. Single seed; indicative.}
+\label{tab:ablation}
+\footnotesize
+\begin{tabular}{lcccc}
+\toprule
+Variant & PR & ROC & Type acc & RCA Jaccard \\
+\midrule
+full & 0.7439 & 0.9485 & 0.1651 & 0.5310 \\
+no\_graph & \textbf{0.7581} & \textbf{0.9520} & 0.1840 & 0.5402 \\
+static\_graph & 0.7482 & 0.9501 & \textbf{0.1934} & \textbf{0.5538} \\
+undirected & 0.7431 & 0.9499 & \textbf{0.1934} & 0.5484 \\
+no\_nodeconv & 0.7445 & 0.9499 & 0.1769 & 0.5364 \\
+hazard\_only & 0.7305 & 0.9497 & 0.1557 & 0.5640 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Root-cause localization}
+
+RCA ground truth is large (median 7 of 16 KPIs on the test split), so Recall@1 is capped at $1/|gt|$ (about 0.14 at the median size). TAGN's R@1 is 0.062, essentially the chance rate $1/16$. Table~\ref{tab:rca} shows MRR 0.6710 and MAP 0.5334 (mean over five seeds); that is not a localization result. Type accuracy is about 0.224 against chance 0.09: better than chance, but nowhere near a usable root-cause system. The per-KPI ranking is slightly better than the type label; neither supports the claim that TAGN localizes causes.
+
+\begin{table*}[t]
+\centering
+\caption{RCA ranking metrics recovered from checkpoints (no retraining). Ground-truth root sets are large, so R@1 is bounded near 0.1.}
+\label{tab:rca}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+Seed & R@1 & R@3 & R@5 & MRR & MAP & Type acc \\
+\midrule
+42 & 0.0227 & 0.1035 & 0.2268 & 0.4621 & 0.4883 & 0.2453 \\
+123 & 0.0841 & 0.1970 & 0.3513 & 0.7792 & 0.5776 & 0.2170 \\
+456 & 0.0656 & 0.1840 & 0.3232 & 0.6936 & 0.5437 & 0.2170 \\
+789 & 0.0531 & 0.1380 & 0.2593 & 0.6394 & 0.5245 & 0.2453 \\
+1337 & 0.0863 & 0.2051 & 0.2751 & 0.7806 & 0.5331 & 0.1934 \\
+\midrule
+Mean & 0.0624 & 0.1655 & 0.2871 & \textbf{0.6710} & \textbf{0.5334} & \textbf{0.2236} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Interventional fidelity: the metric fails its own control}
+
+Table~\ref{tab:fidelity} reports the trial. We evaluate all five TAGN checkpoints on 424 anomalous test windows from 13 recordings. For each checkpoint, we intervene on the candidate root set and on a matched random non-root set of the same size. Predicted and random sets have exactly $k$ KPIs; a ground-truth set larger than $k$ is randomly subsampled to $k$, and the control is always matched to the candidate size. The table reports the mean and standard deviation over checkpoints and the per-checkpoint range; the text reports recording-level cluster-bootstrap intervals where they are needed.
+
+\begin{table}[t]
+\centering
+\caption{Interventional RCA fidelity with controls (five checkpoints, 424 anomalous test windows, 13 recordings). Mean and standard deviation are over checkpoints; range is the per-checkpoint minimum and maximum.}
+\label{tab:fidelity}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lccc}
+\toprule
+Control & $k$ & Mean $\pm$ SD & Range \\
+\midrule
+Predicted roots & 3 & 0.567 $\pm$ 0.235 & [0.304, 0.976] \\
+Predicted roots & 5 & 0.570 $\pm$ 0.217 & [0.368, 0.986] \\
+Predicted roots & 7 & 0.561 $\pm$ 0.215 & [0.377, 0.976] \\
+True roots (positive) & 3 & 0.496 $\pm$ 0.052 & [0.420, 0.559] \\
+True roots (positive) & 5 & 0.476 $\pm$ 0.086 & [0.351, 0.616] \\
+True roots (positive) & 7 & 0.519 $\pm$ 0.137 & [0.349, 0.738] \\
+True roots (full set) & full & 0.508 $\pm$ 0.085 & [0.394, 0.639] \\
+Random roots (negative) & 3 & 0.503 $\pm$ 0.016 & [0.479, 0.528] \\
+Random roots (negative) & 5 & 0.506 $\pm$ 0.026 & [0.469, 0.542] \\
+Random roots (negative) & 7 & 0.495 $\pm$ 0.025 & [0.467, 0.528] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The negative control behaves as expected: random roots score 0.503 $\pm$ 0.016 at $k=3$, 0.506 $\pm$ 0.026 at $k=5$, and 0.495 $\pm$ 0.025 at $k=7$; the $k=7$ recording-level 95\% cluster-bootstrap interval is [0.465, 0.516]. The positive control does not. The ground-truth affected-KPI set scores 0.496 $\pm$ 0.052 at $k=3$, 0.476 $\pm$ 0.086 at $k=5$, and 0.519 $\pm$ 0.137 at $k=7$. The $k=3$ recording-level interval is [0.418, 0.567] and includes chance. Using each window's full ground-truth set (median 7 KPIs on the test split) against a random set of the same size (which may overlap the roots) gives 0.508 $\pm$ 0.085, so truncation is not the reason for the failure. The per-checkpoint values for the positive control are tightly clustered around chance (0.420--0.559 at $k=3$), so the failure is not driven by a single checkpoint. This is not a borderline result: the ground-truth-root score is at chance and overlaps the matched random-root null. A metric that cannot separate them is not an RCA metric; it is a model-sensitivity score.
+
+The predicted-root scores look higher (0.567 $\pm$ 0.235 at $k=3$), but they are unstable across seeds: the per-seed values are 0.304, 0.976, 0.571, 0.611, and 0.370. One checkpoint drives the mean. Because the positive control fails, the predicted-root score is not evidence that TAGN localizes causal KPIs. The earlier pilot value of 0.465 is invalid: it was computed on a single checkpoint without matched controls and is not reproducible under the corrected implementation. We do not cite it as evidence. The diagnostic is useful precisely because it exposes this failure; a paper that reported only 0.465 would have been wrong.
+
+\subsection{Early warning: the old number was an artifact}
+
+The original early-warning evaluation took the argmax hazard over the whole window and compared it with the onset. That is not an early-warning metric: the argmax can occur after onset, and it is not calibrated to a false-alarm budget. We replace it with an event-level protocol. For each anomalous window with onset $>0$, we find the first step before onset whose hazard exceeds a threshold $\tau$. Detection occurs if such a step exists, and lead time is onset minus that step. We choose $\tau$ on validation normal windows to achieve a target window-level false-alarm rate, then report test detection and false alarms.
+
+Table~\ref{tab:early} reports the results over five seeds and 93 test events. At a targeted 1\% false-alarm budget, the hazard head detects 3.7\% of events and produces 0.018 false alarms per normal window (a realized rate of 1.8\%). At a targeted 5\%, it detects 10.1\% and produces 0.096 false alarms per normal window (9.6\%). Per-step AUC is 0.495 and per-step AP is 0.006. The old argmax rule would report 65.2\% ``warning before onset,'' but its mean absolute lead error is 53.6 steps, and the rule is not threshold-calibrated. The old number is not an early-warning result. Under a calibrated protocol the hazard head is near chance and is not usable as an early-warning system on this data.
+
+\begin{table}[t]
+\centering
+\caption{Event-level early warning over five seeds and 93 test events. The final two rows are the old argmax-lag rule, shown for contrast.}
+\label{tab:early}
+\footnotesize
+\begin{tabular}{lcc}
+\toprule
+Metric & Mean & SD \\
+\midrule
+Per-step AUC & 0.495 & 0.029 \\
+Per-step AP & 0.006 & 0.001 \\
+Detection at 1\% FA & 0.037 & 0.009 \\
+False alarms/window at 1\% FA & 0.018 & 0.007 \\
+Detection at 5\% FA & 0.101 & 0.048 \\
+False alarms/window at 5\% FA & 0.096 & 0.029 \\
+\midrule
+Argmax ``warn before onset'' & 0.652 & 0.134 \\
+Argmax mean absolute lead error & 53.6 steps & 5.7 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Only 93 of 424 test anomalies have onset $>0$; the remaining 331 are onset-zero events such as jammers, which carry no pre-onset signal and are excluded. The support is small, so the event-level numbers are indicative rather than definitive. Even so, the gap between 65\% under the old rule and 3.7\% under the calibrated rule shows why the evaluation protocol matters.
+
+\subsection{External validity: SpotLight}
+
+SpotLight has no public per-step labels, so we self-derive weak labels from the injection mechanism and map channels to a shared KPI-role space. Zero-shot transfer from TelecomTS fails: a Gaussian normal model reaches ROC-AUC 0.281. Per-vendor leave-one-run-out adaptation reaches ROC-AUC 0.944 and PR-AUC 0.886, but the labels are self-derived and share signal with the input channels, so this is not comparable to KAC's reported numbers. We treat it as a preliminary external check, not as evidence of a general method.
+
+\subsection{Deferral, robustness, and LORO}
+
+Attribution-stability deferral improves precision at 10\% coverage from 0.291 to 0.33. The gain is modest and the coverage-risk curve is the relevant object; we do not claim a solved deferral policy. Under noise, channel dropout, time shift, and scale perturbations, detection degrades gracefully; the full robustness table is in the released results. Leave-recordings-out reaches 0.7689 PR-AUC (fold range 0.6831--0.8475) and 0.9011 ROC-AUC, indistinguishable from the pooled Setting-I number. Once the G5 leak is removed, holding entire sessions out costs nothing. The pre-repair gap was recording-specific memorization.
+
+\subsection{Template versus instance-varying windows}
+
+On the shipped template windows, an input-free type-oracle reaches 0.971 top-$k$ Jaccard. On instance-varying Track-2 windows, the same oracle drops to 0.661. This is the shortcut audit in one comparison: the shipped benchmark's RCA headline is dominated by the template, and the type-oracle baseline falls on instance-varying windows. A model cannot be credited for a number that an input-free lookup can reach.
+
+\subsection{Explainability and the recording shortcut}
+
+Gradient attribution agrees with the type template at AUC 0.852. The recording-prior RCA Jaccard (0.592) beats input-driven RCA (0.344), confirming the recording-memorization shortcut on the repaired split. This motivates leave-recordings-out and explicit reporting of both setups. It also explains why type accuracy can look acceptable while per-KPI localization is weak.
+
+\section{Discussion}
+
+\paragraph{The prior approach does not survive.}
+The graph is worse than no graph, TAGN loses to a linear model on PR-AUC, type accuracy is weak, the fidelity metric fails its positive control, and the hazard head is near chance. This is not a tune-up problem. The benchmark and the evaluation were doing the work. Our contribution is the audit, the corrected benchmark, the validation protocol, and the evidence that a causal-sounding metric can fail when it is actually tested.
+
+\paragraph{Dependencies are not causes.}
+The learned graph encodes statistical dependencies. It is useful as a descriptive summary and as a structure for a diagnostic, but it is not a verified causal DAG. The intervention is a model-internal perturbation, not a physical do-operation. Any claim that the model ``localizes the cause'' requires a positive control on known root sets. Ours fails that control, so the claim is dead.
+
+\paragraph{Why the fidelity metric fails.}
+The anomaly head is dominated by summary statistics. Zeroing a KPI set changes those statistics, but the change need not align with the ground-truth affected set. The model can score an anomaly using a different set of channels than the injector labeled. A metric that asks whether the model's score responds to the labeled roots is therefore testing model reliance, not ground-truth causality. That would be useful if the model were causal; here it is not.
+
+\paragraph{Why early warning is hard here.}
+The hazard head is trained with masked BCE on pre-onset steps, but the positive rate is low and the events are heterogeneous. At a 1\% false-alarm budget the head detects few events. The old argmax rule hid this by scoring the whole window. Calibrated event-level evaluation is the minimum standard for an early-warning claim; by that standard the head fails.
+
+\paragraph{What would change the picture.}
+A better causal graph (validated, not just statistical), more data, better features, a different task formulation, or a model whose anomaly score is explicitly tied to the root set. A positive control on true roots should be a gate for any intervention-based RCA paper.
+
+\section{Limitations}
+
+\paragraph{Label structure.}
+\texttt{affected\_kpis} are per-type templates on the shipped data, so type accuracy is the perceptual ceiling for template-based RCA. We evaluate RCA twice, via type-to-template mapping and input-driven per-KPI localization, and report both.
+
+\paragraph{Recording-origin confound.}
+Normal and anomalous classes come from different recordings; no recording mixes both. A model can partially solve the task by recognizing scenario rather than fault signature. We mitigate with chronological splits, LORO, and explicit reporting, but the confound is not eliminated.
+
+\paragraph{Evaluation support.}
+The test set has 424 anomalous windows in bursts, with per-type counts from 8 to 92. Only 93 events have onset $>0$, so the early-warning numbers are indicative. Macro metrics over types are noisy.
+
+\paragraph{Model capacity.}
+The model is compact ($\sim$485k parameters), CPU-trained, and uses config defaults rather than a hyperparameter search. This limits absolute performance but does not change the qualitative conclusions.
+
+\paragraph{Graph inference.}
+GraphicalLasso plus transfer entropy is a simple estimator; edges are threshold-dependent, and the graphs are prototypes of bin-level topologies. The graph is a dependency estimate, not a verified causal DAG.
+
+\paragraph{Metric validation.}
+The fidelity positive control is at chance across five checkpoints. We report this as a failure of the metric, not as a success of the model. A larger set of recordings or a model with an explicitly causal anomaly head might change the result; we have not demonstrated that.
+
+\section{Conclusion}
+
+The audit changes the conclusions. After repairing the background leak and injection labels, TAGN trails TCN and logistic regression on mean PR-AUC. The single-seed graph ablation favors no graph; the intervention metric fails its positive control; and the calibrated hazard head is near chance. The graph remains a statistical dependency estimate, not a causal mechanism. These results do not establish a new model, but they do establish why the initial headline is unsupported under the repaired split and control-based evaluation. We provide the repaired split, scripts, and tests so the audit can be reproduced and its controls applied to future benchmark claims.
+
+\appendix
+\section{Reproducibility and Additional Results}
+
+\subsection{Hyperparameters}
+AdamW with learning rate $10^{-3}$ (2-epoch warmup, cosine decay to 5\% of the base rate), batch size 64, weight decay $10^{-4}$, hidden dimension 64, two dilated causal-convolution layers, two GAT layers with four heads, a one-layer GRU, dropout 0.2 (0.1 inside the GAT), and gradient clipping 1.0. Stage~A fits a linear summary readout for 200 epochs at learning rate $10^{-2}$, then a nonlinear summary residual for 40 epochs. Stage~B trains the full model for at most 30 epochs with early-stopping patience 6 on validation PR-AUC. The headline model has 485,471 parameters. Training is on CPU and takes roughly 3--6 minutes per epoch.
+
+\subsection{Per-seed backbone results}
+The Phase-1 backbone reaches PR-AUC 0.8437 (seed 42), 0.7843 (123), and 0.7877 (456), with a mean of 0.8052 and high variance. The five-seed graph-plus-summary model used in Table~\ref{tab:detection} has mean 0.7589 and standard deviation 0.0413.
+
+\subsection{Experiment index}
+The released registry contains the classical baselines (exp\_001), TAGN multi-seed runs (exp\_002), component ablations (exp\_003), robustness (exp\_004), leave-recordings-out (exp\_005), explainability (exp\_006), early warning (exp\_007), self-supervised pretraining (exp\_008), hybrid ensemble (exp\_009), SpotLight transfer (exp\_010), seed ensemble (exp\_011), type-invariant RCA (exp\_012), temporal baselines (exp\_013), Phase-1 backbone (exp\_014), multimodal fusion (exp\_015), causal-intervention pilot (exp\_016), and the Phase-3 causal model (exp\_017). The fidelity and early-warning validations in this paper are produced by \texttt{scripts/validate\_fidelity.py} and \texttt{scripts/validate\_early\_warning.py}.
+
+\subsection{Code and data}
+All code, data-processing scripts, checkpoints, and results are in the repository. The dashboard runs with \texttt{streamlit run src/dashboard/app.py}. Tests run with \texttt{pytest}. Library versions are pinned (scipy 1.14.1, numpy 1.26.4). The reported numbers are deterministic given the seeds.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

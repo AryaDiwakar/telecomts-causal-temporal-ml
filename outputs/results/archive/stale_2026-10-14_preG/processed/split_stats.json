@@ -1,0 +1,113 @@
+{
+  "protocol": "temporal_within_recording",
+  "ratios": [
+    0.7,
+    0.15,
+    0.15
+  ],
+  "counts": {
+    "train": {
+      "n": 22735,
+      "n_anomalous": 1235,
+      "n_recordings": 37,
+      "types": {
+        "Buffer Overflow (Gradual Buildup)": 163,
+        "High Network Congestion (Gradual Buildup)": 156,
+        "Co-Channel Interference (Mild)": 147,
+        "Doppler Shift (Severe)": 131,
+        "Faulty Handover Algorithm (Too Frequent)": 119,
+        "Antenna Failure": 117,
+        "Faulty RF Filters (Temporal)": 97,
+        "Jamming": 93,
+        "High Network Congestion (Sudden Spike)": 82,
+        "Co-Channel Interference (Severe)": 80,
+        "Resource Allocation Bugs": 50
+      },
+      "onset_gt0": 325
+    },
+    "val": {
+      "n": 4739,
+      "n_anomalous": 185,
+      "n_recordings": 28,
+      "types": {
+        "Jamming": 94,
+        "Co-Channel Interference (Mild)": 32,
+        "Antenna Failure": 15,
+        "Co-Channel Interference (Severe)": 15,
+        "Faulty RF Filters (Temporal)": 10,
+        "High Network Congestion (Gradual Buildup)": 9,
+        "Faulty Handover Algorithm (Too Frequent)": 5,
+        "Buffer Overflow (Gradual Buildup)": 5
+      },
+      "onset_gt0": 36
+    },
+    "test": {
+      "n": 4969,
+      "n_anomalous": 424,
+      "n_recordings": 34,
+      "types": {
+        "Jamming": 92,
+        "Co-Channel Interference (Severe)": 69,
+        "Faulty RF Filters (Temporal)": 64,
+        "Faulty Handover Algorithm (Too Frequent)": 54,
+        "Buffer Overflow (Gradual Buildup)": 41,
+        "Antenna Failure": 38,
+        "Resource Allocation Bugs": 21,
+        "Co-Channel Interference (Mild)": 15,
+        "High Network Congestion (Gradual Buildup)": 12,
+        "Doppler Shift (Severe)": 10,
+        "High Network Congestion (Sudden Spike)": 8
+      },
+      "onset_gt0": 93
+    }
+  },
+  "audit": {
+    "atomic_recordings": {
+      "anomalous/jammer/File": "train",
+      "anomalous/jammer/Twitch": "val",
+      "anomalous/jammer/YouTube": "test",
+      "anomalous/synthetic_gen/stationary/Zone_A/congestion/YouTube": "train",
+      "anomalous/synthetic_gen/stationary/Zone_B/congestion/YouTube": "train",
+      "anomalous/synthetic_gen/stationary/Zone_C/congestion/YouTube": "train",
+      "anomalous/synthetic_gen/stationary/Zone_A/congestion/Twitch": "train",
+      "anomalous/synthetic_gen/stationary/Zone_B/congestion/Twitch": "train",
+      "anomalous/synthetic_gen/stationary/Zone_C/congestion/Twitch": "train",
+      "anomalous/synthetic_gen/stationary/Zone_A/congestion/File": "val",
+      "anomalous/synthetic_gen/stationary/Zone_B/congestion/File": "val",
+      "anomalous/synthetic_gen/stationary/Zone_C/congestion/File": "test",
+      "anomalous/synthetic_gen/mobile/YouTube": "test",
+      "anomalous/synthetic_gen/mobile/Twitch": "test",
+      "anomalous/synthetic_gen/mobile/File": "test"
+    },
+    "dropped_clusters": {
+      "anomalous/synthetic/Zone_A/YouTube": 76,
+      "anomalous/synthetic/Zone_B/Twitch": 9,
+      "anomalous/synthetic/Zone_C/File": 12,
+      "anomalous/synthetic/Zone_C/Twitch": 8
+    },
+    "dropped_chunks": {
+      "normal/mobile/File": 8,
+      "normal/mobile/Twitch": 8,
+      "normal/mobile/YouTube": 8,
+      "normal/stationary/Zone_A/congestion/File": 8,
+      "normal/stationary/Zone_A/congestion/Twitch": 8,
+      "normal/stationary/Zone_A/congestion/YouTube": 8,
+      "normal/stationary/Zone_A/no_congestion/File": 8,
+      "normal/stationary/Zone_A/no_congestion/Twitch": 7,
+      "normal/stationary/Zone_A/no_congestion/YouTube": 8,
+      "normal/stationary/Zone_B/congestion/File": 8,
+      "normal/stationary/Zone_B/congestion/Twitch": 8,
+      "normal/stationary/Zone_B/congestion/YouTube": 8,
+      "normal/stationary/Zone_B/no_congestion/File": 8,
+      "normal/stationary/Zone_B/no_congestion/Twitch": 8,
+      "normal/stationary/Zone_B/no_congestion/YouTube": 8,
+      "normal/stationary/Zone_C/congestion/File": 8,
+      "normal/stationary/Zone_C/congestion/Twitch": 8,
+      "normal/stationary/Zone_C/congestion/YouTube": 8,
+      "normal/stationary/Zone_C/no_congestion/File": 8,
+      "normal/stationary/Zone_C/no_congestion/Twitch": 7,
+      "normal/stationary/Zone_C/no_congestion/YouTube": 8
+    }
+  },
+  "dropped_total": 271
+}
